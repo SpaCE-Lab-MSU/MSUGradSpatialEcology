@@ -1,0 +1,13 @@
+---
+title: "MSU Graduate Spatial Ecology (FOR870)"
+author: "Phoebe Zarnetske; plz@msu.edu"
+date: "Aug 19, 2020"
+urlcolor: blue
+---
+
+## Welcome {-}
+
+
+These are the lab exercises for the MSU Graduate course in Spatial Ecology, Fall 2020 (FOR870).  
+
+This is in early stage and a work in progress

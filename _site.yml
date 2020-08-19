@@ -1,0 +1,10 @@
+name: "MSUGradSpatialEcology"
+output_dir: _site
+exclude: ["renv", "renv.lock"]
+navbar:
+  title: "MSU Grad Spatial Ecology"
+  left:
+    - text: "Lab 1: R"
+      href: lab1_R.html
+    - text: "Lab 2: scale"
+      href: lab2_scale.html      
