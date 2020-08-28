@@ -1,6 +1,7 @@
 name: "MSUGradSpatialEcology"
 output_dir: docs
-exclude: ["renv", "renv.lock"]
+exclude: ["renv", "renv.lock", "*.rst"]
+include: ["*.Rmd"]
 navbar:
   title: "MSU Grad Spatial Ecology"
   left:
