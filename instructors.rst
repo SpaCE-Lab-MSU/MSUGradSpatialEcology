@@ -1,8 +1,8 @@
 For Instructors
 ====
 
-**The following instructions are not for students.  Students please go to 
- https://space-lab-msu.github.io/MSUGradSpatialEcology**
+The following instructions are not for students.  Students please go to 
+ https://space-lab-msu.github.io/MSUGradSpatialEcology
  
 This information is for  
 instructors interested in using these course materials. 
