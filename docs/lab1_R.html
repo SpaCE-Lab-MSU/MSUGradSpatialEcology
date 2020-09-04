@@ -14,6 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 1</title>
 
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -275,9 +276,6 @@ $(document).ready(function () {
         <li>
   <a href="lab1_R.html">Lab 1: R</a>
 </li>
-<li>
-  <a href="lab2_scale.html">Lab 2: scale</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -299,8 +297,8 @@ $(document).ready(function () {
 
 <div id="lab-1-r-data-management-ggplot2-stommel-diagram" class="section level1">
 <h1>Lab 1: R, Data Management, ggplot2, Stommel Diagram</h1>
-<p><a href="lab1_R.Rmd">RMarkdown Version</a></p>
-<p>This lab has THREE Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for “LABS”). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (Mondays @ 5pm US Eastern: refer to the syllabus for exact date).</p>
+<p><em><a href="lab1_R.Rmd">Download RMarkdown Source code for this lab</a></em></p>
+<p>This lab has 3 Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for “LABS”). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (Mondays @ 5pm US Eastern: refer to the syllabus for exact date).</p>
 <p>At the end of Lab 1 is Homework in preparation for Lab 2.</p>
 <div id="part-1-r-data-management" class="section level2">
 <h2>Part 1: R &amp; Data Management</h2>
@@ -308,14 +306,14 @@ $(document).ready(function () {
 <p>R RESOURCES There are numerous tutorials, books, short courses, etc. out there to help you learn R. See the Resources in the course D2L folder, “Resources” for just a few relevant links to help you beyond this course. There are also resources posted on the MSU SpaCE Lab website at: <a href="https://space-lab-msu.github.io/r_guide/" class="uri">https://space-lab-msu.github.io/r_guide/</a>. The exercises below draw on bits and pieces from some of these sources, but also some aspects that I think are particularly important to understand about R. Even if you’ve worked with R before, you may find some of these descriptions and codes useful. I’m always learning new things in R from a variety of sources - from my students, postdocs, and colleagues, and from websites and scientific papers and conferences.</p>
 <div id="fair-principles" class="section level3">
 <h3>FAIR Principles</h3>
-<p>Data should be Findable, Accessible, Interoperable, and Reusable (FAIR). Read Wilkinson et al. (2016) to become familiar with these standards, as we will be referring to them throughout the course.</p>
+<p>Data should be Findable, Accessible, Interoperable, and Reusable (FAIR). Read Wilkinson et al. (2016) to become familiar with these standards, as we will be referring to them throughout the course.</p>
 <p>Wilkinson, M. D., M. Dumontier, Ij. J. Aalbersberg, G. Appleton, M. Axton, A. Baak, N. Blomberg, J.-W. Boiten, L. B. da Silva Santos, P. E. Bourne, J. Bouwman, A. J. Brookes, T. Clark, M. Crosas, I. Dillo, O. Dumon, S. Edmunds, C. T. Evelo, R. Finkers, A. Gonzalez-Beltran, A. J. G. Gray, P. Groth, C. Goble, J. S. Grethe, J. Heringa, P. A. C. ’t Hoen, R. Hooft, T. Kuhn, R. Kok, J. Kok, S. J. Lusher, M. E. Martone, A. Mons, A. L. Packer, B. Persson, P. Rocca-Serra, M. Roos, R. van Schaik, S.-A. Sansone, E. Schultes, T. Sengstag, T. Slater, G. Strawn, M. A. Swertz, M. Thompson, J. van der Lei, E. van Mulligen, J. Velterop, A. Waagmeester, P. Wittenburg, K. Wolstencroft, J. Zhao, and B. Mons. 2016. The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3:160018. <a href="DOI:10.1038/sdata.2016.18" class="uri">DOI:10.1038/sdata.2016.18</a>.</p>
 <p>You can also review the FAIR Principles at this website: <a href="https://www.go-fair.org/fair-principles/" class="uri">https://www.go-fair.org/fair-principles/</a></p>
 </div>
 <div id="data-management-is-key-to-your-success-as-a-scientist-or-practitioner." class="section level3">
 <h3>DATA MANAGEMENT is key to your success as a scientist or practitioner.</h3>
 <p>One of the most important (and time consuming) steps with your data is organizing it. The readings for this lab will focus on that. Rather than work in Excel or another point and click program, R will enable you to track your changes from the very beginning. This is extremely important because chances are, you’ll need to re-run your organization script at some point during your analysis because you’ve realized you made some mistake along the way. It also vastly reduces human error because it provides you with a track record for reproducible research.</p>
-<p>Please make sure you have read Borer et al. (2009) and White et al. (2013) and are familiar with proper data entry and management. If you follow these guidelines I guarantee you’ll be more efficient. For more in-depth information, see the 2011 ESA workshop, “How to Manage Ecological Data for Effective Use and Re-use”: <a href="https://www.dataone.org/esa-2011-how-manage-ecological-data-effective-use-and-re-use" class="uri">https://www.dataone.org/esa-2011-how-manage-ecological-data-effective-use-and-re-use</a>. The papers are on D2L, as are links to other data management resources in our Resources folder.</p>
+<p>Please make sure you have read Borer et al. (2009) and White et al. (2013) and are familiar with proper data entry and management. If you follow these guidelines I guarantee you’ll be more efficient. For more in-depth information, see the 2011 ESA workshop, “How to Manage Ecological Data for Effective Use and Re-use”: <a href="https://www.dataone.org/esa-2011-how-manage-ecological-data-effective-use-and-re-use" class="uri">https://www.dataone.org/esa-2011-how-manage-ecological-data-effective-use-and-re-use</a>. The papers are on D2L, as are links to other data management resources in our Resources folder.</p>
 <p>Elizabeth T. Borer, Eric W. Seabloom, Matthew B. Jones, and Mark Schildhauer 2009. Some Simple Guidelines for Effective Data Management. Bulletin of the Ecological Society of America 90:205–214. <a href="http://dx.doi.org/10.1890/0012-9623-90.2.205" class="uri">http://dx.doi.org/10.1890/0012-9623-90.2.205</a></p>
 <p>White, E., E. Baldridge, Z. T. Brym, K. J. Locey, D. J. McGlinn, and S. R. Supp. 2013. Nine simple ways to make it easier to (re)use your data. Ideas in Ecology and Evolution 6.</p>
 </div>
@@ -336,7 +334,9 @@ output_path&lt;-&quot;output&quot;
 
 # install/load appropriate packages used in your script.
 # in this case install ggplot2 package then load it
-install.packages(&#39;ggplot2&#39;,repos = &quot;http://cran.us.r-project.org&quot;) 
+
+#   install.packages(&#39;ggplot2&#39;,repos = &quot;http://cran.us.r-project.org&quot;) 
+
 # you may be required to pick a source – pick one near where you are located
 library(ggplot2) #Load ggplot2: &#39;https://ggplot2.tidyverse.org/reference/&#39;
 # If you install several packages at once, you can use code like this to 
@@ -372,7 +372,7 @@ load(file.path(data_path,&quot;lab1.RData&quot;))</code></pre>
 <p><img src="data/lab1/spc_histo2.png" alt="Plot 2:" /> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spc_histo2.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spc_histo2.png</a></p>
 <p><img src="data/lab1/spcplt.png" alt="Plot 3:" /> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spcplt.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spcplt.png</a></p>
 <div class="figure">
-<img src="data/lab1/elev_av_depth.png" alt="Plot 4:" />
+<img src="data/lab1/elev_av_depth.png" alt="" />
 <p class="caption">Plot 4:</p>
 </div>
 <p><a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab2/elev_av_depth.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab2/elev_av_depth.png</a></p>
@@ -391,7 +391,7 @@ load(file.path(data_path,&quot;lab1.RData&quot;))</code></pre>
 <p>Label your axes and place approximate values on your tick-marks. X-axis=space, Y-axis=time. Pick at least one response variable to plot as your Z-axis. Label the phenomena associated with your response variable. Use the examples from lecture as a guide.</p>
 <p>On your diagram, include a depiction of data sources as in Kaiser et al. 2005 (and FYI, here’s a better link to the shading on that diagram from lecture: <a href="http://rs.resalliance.org/wp-content/uploads/2010/02/stommelteaching.jpg" class="uri">http://rs.resalliance.org/wp-content/uploads/2010/02/stommelteaching.jpg</a></p>
 <div class="figure">
-<img src="data/lab1/stommelteaching.jpg" alt="Plot 5:" />
+<img src="data/lab1/stommelteaching.jpg" alt="" />
 <p class="caption">Plot 5:</p>
 </div>
 <p>You can see that the ships cover a narrower range within the satellite range but also overlap the finer scales of the moorings).</p>
