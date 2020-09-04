@@ -8,6 +8,31 @@ urlcolor: blue
 ## Welcome {-}
 
 
-These are the lab exercises for the MSU Graduate course in Spatial Ecology, Fall 2020 (FOR870).  
+These are the lab exercises for the MSU Graduate course in Spatial Ecology, Fall 2020 (FOR870). Labs will be posted as we go through the semester.   The labs are generally mixtures of lecture, code, and results.  Most labs have exercises for you to produce working code, and will require R and RStudio. 
 
-This is in early stage and a work in progress
+### Requirements
+
+  * Install R and and the "Open Source Edition" of Rstudio desktop (both free) on your computer.   For more information on installing those programs, see D2L , or our lab's guide here: https://space-lab-msu.github.io/r_guide/installing-r-and-rstudio.html   
+   Note you may safely use all the defaults options during these installations.    
+
+  * Create a folder for this course (something like "MSUGradSpatialEcology").
+  
+  * In your new course folder, create a 'data' folder that will be used by some labs or for your own homework.   
+
+
+### General Instructions
+
+The labs provide example, working code that you can use to complete the exercises.   You may copy/paste this code into your own scripts.  
+
+All labs use data pulled from the internet, and usually with R code to do that downloading automatically.   In the event that you cannot download these data from the internet, they are also linked on this page, orr in the lab text itself. 
+
+When we get to Lab 2, it describes how to write code that you can create a report from in a format called "Markdown", or a format specific to R called "Rmarkdown."   For the exercises, you will write RMarkdown files that you'll use Rstudio to run and create a PDF that includes your write-up, your code, and the outputs from your code (text, plots, images, etc).    You turn in this PDF for credit.   
+
+The lab documents themselves were written in Rmarkdown, and used R to run all the code, create the plots, and then create this website to make it easy to read.   To help you get started on your exercise, you can also download these RMarkdown scripts and run them on your own computer to see how they work, or to use them to start working on your homework.    
+
+Each lab will have a link at the top to the "source code" for the lab (in "RMarkdown format" or Rmd).   Much more information about Rmarkdown and how to use it is introduced in lab 2.  
+
+A few labs need other files to be complete, and if these are necessary they will also have links to them.   However all the data used by all of the labs is available in my data folder on https://github.com/SpaCE-Lab-MSU/MSUGradSpatialEcology/tree/master/docs
+
+I don't expect you to be familiar with git or github (which you may have heard of) but this is a convenient way to make all of the R source code and data files available to you.  
+

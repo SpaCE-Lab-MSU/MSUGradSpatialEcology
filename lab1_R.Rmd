@@ -7,9 +7,9 @@ urlcolor: blue
 
 # Lab 1: R, Data Management, ggplot2, Stommel Diagram 
 
-[RMarkdown Version](lab1_R.Rmd)
+*[Download RMarkdown Source code for this lab](lab1_R.Rmd)*
 
-This lab has THREE Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for "LABS"). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (Mondays @ 5pm US Eastern: refer to the syllabus for exact date). 
+This lab has 3 Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for "LABS"). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (Mondays @ 5pm US Eastern: refer to the syllabus for exact date). 
 
 At the end of Lab 1 is Homework in preparation for Lab 2. 
 
@@ -64,7 +64,9 @@ output_path<-"output"
 
 # install/load appropriate packages used in your script.
 # in this case install ggplot2 package then load it
-install.packages('ggplot2',repos = "http://cran.us.r-project.org") 
+
+#   install.packages('ggplot2',repos = "http://cran.us.r-project.org") 
+
 # you may be required to pick a source – pick one near where you are located
 library(ggplot2) #Load ggplot2: 'https://ggplot2.tidyverse.org/reference/'
 # If you install several packages at once, you can use code like this to 
