@@ -7,4 +7,6 @@ navbar:
   left:
     - text: "Lab 1: R"
       href: lab1_R.html  
+    - text: "Lab 2: R"
+      href: lab2_scale.html
       

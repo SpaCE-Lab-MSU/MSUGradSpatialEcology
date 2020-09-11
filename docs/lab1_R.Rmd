@@ -7,7 +7,7 @@ urlcolor: blue
 
 # Lab 1: R, Data Management, ggplot2, Stommel Diagram 
 
-*[Download RMarkdown Source code for this lab](lab1_R.Rmd)*
+*[Download RMarkdown Source code for this lab](lab1_R.Rmd)*  
 Refer to the Welcome page of this website for the "Requirements" for working on each lab (create "/data/lab1" and also run any script from your course folder).  
 
 This lab has 3 Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for "LABS"). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (refer to the Syllabus for exact date).  
