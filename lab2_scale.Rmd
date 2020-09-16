@@ -81,12 +81,18 @@ graphics.off()
 
 # Set the paths for your work
 output_path<-("output")
+# if this folder doesn't exist, create it
+if(!dir.exists(output_path)){
+  dir.create(output_path)
+}
+
 
 # Create the folders (directories) "data" and "lab2" - If they exist already, this 
 # command won't over-write them.
 data_path<-(file.path("data","lab2"))
 if(!dir.exists(data_path)){
-  dir.create(data_path)}
+  dir.create(data_path,recursive = TRUE)
+}
 
 # If you previously saved your workspace and want to load it here, do so this way 
 # load(file.path(output_path,"lab2.RData"))
@@ -120,7 +126,7 @@ for the proj4 strings see www.spatialreference.org or search on https://epsg.io/
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
 # USA BOUNDARY SHAPEFILE: download it from the web [note that you may need to change the exdir location depending on where you want it to be saved]
-if(! file.exists('us.zip')){
+if(! file.exists(file.path(data_path,'us.zip'))){
  download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip", dest=file.path(data_path,"us.zip"), mode="wb") 
 }
 
