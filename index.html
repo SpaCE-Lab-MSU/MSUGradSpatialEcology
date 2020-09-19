@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Phoebe Zarnetske; plz@msu.edu" />
+
+
+<title>MSU Graduate Spatial Ecology Fall 2020</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">MSU Grad Spatial Ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="lab1_R.html">Lab 1: R</a>
+</li>
+<li>
+  <a href="lab2_scale.html">Lab 2: R</a>
+</li>
+<li>
+  <a href="lab3_patch_design.html">Lab 3: R</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Fall 2020</h1>
+<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
+<h4 class="date">Aug 19, 2020</h4>
+
+</div>
+
+
+<div id="welcome" class="section level2 unnumbered">
+<h2>Welcome</h2>
+<p>This website contains the lab exercises for the MSU Graduate course: Spatial Ecology (FOR870), Fall 2020. Labs will be posted through the semester. The labs are generally mixtures of background, code with descriptive text, and results. Most labs have exercises for you to produce working code and output such as plots, and will require R and RStudio. Please read the instructions under “LAB” on D2L, and on the Syllabus. These contain due dates, how to submit your Lab assignments, and expectations. If you are coming to this website and are not enrolled in the course, feel free to try out the exercises.</p>
+<p>Please note that this website is Version 1.0, and includes labs recently updated from previous semesters of Spatial Ecology. Please let me know if anything is unclear.</p>
+<div id="requirements" class="section level3">
+<h3>Requirements</h3>
+<ul>
+<li><p>Install R and and the “Open Source Edition” of Rstudio desktop (both free) on your computer. For more information on installing those programs, see D2L: R in Resources, <a href="https://datacarpentry.org/R-ecology-lesson/index.html" class="uri">https://datacarpentry.org/R-ecology-lesson/index.html</a>, or our the MSU SpaCE Lab’s guide here: <a href="https://space-lab-msu.github.io/r_guide/installing-r-and-rstudio.html" class="uri">https://space-lab-msu.github.io/r_guide/installing-r-and-rstudio.html</a><br />
+Note you may safely use all the defaults options during these installations.</p></li>
+<li><p>It will be helpful to replicate the folder (directory) structure for Labs on your computer as follows:</p></li>
+<li><p>Create a folder for this course (something like ‘SpatialEcologyLab’). This is your working directory.</p></li>
+<li><p>In your course folder, create a ‘data’ folder that will be used by some labs. Within this folder, add folders (subdirectories) for each lab in all lowercase, before starting a lab. For example, create ‘lab1’ before you work on lab1.</p></li>
+<li><p>Place the .R or .Rmd files for each lab in your working directory and work from that directory.</p></li>
+</ul>
+</div>
+<div id="general-instructions" class="section level3">
+<h3>General Instructions</h3>
+<p>The labs provide example, working code that you can use to complete the exercises. You may copy/paste this code into your own scripts. Or start from the source code (see R Markdown below)</p>
+<p>Most labs use data pulled from the internet, and usually with R code to do that downloading automatically. In the event that you cannot download these data from the internet, they are also linked on this page, or in the Lab text itself.</p>
+<div id="r-markdown" class="section level4">
+<h4>R Markdown</h4>
+<p>Lab 2 describes how to write code so that you can create a report in a format called “Markdown”, or a format specific to R called “RMarkdown.” For all Lab assignments starting with Lab 2, you will write RMarkdown files that you’ll use RStudio to run and create a PDF. The PDF includes your write-up, your code, and the outputs from your code (text, plots, images, etc). You turn in this PDF for credit.</p>
+<p>The lab documents themselves were written in RMarkdown, and used R to run all the code, create the plots, and then create this website to make it easy to read. To help you get started on your exercise, you can also download these RMarkdown scripts and run them on your own computer to see how they work, or to use them to start working on your Lab assignment.</p>
+<p>Each lab will have a link at the top to the “source code” for the lab (in “RMarkdown format” or Rmd). Lab 2 contains more information about RMarkdown and how to use it.</p>
+</div>
+<div id="data" class="section level4">
+<h4>data</h4>
+<p>A few labs need other files to be complete, and if these are necessary they will also have links to them. However all the data used by all of the labs is available in the “data” folder on <a href="https://github.com/SpaCE-Lab-MSU/MSUGradSpatialEcology/tree/master/docs" class="uri">https://github.com/SpaCE-Lab-MSU/MSUGradSpatialEcology/tree/master/docs</a></p>
+</div>
+<div id="github" class="section level4">
+<h4>GitHub</h4>
+<p>I don’t expect you to be familiar with git or GitHub (which you may have heard of) but this is a convenient way to make all of the R source code and data files available to you. We will go over an introduction to GitHub in a future Lab.</p>
+</div>
+</div>
+<div id="lab-community-forum" class="section level3">
+<h3>Lab Community Forum</h3>
+<p>Please see the Syllabus and D2L for a full description of the Lab Community Forum. The Lab Community Forum is a collection of Google Docs in the course Google Shared Drive, one for each Lab. Further Instructions are found at the top of each Lab Community Forum Google Doc. Remember that even if you don’t have a question to post to the Lab Community Forum, you can add in some helpful tips you came across while using R that relate to the Lab. Participation in this course includes contributions to this Forum. See D2L “LABS” for the link.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
