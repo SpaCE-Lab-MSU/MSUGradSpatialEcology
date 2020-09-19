@@ -47,18 +47,19 @@ if(!dir.exists(data_path)){
 # load(file.path(output_path,"lab3.RData"))
      
 ## NOTES on R packages:
-## (1) FedData should be installed from github and requires data.table package first
+## (1) FedData should be installed from github and requires data.table package first. 
 #install.packages("data.table", type="binary")
 #library(data.table)
 #install.packages("remotes")
 #remotes::install_github("ropensci/FedData")
 #library(FedData)
+## NOTE: If the installation for FedData doesn't work for you, I have included the NLCD data for Oregon, linked below, so you can read it in directly from the Lab website.
 
 ## (2) The packages landscapemetrics and landscapetools may require loading separately - uncomment below.
-# install.packages("landscapemetrics")
-# install.packages("landscapetools")
-# library(landscapemetrics)
-# library(landscapetools)
+#install.packages("landscapemetrics")
+#install.packages("landscapetools")
+#library(landscapemetrics)
+#library(landscapetools)
 ## If you run into errors, try this installation instead:
 #devtools::install_github("r-spatialecology/landscapemetrics")
 #library(landscapemetrics)
@@ -83,6 +84,8 @@ library(FedData)
 ```
 
 The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Here we are downloading the 2016 NLCD land cover product for the western half of Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select "Metadata". Metadata contain data about data. Search for "proj" to find the projection information) https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml. It's Albers Conical Equal Area, WGS84. Refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf),  Lab 2's links, or resources on D2L if you need a refresher on Coordinate Reference Systems.
+
+NOTE: If the installation for FedData doesn't work for you, I have included the NLCD data for Oregon, linked below, so you can read it in directly from the Lab website.
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
 # Create a polygon the state of Oregon from the States of US shapefile
@@ -137,82 +140,106 @@ if(! file.exists('mgmt.zip')){
  download.file("https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip",dest=file.path(data_path,"mgmt.zip"), mode="wb") 
 }
 unzip (file.path(data_path,"mgmt.zip"), exdir = data_path)
-
 mgmt<-readOGR(file.path(data_path,"wmu24poly.shp"))
 
-summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html), GRS80. We should transform it to match NLCD data from FedData.
-mgmt1<-spTransform(mgmt, merc.proj)
+summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
+lcc.proj<-CRS("+proj=lcc +lat_0=41.75 +lon_0=-120.5 +lat_1=43 +lat_2=45.5 +x_0=400000 +y_0=0 +datum=NAD83 +units=ft +no_defs")
+
+# Project mgmt into the lcc projection from the Oregon NLCD 2011 (see below)
+mgmt1<-spTransform(mgmt, lcc.proj)
 
 head(mgmt1)
 unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
-hood <- mgmt1[mgmt1$UNIT_NAME =="HOOD",] 
-# See where it's located. Plotting and rendering may take a minute because these polygons are complex.
+hood <- mgmt1[mgmt$UNIT_NAME =="HOOD",] 
+## See where it's located. Plotting and rendering may take a minute because these polygons are complex.
 plot(mgmt1)
 plot(hood,add=T,col="red")
 
-## FYI if you had a raster of mgmt1 instead of a shapefile (e.g., mgmt1_raster) you wanted to clip to the extent of another raster (e.g., hood_raster), you could do the following:
+## Here is where you will import the Oregon NLCD directly (if the FedData package is not installing correctly), OR start using the FedData package to download the 2016 data.
 
-# hood_raster <- crop(mgmt1_raster, extent(hood))
-# hood_raster <- mask(x = hood_raster, mask = hood)
+## OPTION 1: Importing the Oregon 2011 NLCD data directly
+## Download the 2011 Oregon NLCD (54 MB) - may take a few mins
+## Download the Oregon NLCD (54 MB) - uncomment below
+# if(! file.exists('or_nlcd.zip')){
+# download.file("http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip", dest=file.path(data_path,"or_nlcd.zip"), mode="wb")
+# }
+# unzip (file.path(data_path,"or_nlcd.zip"), exdir = data_path)
+# or_nlcd <- raster(file.path(data_path,"./OR_NLCD_2011/nlcd_or_20111" ))
+# save.image("lab3.RData")
+# 
+# # Take a look at or_nlcd from 2011 - it is projected in lcc
+# or_nlcd
+# 
+# # Crop or_nlcd by hood1
+# hood_nlcd<-crop(or_nlcd, extent(hood))
+# hood_nlcd <- mask(x = hood_nlcd, mask = hood)
 
-# Use the get_nlcd command from FedData to extract the NLCD data for this management unit. FedData does the cropping automatically using a shapefile or raster for "template". 
-?get_nlcd
+# plot(hood_nlcd)
+# plot(hood,add=TRUE, lwd=2, border='white')
 
-hood_nlcd<-get_nlcd(
-  template = hood,
-  label="Hood",
-  year = 2016,
-  dataset = "Land_Cover",
-  extraction.dir = paste0(data_path, "/FedData/"),
-)
+## Uncomment to output a raster as a tif
+?writeRaster
+#writeRaster(raster, "raster.tif")
 
-plot(hood_nlcd)
-plot(hood,add=TRUE, lwd=2, border='white')
+## OPTION 2 (uncomment below): Use the get_nlcd command from FedData to extract the NLCD data for this management unit. FedData does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is.
+# ?get_nlcd
+# 
+# hood_nlcd<-get_nlcd(
+#   template = hood,
+#   label="Hood",
+#   year = 2016,
+#   dataset = "Land_Cover",
+#   extraction.dir = paste0(data_path, "/FedData/"),
+# )
+# hood_nlcd
+
+# plot(hood_nlcd)
+# plot(hood,add=TRUE, lwd=2, border='white')
 
 ```
 
 Now work with the `landscapemetrics` R package to compute different patch and landscape statistics.
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
-# Make a plot of the Hood NLCD data - this renders a map of the NLCD raster. It may take a few mins to render. Then check to see if the input data is suitable for computing patch metrics
+## Make a plot of the Hood NLCD data - this renders a map of the NLCD raster. It may take a few mins to render. Then check to see if the input data is suitable for computing patch metrics
  
-show_landscape(hood_nlcd)
-check_landscape(hood_nlcd)
+#show_landscape(hood_nlcd)
+#check_landscape(hood_nlcd)
 ```
 You could proceed to calculate metrics for all different land cover classes (this would  take a while). Instead, suppose you are interested in the metrics of "forested" patches in this landscape. First, reclassify into "forest" and "nonforest". You need to determine what the cover types are:
 ```{r, message=FALSE, results='hide',warning=FALSE}
-unique(hood_nlcd)
-# Look here at the "Class/Value" to figure out which cover type(s) you want: https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend. For example, evergreen is 42. However, there are other forest cover types as well. Determine how to make the raster "all forest" not just evergreen.
-hood_for <- hood_nlcd
-hood_for[hood_for < 41] <- 0 # make everything below 41 zero
-plot(hood_for)
-hood_for[hood_for > 43] <- 0 # make everything above 43 zero
-plot(hood_for)
-unique(hood_for)
-# Assign 1 value (1) to forest.
-hood_for[hood_for == 41 | hood_for == 42 | hood_for == 43] <- 1
-show_landscape(hood_for)
+#unique(hood_nlcd)
+## Look here at the "Class/Value" to figure out which cover type(s) you want: https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend. For example, evergreen is 42. However, there are other forest cover types as well. Determine how to make the raster "all forest" not just evergreen. Umncomment below:
+#hood_for <- hood_nlcd
+#hood_for[hood_for < 41] <- 0 # make everything below 41 zero
+#plot(hood_for)
+#hood_for[hood_for > 43] <- 0 # make everything above 43 zero
+#plot(hood_for)
+#unique(hood_for)
+## Assign 1 value (1) to forest.
+#hood_for[hood_for == 41 | hood_for == 42 | hood_for == 43] <- 1
+#show_landscape(hood_for)
 
-# The code below follows part of this vignette: https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html - check it out for more context and if you would like to try other commands not covered here.
+## The code below follows part of this vignette: https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html - check it out for more context and if you would like to try other commands not covered here.
 
-# Check to see if the input data is suitable for computing patch metrics
-check_landscape(hood_for)
+## Check to see if the input data is suitable for computing patch metrics
+#check_landscape(hood_for)
 
-# Look at the distinct patches for this landscape
-show_patches(hood_for) 
+## Look at the distinct patches for this landscape
+#show_patches(hood_for) 
 
-# Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
-show_patches(hood_for, class = "all", labels = FALSE)
+## Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
+#show_patches(hood_for, class = "all", labels = FALSE)
 
-# At the patch level, compute patch metrics
-hood_metrics <- calculate_lsm(hood_for, what = "patch")
+## At the patch level, compute patch metrics
+#hood_metrics <- calculate_lsm(hood_for, what = "patch")
 
-# Look at the different types of metrics at the patch level. Note that you can compute these metrics at the patch, landscape, or class levels.
-list_lsm(level='patch')
+## Look at the different types of metrics at the patch level. Note that you can compute these metrics at the patch, landscape, or class levels.
+#list_lsm(level='patch')
 
-# Determine if any patch metrics are correlated
-show_correlation(hood_metrics, method = "pearson")
+## Determine if any patch metrics are correlated
+#show_correlation(hood_metrics, method = "pearson")
 ```
 
 ###QUESTION 1: 
@@ -220,7 +247,7 @@ How do the 12 patch metrics from `landscapemetrics` help you understand how an o
 Refer to the *list_lsm()* results above. You may also want to refer to the FRAGSTATS documentation for more in-depth coverage (warning: this is a large document, I suggest searching for the patch metric term. Page 77 contains the start of the "metrics" discussion, but page 92 contains a condensed table): https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html
 
 ###QUESTION 2: 
-Repeat the process above, but select a different management unit. Compare your other management unit patch metrics with the ones for Hood Management Area. Briefly, how do the patch metrics for Forested areas and  non-Forested areas compare between the two management areas? Optional: make some plots showing the statistical distributions of patch metrics across the two areas (e.g., a histogram of patch area, by class, by management unit). 
+Repeat the process above, but select a different management unit than Hood. Compare your other management unit patch metrics with the ones for Hood Management Area. Briefly, how do the patch metrics for Forested areas and  non-Forested areas compare between the two management areas? Optional: make some plots showing the statistical distributions of patch metrics across the two areas (e.g., a histogram of patch area, by class, by management unit). 
 
 ## Part 2: Study Design 
 
