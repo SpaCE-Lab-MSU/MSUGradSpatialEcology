@@ -14,7 +14,6 @@
 
 <title>MSU Graduate Spatial Ecology Lab 1</title>
 
-<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -279,6 +278,9 @@ $(document).ready(function () {
 <li>
   <a href="lab2_scale.html">Lab 2: R</a>
 </li>
+<li>
+  <a href="lab3_patch_design.html">Lab 3: R</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -336,7 +338,7 @@ graphics.off()
 # make sure the .R or .Rmd file you&#39;re working on is moved to that location (you will 
 # have to close the .R or .Rmd file if you&#39;ve opened it in RStudio so it is moved correctly). 
 getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/billspat/Code/SpaCELab/MSUGradSpatialEcology&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/plz/DATA/git/MSUGradSpatialEcology&quot;</code></pre>
 <p>For purely reproducible research, it’s not recommended to set your working directory (“setwd()”). This is because any code you write should be able to run from any computer, reading in data from a raw data folder housed on some server or cloud location, potentially through a data repository. For reproducible research you would not want to store the data on your personal computer. However, working from your personal computer while preparing data analysis ahead of publication, or working on these Labs is okay (just make sure you back it up regularly).</p>
 <p>Get in the habit of removing any spaces in your pathnames and filenames. Use “_” instead. No special characters; just ASCII characters (American Standard Code for Information Interchange).</p>
 <p>Set paths with <strong>file.path()</strong> to tell R the location where the data exist (these directories should already exist - see the Welcome page of this website). <strong>file.path()</strong> creates reproducible code that can be run on multiple operating system because Mac and Windows have different directory separators. The code below assumes the folders “data/lab1” [“lab1” is a folder inside “data”] and “output” already exist where this script is run.</p>

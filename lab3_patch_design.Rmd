@@ -131,7 +131,6 @@ plot(or2)
 plot(or1,add=T, col="blue")
 ```
 Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let's try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish & Wildlife Units: https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp. 
-[![bigmapa2](bigmapa2.gif)](https://www.dfw.state.or.us/resources/hunting/big_game/units/images/bigmapa2.gif)
 
 Repeat the same process as above with Oregon:
 
