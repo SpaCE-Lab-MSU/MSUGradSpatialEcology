@@ -307,7 +307,7 @@ $(document).ready(function () {
 <p>At the end of Lab 3 is Homework in preparation for Lab 4 (familiarizing yourself with GitHub).</p>
 <div id="part-1-patch-metrics" class="section level2">
 <h2>Part 1: Patch Metrics</h2>
-<p>We will be using the R package, “landscapemetrics” to compute patch metrics. Before we can do that, we need to obtain the data.</p>
+<p>We will be using the R package, <code>landscapemetrics</code> to compute patch metrics. Before we can do that, we need to set up the directories and obtain data.</p>
 <p>Start working in R:</p>
 <pre class="r"><code>##### STARTING UP R
 # Clear all existing data
@@ -323,42 +323,39 @@ if(!dir.exists(output_path)){
   dir.create(output_path)
 }
 
-# Create the folders (directories) &quot;data&quot; and &quot;lab2&quot; - If they exist already, this 
-# command won&#39;t over-write them.
+# Create the folders (directories) &quot;data&quot; and &quot;lab2&quot; - If they exist already, this command won&#39;t over-write them.
 data_path&lt;-(file.path(&quot;data&quot;,&quot;lab3&quot;))
 if(!dir.exists(data_path)){
   dir.create(data_path,recursive = TRUE)
 }</code></pre>
 <p>If you previously saved your workspace and want to load it here, do so this way:</p>
 <p><code>load(file.path(output_path,"lab3.RData"))</code></p>
-<p><em>NOTES on R packages:</em></p>
-<pre class="r"><code>## (1) FedData should be installed from github and requires data.table package first. 
-#install.packages(&quot;data.table&quot;, type=&quot;binary&quot;)
-#library(data.table)
-#install.packages(&quot;remotes&quot;)
-#remotes::install_github(&quot;ropensci/FedData&quot;)
-#library(FedData)
-## NOTE: If the installation for FedData doesn&#39;t work for you, I have included the NLCD data for Oregon, linked below, so you can read it in directly from the Lab website.
-
-## (2) The packages landscapemetrics and landscapetools may require loading separately - uncomment below.
-#install.packages(&quot;landscapemetrics&quot;)
-#install.packages(&quot;landscapetools&quot;)
-#library(landscapemetrics)
-#library(landscapetools)
-## If you run into errors, try this installation instead:
-#devtools::install_github(&quot;r-spatialecology/landscapemetrics&quot;)
-#library(landscapemetrics)
-
-## (2) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit); uncomment it.
-#for (package in c(&quot;ggplot2&quot;,&quot;raster&quot;,&quot;sp&quot;,&quot;rgdal&quot;,&quot;maptools&quot;,&quot;rgeos&quot;)) {
-#  if (!require(package, character.only=T, quietly=T)) {
-#    install.packages(package)
-#    library(package, character.only=T)
-#  }
-#}
-
-# sometimes the above packages don&#39;t get required correctly
-library(ggplot2)
+<p><strong>NOTES on R packages used in this lab:</strong></p>
+<ol style="list-style-type: decimal">
+<li>With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit). <code>for (package in c("ggplot2","raster","sp","rgdal","maptools","rgeos")) {</code> <code>if (!require(package, character.only=T, quietly=T)) {</code></li>
+</ol>
+<p><code>install.packages(package)</code></p>
+<p><code>library(package, character.only=T)</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>FedData</code> should be installed from github and requires <code>data.table</code> package first. If the installation below for FedData doesn’t work for you, I have included another approach to obtain 2011 NLCD data for Oregon, described farther down.</li>
+</ol>
+<p><code>install.packages("data.table", type="binary")</code></p>
+<p><code>library(data.table)</code></p>
+<p><code>install.packages("remotes")</code></p>
+<p><code>remotes::install_github("ropensci/FedData")</code></p>
+<p><code>library(FedData)</code></p>
+<ol start="3" style="list-style-type: decimal">
+<li>The packages <code>landscapemetrics</code> and <code>landscapetools</code> may require loading separately.</li>
+</ol>
+<p><code>install.packages("landscapemetrics")</code></p>
+<p><code>install.packages("landscapetools")</code></p>
+<p>If you run into errors installing landscape metrics or applying it, try this installation instead:</p>
+<p><code>devtools::install_github("r-spatialecology/landscapemetrics")</code></p>
+<p><code>library(landscapemetrics)</code></p>
+<p>Load the packages:</p>
+<pre class="r"><code>library(ggplot2)
 library(raster)
 library(sp)
 library(rgdal)
@@ -367,18 +364,18 @@ library(maptools)
 library(landscapemetrics)
 library(landscapetools)
 library(FedData)</code></pre>
-<p>The <code>FedData</code> R package is a good way to pull in US environmental data from federal sources. See more here: <a href="https://docs.ropensci.org/FedData/" class="uri">https://docs.ropensci.org/FedData/</a>. Here we are downloading the 2016 NLCD land cover product for the western half of Oregon. We want to work with NLCD data, so it’s important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to <a href="https://www.mrlc.gov/data" class="uri">https://www.mrlc.gov/data</a>, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select “Metadata”. Metadata contain data about data. Search for “proj” to find the projection information) <a href="https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml" class="uri">https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml</a>. It’s Albers Conical Equal Area, WGS84. Refer to this summary sheet (<a href="https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf" class="uri">https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf</a>), Lab 2’s links, or resources on D2L if you need a refresher on Coordinate Reference Systems.</p>
-<p>NOTE: If the installation for FedData doesn’t work for you, I have included another way to get NLCD data for Oregon, below.</p>
+<p>The <code>FedData</code> R package is a good way to pull in US environmental data from federal sources. See more here: <a href="https://docs.ropensci.org/FedData/" class="uri">https://docs.ropensci.org/FedData/</a>. Through <code>FedData</code> we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it’s important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to <a href="https://www.mrlc.gov/data" class="uri">https://www.mrlc.gov/data</a>, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select “Metadata”. Metadata contain data about data. Search for “proj” to find the projection information) <a href="https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml" class="uri">https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml</a>. It’s Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (<a href="https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf" class="uri">https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf</a>), Lab 2’s links, or resources on D2L.</p>
+<p>Practice working with shapefiles and projecting:</p>
 <pre class="r"><code># Create a polygon the state of Oregon from the States of US shapefile
 if(! file.exists(file.path(data_path,&#39;uss.zip&#39;))){
   download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_state_20m.zip&quot;, dest=file.path(data_path,&quot;uss.zip&quot;), mode=&quot;wb&quot;) 
 }
 unzip (file.path(data_path,&quot;uss.zip&quot;), exdir = data_path)
 
-# Read in the shapefile with rgdal package - if you get an error try, library(rgdal) first
+# Read in the shapefile with rgdal package.
 uss &lt;- readOGR(file.path(data_path,&quot;cb_2014_us_state_20m.shp&quot;))
 
-#Take a look at the shapefile info. It&#39;s a geographic coordinate system  https://epsg.io/42310.
+#Take a look at the shapefile info. Its CRS is here: https://epsg.io/42310.
 summary(uss)
 # What are the first 6 lines of uss?
 head(uss)
@@ -386,10 +383,9 @@ head(uss)
 plot(uss)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code># What are the unique entries in the field, NAME?
-unique(uss$NAME)
-
-# We can project these data to match the NLCD data coordinate reference system (Albers, also known as NAD83 / Albers NorthAm). Fed Data R package returns NLCD data in a different CRS.
-# Here&#39;s the CRS info for the CRS that FedData returns for NLCD (Pseudo Mercator: https://epsg.io/3857)
+unique(uss$NAME)</code></pre>
+<p><strong>Projecting</strong> We can project these data to match the NLCD data coordinate reference system (Albers, also known as NAD83 / Albers NorthAm). FedData R package returns NLCD data in a different CRS. In general you should avoid projecting rasters because projection of rasters affects their cell values. If you’re working with a raster and a vector in some spatial analysis, project the vector data to match the raster projection.</p>
+<pre class="r"><code># Here&#39;s the CRS info that FedData returns for NLCD (Pseudo Mercator: https://epsg.io/3857)
 merc.proj &lt;- CRS(&quot;+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs&quot;)
 # Here&#39;s the CRS info for CONUS North America Albers Equal Area Conic (https://epsg.io/5070)
 us.aea.proj &lt;- CRS(&quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs&quot;)
@@ -397,13 +393,14 @@ us.aea.proj &lt;- CRS(&quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-
 # First let&#39;s make a shapefile of just Oregon from the entire US shapefile:
 or &lt;- uss[uss$NAME ==&quot;Oregon&quot;,] 
 
+# Make 2 plots, side by side
+par(mfrow=c(1,2))
 # Plot Oregon
-plot(or)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
-<pre class="r"><code># Practice projecting, and plot again
+plot(or, main=&quot;Latitude, Longitude NAD83&quot;)
+# Practice projecting, and plot again - 
 or1&lt;-spTransform(or, us.aea.proj)
-plot(or1)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+plot(or1, main=&quot;Albers Equal Area Conic&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code># Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
 # Refer to the extent (min and max x and y) of the shapefile, &quot;or1&quot;
 summary(or1)
@@ -412,8 +409,9 @@ or2 &lt;- polygon_from_extent(raster::extent(-2294351,-1584307,2301475,2899476),
 # See how the or2 outlines to the polygon, &quot;or1&quot;
 plot(or2)
 plot(or1,add=T, col=&quot;blue&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-3-4.png" width="672" /> Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let’s try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish &amp; Wildlife Units: <a href="https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp" class="uri">https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp</a>. <a href="https://www.dfw.state.or.us/resources/hunting/big_game/units/images/bigmapa2.gif"><img src="bigmapa2.gif" alt="bigmapa2" /></a></p>
-<p><em>Repeat the same process as above, but with the management unit, Hood.</em></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p>Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let’s try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish &amp; Wildlife Units: <a href="https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp" class="uri">https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp</a>.</p>
+<p><strong>Repeat the same process as above, but with the management unit, Hood.</strong></p>
 <pre class="r"><code>if(! file.exists(&#39;mgmt.zip&#39;)){
  download.file(&quot;https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip&quot;,dest=file.path(data_path,&quot;mgmt.zip&quot;), mode=&quot;wb&quot;) 
 }
@@ -423,7 +421,7 @@ mgmt&lt;-readOGR(file.path(data_path,&quot;wmu24poly.shp&quot;))
 summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
 lcc.proj&lt;-CRS(&quot;+proj=lcc +lat_0=41.75 +lon_0=-120.5 +lat_1=43 +lat_2=45.5 +x_0=400000 +y_0=0 +datum=NAD83 +units=ft +no_defs&quot;)
 
-# Project mgmt into the lcc projection from the Oregon NLCD 2011 (see below)
+# Project mgmt to the lcc projection from the Oregon NLCD 2011 (see below)
 mgmt1&lt;-spTransform(mgmt, lcc.proj)
 
 head(mgmt1)
@@ -432,8 +430,8 @@ unique(mgmt1$UNIT_NAME)
 hood &lt;- mgmt1[mgmt$UNIT_NAME ==&quot;HOOD&quot;,] 
 ## See where it&#39;s located. Plotting and rendering may take a minute because these polygons are complex.
 plot(mgmt1)
-plot(hood,add=T,col=&quot;red&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+plot(hood,add=T,col=&quot;red&quot;, main=&quot;Hood Wildlife Management Unit, Oregon&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Use the <code>get_nlcd</code> command from <code>FedData</code> to extract the NLCD data for this management unit. <code>FedData</code> does the cropping automatically using a shapefile or raster for “template”. If you run into errors you may need to check what the projection of hood_nlcd is.</p>
 <pre class="r"><code>?get_nlcd
  
@@ -446,32 +444,28 @@ hood_nlcd&lt;-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc&lt;-spTransform(hood, merc.proj)
-
 plot(hood_nlcd,legend = FALSE)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>plot(hood.merc,add=TRUE, lwd=2, border=&#39;white&#39;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
-<p>If you have trouble with the <code>FedData</code> package, here is where you will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins. Uncomment the code below.</p>
-<pre class="r"><code># if(! file.exists(&#39;or_nlcd.zip&#39;)){
-# download.file(&quot;http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip&quot;, dest=file.path(data_path,&quot;or_nlcd.zip&quot;), mode=&quot;wb&quot;)
-# }
-# unzip (file.path(data_path,&quot;or_nlcd.zip&quot;), exdir = data_path)
-# or_nlcd &lt;- raster(file.path(data_path,&quot;./OR_NLCD_2011/nlcd_or_20111&quot; ))
-# save.image(&quot;lab3.RData&quot;)
-# 
-# # Take a look at or_nlcd from 2011 - it is projected in lcc
-# or_nlcd
-# 
-# # Crop or_nlcd by hood1
-# hood_nlcd&lt;-crop(or_nlcd, extent(hood))
-# hood_nlcd &lt;- mask(x = hood_nlcd, mask = hood)
-
-# plot(hood_nlcd)
-# plot(hood,add=TRUE, lwd=2, border=&#39;white&#39;)
-
-## Uncomment to output a raster as a tif
-?writeRaster
-#writeRaster(raster, &quot;raster.tif&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>If you have trouble with the <code>FedData</code> package, the code below will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins.</p>
+<p><code>if(! file.exists('or_nlcd.zip')){</code></p>
+<p><code>download.file("http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip",</code></p>
+<p><code>dest=file.path(data_path,"or_nlcd.zip"), mode="wb")</code></p>
+<p><code>}</code></p>
+<p><code>unzip (file.path(data_path,"or_nlcd.zip"), exdir = data_path)</code></p>
+<p><code>or_nlcd &lt;- raster(file.path(data_path,"./OR_NLCD_2011/nlcd_or_20111"))</code></p>
+<p><code>save.image("lab3.RData")</code></p>
+<p>Take a look at or_nlcd from 2011 - it is projected in lcc.</p>
+<p><code>or_nlcd</code></p>
+<p>Crop or_nlcd by hood</p>
+<p><code>hood_nlcd&lt;-crop(or_nlcd, extent(hood))</code></p>
+<p><code>hood_nlcd &lt;- mask(x = hood_nlcd, mask = hood)</code></p>
+<p><code>plot(hood_nlcd)</code></p>
+<p><code>plot(hood,add=TRUE, lwd=2, border='white')</code></p>
+<p>If you want to output a raster as a tif</p>
+<p><code>?writeRaster</code></p>
+<p><code>writeRaster(raster, "raster.tif")</code></p>
 <p>Now work with the <code>landscapemetrics</code> R package to compute different patch and landscape statistics.</p>
 <pre class="r"><code>## Make a plot of the Hood NLCD data - this renders a map of the NLCD raster. It may take a few mins to render. Then check to see if the input data is suitable for computing patch metrics
  
@@ -493,17 +487,16 @@ plot(hood_for)</code></pre>
 hood_for[hood_for == 41 | hood_for == 42 | hood_for == 43] &lt;- 1
 show_landscape(hood_for)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
-<pre class="r"><code>## The code below follows part of this vignette: https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html - check it out for more context and if you would like to try other commands not covered here.
-
-## Check to see if the input data is suitable for computing patch metrics
+<p>The code below follows part of this vignette: <a href="https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html" class="uri">https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html</a> - check it out for more context and if you would like to try other commands not covered here.</p>
+<pre class="r"><code>## Check to see if the input data is suitable for computing patch metrics
 check_landscape(hood_for)
 
 ## Look at the distinct patches for this landscape
 show_patches(hood_for) </code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-6.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>## Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
 show_patches(hood_for, class = &quot;all&quot;, labels = FALSE)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-7.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <pre class="r"><code>## At the patch level, compute patch metrics
 hood_metrics &lt;- calculate_lsm(hood_for, what = &quot;patch&quot;)
 
@@ -511,11 +504,12 @@ hood_metrics &lt;- calculate_lsm(hood_for, what = &quot;patch&quot;)
 list_lsm(level=&#39;patch&#39;)
 
 ## Determine if any patch metrics are correlated
-show_correlation(hood_metrics, method = &quot;pearson&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-8.png" width="672" /></p>
+correlations&lt;-calculate_correlation(hood_metrics)
+show_correlation(correlations, method = &quot;pearson&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
-<p>How do the patch metrics from <code>landscapemetrics</code> help you understand how an organism interacts with its environment? For 3 metrics of your choice, explain in 1-2 sentences what the metric tells us about an organism’s interaction with its environment. Feel free to use examples. Refer to the <em>list_lsm()</em> results above. You may also want to refer to the FRAGSTATS documentation for more in-depth coverage (warning: this is a large document, I suggest searching for the patch metric term. Page 77 contains the start of the “metrics” discussion, but page 92 contains a condensed table): <a href="https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html" class="uri">https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html</a></p>
+<p>How do the patch metrics from <code>landscapemetrics</code> help you understand how an organism interacts with its environment? For 3 metrics of your choice, explain in 1-2 sentences what the metric tells us about an organism’s interaction with its environment. Feel free to use examples. Refer to the <code>list_lsm()</code> results above. You may also want to refer to the FRAGSTATS documentation for more in-depth coverage (warning: this is a large document, I suggest searching for the patch metric term. Page 77 contains the start of the “metrics” discussion, but page 92 contains a condensed table): <a href="https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html" class="uri">https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html</a></p>
 </div>
 <div id="question-2" class="section level3">
 <h3>QUESTION 2:</h3>
@@ -527,11 +521,12 @@ show_correlation(hood_metrics, method = &quot;pearson&quot;)</code></pre>
 <p>You decide to study the interactions between Spotted Owls and Barred Owls in Oregon forests (do a little internet searching to understand why studying these 2 species together is important, and what their habitat requirements are).</p>
 <div id="question-3." class="section level3">
 <h3>QUESTION 3.</h3>
-<p>Use GBIF data to generate a map showing “recent” point locations of each of these species (as different symbols and/or different colors), overlain on top of the 2 forest rasters you created above. Justify the timeframe you chose for the occurrences. Make 2 maps, one for each management unit with the points overlaid on top of the forest raster. Add a desriptive title to each plot. Optional: Include a legend, scalebar (with units), and north arrow for your maps. You may want to reference Lab 2 for additional code.</p>
+<p>Use GBIF data to add to one of the management unit maps you created above. On this map, overlay “recent” point locations of each of these species (as different symbols and/or different colors). Justify the timeframe you chose for the occurrences. Add a descriptive title to the plot. Add a legend, scalebar (with units), and north arrow for your map. You may want to reference Lab 2 and below for additional code.</p>
+<p>In the <code>raster</code> package see the options for each command: <code>?plot</code> to plot the raster <code>?points()</code> to add points for the species <code>?legend()</code> to add a legend <code>?scalebar()</code> to add a scalebar</p>
 </div>
 <div id="question-4." class="section level3">
 <h3>QUESTION 4.</h3>
-<p>If you had unlimited resources, describe how you would sample the 2 management units to obtain new occurrence data next year for both species. Are there specific forest attributes that would be helpful to know in addition to just “forest vs. non-forest”? Use terminology we covered in Lecture and Discussion about sampling.</p>
+<p>If you had unlimited resources, describe how you would sample the 2 management units to obtain new occurrence data next year for both species. Are there specific forest attributes that would be helpful to know in addition to just “forest vs. non-forest”? Use terminology from the Lecture and Discussion about sampling.</p>
 <p><em>Some other potentially helpful code below:</em></p>
 <p><code>gbif</code>: Extract out just points from Oregon (or some extent): <a href="http://www.inside-r.org/packages/cran/dismo/docs/rgbif" class="uri">http://www.inside-r.org/packages/cran/dismo/docs/rgbif</a>. There are 2 ways of extracting out the points:</p>
 <p>The commands, <code>drawExtent</code> and <code>extent</code> are both ways to specify the extent of data in <code>gbif()</code></p>
