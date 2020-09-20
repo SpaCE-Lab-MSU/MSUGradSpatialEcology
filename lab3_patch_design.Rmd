@@ -184,6 +184,9 @@ hood_nlcd<-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc<-spTransform(hood, merc.proj)
+# See if you can add a legend - what are the classifications? https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
+unique(hood_nlcd)
+
 plot(hood_nlcd,legend = FALSE)
 plot(hood.merc,add=TRUE, lwd=2, border='white')
 ```
@@ -265,9 +268,22 @@ hood_metrics <- calculate_lsm(hood_for, what = "patch")
 ## Look at the different types of metrics at the patch level. Note that you can compute these metrics at the patch, landscape, or class levels.
 list_lsm(level='patch')
 
-## Determine if any patch metrics are correlated
-correlations<-calculate_correlation(hood_metrics)
-show_correlation(correlations, method = "pearson")
+#look at just Forested patches; subset out class==1 for forest
+hood_metrics_for <- subset(hood_metrics, class == 1)
+
+# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively.
+hood_for_metrics_hist<-hood_metrics_for %>%
+     select(value, metric) %>%
+     na.omit() %>%
+     ggplot(aes(value, fill = metric, color = metric)) +
+     geom_density(alpha = 0.2)+
+     scale_x_log10()+
+     facet_wrap(~metric, scales="free_y")
+hood_for_metrics_hist
+
+## Determine if any patch metrics for forest are correlated
+hood_for_corr<-calculate_correlation(hood_metrics_for)
+show_correlation(hood_for_corr, method = "pearson")
 ```
 
 ### QUESTION 1: 

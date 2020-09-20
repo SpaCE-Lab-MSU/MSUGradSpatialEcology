@@ -443,6 +443,9 @@ hood_nlcd&lt;-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc&lt;-spTransform(hood, merc.proj)
+# See if you can add a legend - what are the classifications? https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
+unique(hood_nlcd)
+
 plot(hood_nlcd,legend = FALSE)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>plot(hood.merc,add=TRUE, lwd=2, border=&#39;white&#39;)</code></pre>
@@ -502,10 +505,23 @@ hood_metrics &lt;- calculate_lsm(hood_for, what = &quot;patch&quot;)
 ## Look at the different types of metrics at the patch level. Note that you can compute these metrics at the patch, landscape, or class levels.
 list_lsm(level=&#39;patch&#39;)
 
-## Determine if any patch metrics are correlated
-correlations&lt;-calculate_correlation(hood_metrics)
-show_correlation(correlations, method = &quot;pearson&quot;)</code></pre>
+#look at just Forested patches; subset out class==1 for forest
+hood_metrics_for &lt;- subset(hood_metrics, class == 1)
+
+# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively.
+hood_for_metrics_hist&lt;-hood_metrics_for %&gt;%
+     select(value, metric) %&gt;%
+     na.omit() %&gt;%
+     ggplot(aes(value, fill = metric, color = metric)) +
+     geom_density(alpha = 0.2)+
+     scale_x_log10()+
+     facet_wrap(~metric, scales=&quot;free_y&quot;)
+hood_for_metrics_hist</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
+<pre class="r"><code>## Determine if any patch metrics for forest are correlated
+hood_for_corr&lt;-calculate_correlation(hood_metrics_for)
+show_correlation(hood_for_corr, method = &quot;pearson&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
 <p>How do the patch metrics from <code>landscapemetrics</code> help you understand how an organism interacts with its environment? For 3 metrics of your choice, explain in 1-2 sentences what the metric tells us about an organism’s interaction with its environment. Feel free to use examples. Refer to the <code>list_lsm()</code> results above. You may also want to refer to the FRAGSTATS documentation for more in-depth coverage (warning: this is a large document, I suggest searching for the patch metric term. Page 77 contains the start of the “metrics” discussion, but page 92 contains a condensed table): <a href="https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html" class="uri">https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html</a></p>
