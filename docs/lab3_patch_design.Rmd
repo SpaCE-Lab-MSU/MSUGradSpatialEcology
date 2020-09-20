@@ -129,8 +129,6 @@ us.aea.proj <- CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=
 # First let's make a shapefile of just Oregon from the entire US shapefile:
 or <- uss[uss$NAME =="Oregon",] 
 
-# Make 2 plots, side by side
-par(mfrow=c(1,2))
 # Plot Oregon
 plot(or, main="Latitude, Longitude NAD83")
 # Practice projecting, and plot again - 
@@ -169,8 +167,8 @@ unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
 hood <- mgmt1[mgmt$UNIT_NAME =="HOOD",] 
 ## See where it's located. Plotting and rendering may take a minute because these polygons are complex.
-plot(mgmt1)
-plot(hood,add=T,col="red", main="Hood Wildlife Management Unit, Oregon")
+plot(mgmt1,main="Hood Wildlife Management Unit, Oregon")
+plot(hood,add=T,col="red")
 ```
 
 Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is.

@@ -393,14 +393,13 @@ us.aea.proj &lt;- CRS(&quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-
 # First let&#39;s make a shapefile of just Oregon from the entire US shapefile:
 or &lt;- uss[uss$NAME ==&quot;Oregon&quot;,] 
 
-# Make 2 plots, side by side
-par(mfrow=c(1,2))
 # Plot Oregon
-plot(or, main=&quot;Latitude, Longitude NAD83&quot;)
-# Practice projecting, and plot again - 
+plot(or, main=&quot;Latitude, Longitude NAD83&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code># Practice projecting, and plot again - 
 or1&lt;-spTransform(or, us.aea.proj)
 plot(or1, main=&quot;Albers Equal Area Conic&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <pre class="r"><code># Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
 # Refer to the extent (min and max x and y) of the shapefile, &quot;or1&quot;
 summary(or1)
@@ -409,7 +408,7 @@ or2 &lt;- polygon_from_extent(raster::extent(-2294351,-1584307,2301475,2899476),
 # See how the or2 outlines to the polygon, &quot;or1&quot;
 plot(or2)
 plot(or1,add=T, col=&quot;blue&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <p>Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let’s try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish &amp; Wildlife Units: <a href="https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp" class="uri">https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp</a>.</p>
 <p><strong>Repeat the same process as above, but with the management unit, Hood.</strong></p>
 <pre class="r"><code>if(! file.exists(&#39;mgmt.zip&#39;)){
@@ -429,8 +428,8 @@ unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
 hood &lt;- mgmt1[mgmt$UNIT_NAME ==&quot;HOOD&quot;,] 
 ## See where it&#39;s located. Plotting and rendering may take a minute because these polygons are complex.
-plot(mgmt1)
-plot(hood,add=T,col=&quot;red&quot;, main=&quot;Hood Wildlife Management Unit, Oregon&quot;)</code></pre>
+plot(mgmt1,main=&quot;Hood Wildlife Management Unit, Oregon&quot;)
+plot(hood,add=T,col=&quot;red&quot;)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Use the <code>get_nlcd</code> command from <code>FedData</code> to extract the NLCD data for this management unit. <code>FedData</code> does the cropping automatically using a shapefile or raster for “template”. If you run into errors you may need to check what the projection of hood_nlcd is.</p>
 <pre class="r"><code>?get_nlcd
