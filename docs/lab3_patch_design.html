@@ -332,7 +332,7 @@ if(!dir.exists(data_path)){
 <p><code>load(file.path(output_path,"lab3.RData"))</code></p>
 <p><strong>NOTES on R packages used in this lab:</strong></p>
 <ol style="list-style-type: decimal">
-<li>With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit). <code>for (package in c("ggplot2","raster","sp","rgdal","maptools","rgeos")) {</code> <code>if (!require(package, character.only=T, quietly=T)) {</code></li>
+<li>With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit). <code>for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","maps","GISTools")) {</code> <code>if (!require(package, character.only=T, quietly=T)) {</code></li>
 </ol>
 <p><code>install.packages(package)</code></p>
 <p><code>library(package, character.only=T)</code></p>
@@ -355,7 +355,8 @@ if(!dir.exists(data_path)){
 <p><code>devtools::install_github("r-spatialecology/landscapemetrics")</code></p>
 <p><code>library(landscapemetrics)</code></p>
 <p>Load the packages:</p>
-<pre class="r"><code>library(ggplot2)
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
 library(raster)
 library(sp)
 library(rgdal)
@@ -363,7 +364,9 @@ library(rgeos)
 library(maptools)
 library(landscapemetrics)
 library(landscapetools)
-library(FedData)</code></pre>
+library(FedData)
+library(maps)
+library(GISTools)</code></pre>
 <p>The <code>FedData</code> R package is a good way to pull in US environmental data from federal sources. See more here: <a href="https://docs.ropensci.org/FedData/" class="uri">https://docs.ropensci.org/FedData/</a>. Through <code>FedData</code> we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it’s important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to <a href="https://www.mrlc.gov/data" class="uri">https://www.mrlc.gov/data</a>, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select “Metadata”. Metadata contain data about data. Search for “proj” to find the projection information) <a href="https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml" class="uri">https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml</a>. It’s Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (<a href="https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf" class="uri">https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf</a>), Lab 2’s links, or resources on D2L.</p>
 <p>Practice working with shapefiles and projecting:</p>
 <pre class="r"><code># Create a polygon the state of Oregon from the States of US shapefile
@@ -443,13 +446,80 @@ hood_nlcd&lt;-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc&lt;-spTransform(hood, merc.proj)
-# See if you can add a legend - what are the classifications? https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
-unique(hood_nlcd)
 
-plot(hood_nlcd,legend = FALSE)</code></pre>
+# Plot it with raster package which uses base R plotting:
+plot(hood_nlcd)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>plot(hood.merc,add=TRUE, lwd=2, border=&#39;white&#39;)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<pre class="r"><code># The plot above doesn&#39;t have a legend, a north arrow, or a scalebar. Add those.
+# For more on adding legends with raster (and classifying), see: https://www.earthdatascience.org/courses/earth-analytics/lidar-raster-data-r/classify-raster/
+# To add a legend you need to refer to the NLCD classes https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
+
+# You can look at the color codes for the legend of the raster (tif) in R like this:
+hood_nlcd@legend
+
+# This is from the current pal_nlcd command on the FedData github site: https://github.com/cran/FedData/blob/master/R/NLCD_FUNCTIONS.R). I&#39;ve updated the color codes below to match the hood_nlcd codings (both the &quot;code&quot; and the associated &quot;class&quot; and &quot;description&quot;)
+pal_nlcd &lt;- function() {
+  data.frame(
+    class = c(&quot;water&quot;, &quot;water&quot;,
+              &quot;developed&quot;, &quot;developed&quot;, &quot;developed&quot;, &quot;developed&quot;,
+              &quot;barren&quot;,
+              &quot;forest&quot;, &quot;forest&quot;, &quot;forest&quot;,
+              &quot;shrubland&quot;, &quot;shrubland&quot;,
+              &quot;herbaceous&quot;, &quot;herbaceous&quot;, &quot;herbaceous&quot;, &quot;herbaceous&quot;,
+              &quot;planted&quot;, &quot;planted&quot;,
+              &quot;wetlands&quot;, &quot;wetlands&quot;),
+    code = as.character(c(11, 12,
+             21, 22, 23, 24,
+             31,
+             41, 42, 43,
+             51, 52,
+             71, 72, 73, 74,
+             81, 82,
+             90, 95)),
+    description = c(&quot;Open Water&quot;, &quot;Perennial Ice/Snow&quot;,
+                    &quot;Developed, Open Space&quot;, &quot;Developed, Low Intensity&quot;, &quot;Developed, Medium Intensity&quot;, &quot;Developed, High Intensity&quot;,
+                    &quot;Barren Land (Rock/Sand/Clay)&quot;,
+                    &quot;Deciduous Forest&quot;, &quot;Evergreen Forest&quot;, &quot;Mixed Forest&quot;,
+                    &quot;Dwarf Scrub&quot;, &quot;Scrub/Shrub&quot;,
+                    &quot;Grassland/Herbaceous&quot;, &quot;Sedge/Herbaceuous&quot;, &quot;Lichens&quot;, &quot;Moss&quot;,
+                    &quot;Pasture/Hay&quot;, &quot;Cultivated Crops&quot;,
+                    &quot;Woody Wetlands&quot;, &quot;Emergent Herbaceous Wetlands&quot;),
+    color = c(&quot;#466B9F&quot;, &quot;#D1DEF8&quot;,
+              &quot;#DEC5C5&quot;, &quot;#D99282&quot;, &quot;#EB0000&quot;, &quot;#AB0000&quot;,
+              &quot;#B3AC9F&quot;,
+              &quot;#68AB5F&quot;, &quot;#1C5F2C&quot;, &quot;#B5C58F&quot;,
+              &quot;#A58C30&quot;, &quot;#CCB879&quot;,
+              &quot;#E2E2C1&quot;, &quot;#C9C977&quot;, &quot;#99C147&quot;, &quot;#77AD93&quot;,
+              &quot;#DCD939&quot;, &quot;#AB6C28&quot;,
+              &quot;#B8D9EB&quot;, &quot;#6C9FB8&quot;),
+    stringsAsFactors = FALSE)
+}</code></pre>
+<p>Pull out the relevant land cover code and description for the legend. The first 2 lines of code below uses dplyr to filter those that match <code>hood_nlcd</code> land cover classes.</p>
+<p>Plot the <code>hood_nlcd</code> with raster package which uses base R plotting: xpd=FALSE is the default to clip plot to plotting region. Leave a little room at the bottom for the legend with “mai”; c(bottom, left, top, right)); units in inches.</p>
+<p>x and y in the <code>legend</code> command are relative to the plotted figure units (which are meters); adjust these for a new raster or your RStudio plotting window size.</p>
+<p>Note that the legend is correct for the colors but the mapping to pixels in the plot itself is not. See if you can figure out how to fix this (Optional for this lab).</p>
+<pre class="r"><code>NLCD &lt;- as.matrix(table(raster::values(hood_nlcd)))
+cols &lt;- dplyr::filter(pal_nlcd(), code %in% row.names(NLCD))
+
+# Plot
+par(xpd = FALSE,mai = c(2.5, 0.5, 1, 1)) 
+plot(hood_nlcd, legend=FALSE,axes=TRUE,box=FALSE,col=cols$color,
+     xlab=&quot;Easting (m)&quot;, ylab=&quot;Northing (m)&quot;,
+     main=&quot;Hood Management Area Land Cover&quot;) 
+par(xpd = TRUE) # reset to limit plotting to figure region
+legend(x = -13580000, y = 5650000, legend = cols$description, fill = cols$color, 
+       ncol = 2,  cex = 0.7, inset = 0.9) 
+
+# Add a scalebar with the raster package
+?scalebar # units are in your raster units (m) but you can display in km
+scalebar(10000, type=&quot;bar&quot;, divs = 2, label = c(0,50,100),below=&quot;km&quot;)
+# Add a north arrow with GISTools package
+north.arrow(x=-13565000, y=5730000, len = 1000, cex.lab = 0.75, col = &quot;black&quot;, fg = &quot;red&quot;)</code></pre>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
+<pre class="r"><code># You may need to clear the graphic to reset the graphics settings if you are going to make more plots after this.
+#graphics.off()</code></pre>
 <p>If you have trouble with the <code>FedData</code> package, the code below will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins.</p>
 <p><code>if(! file.exists('or_nlcd.zip')){</code></p>
 <p><code>download.file("http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip",</code></p>
@@ -472,7 +542,7 @@ plot(hood_nlcd,legend = FALSE)</code></pre>
 <pre class="r"><code>## Make a plot of the Hood NLCD data - this renders a map of the NLCD raster. It may take a few mins to render. Then check to see if the input data is suitable for computing patch metrics
  
 show_landscape(hood_nlcd)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code>check_landscape(hood_nlcd)</code></pre>
 <p>You could proceed to calculate metrics for all different land cover classes (this would take a while). Instead, suppose you are interested in the metrics of “forested” patches in this landscape. First, reclassify into “forest” and “nonforest”. You need to determine what the cover types are:</p>
 <pre class="r"><code>unique(hood_nlcd)
@@ -480,25 +550,25 @@ show_landscape(hood_nlcd)</code></pre>
 hood_for &lt;- hood_nlcd
 hood_for[hood_for &lt; 41] &lt;- 0 # make everything below 41 zero
 plot(hood_for)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-1.png" width="672" /><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <pre class="r"><code>hood_for[hood_for &gt; 43] &lt;- 0 # make everything above 43 zero
 plot(hood_for)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-3.png" width="672" /><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-3.png" width="672" /><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
 <pre class="r"><code>unique(hood_for)
 ## Assign 1 value (1) to forest.
 hood_for[hood_for == 41 | hood_for == 42 | hood_for == 43] &lt;- 1
 show_landscape(hood_for)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-5.png" width="672" /></p>
 <p>The code below follows part of this vignette: <a href="https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html" class="uri">https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html</a> - check it out for more context and if you would like to try other commands not covered here.</p>
 <pre class="r"><code>## Check to see if the input data is suitable for computing patch metrics
 check_landscape(hood_for)
 
 ## Look at the distinct patches for this landscape
 show_patches(hood_for) </code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre class="r"><code>## Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
 show_patches(hood_for, class = &quot;all&quot;, labels = FALSE)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <pre class="r"><code>## At the patch level, compute patch metrics
 hood_metrics &lt;- calculate_lsm(hood_for, what = &quot;patch&quot;)
 
@@ -508,20 +578,20 @@ list_lsm(level=&#39;patch&#39;)
 #look at just Forested patches; subset out class==1 for forest
 hood_metrics_for &lt;- subset(hood_metrics, class == 1)
 
-# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively.
+# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively. Note that we tell the code below to use dplyr for the &quot;select&quot; function because this command is also used by the MASS package, which is loaded with R.
 hood_for_metrics_hist&lt;-hood_metrics_for %&gt;%
-     select(value, metric) %&gt;%
+     dplyr::select(value, metric) %&gt;%
      na.omit() %&gt;%
      ggplot(aes(value, fill = metric, color = metric)) +
      geom_density(alpha = 0.2)+
      scale_x_log10()+
      facet_wrap(~metric, scales=&quot;free_y&quot;)
 hood_for_metrics_hist</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
 <pre class="r"><code>## Determine if any patch metrics for forest are correlated
 hood_for_corr&lt;-calculate_correlation(hood_metrics_for)
 show_correlation(hood_for_corr, method = &quot;pearson&quot;)</code></pre>
-<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
+<p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-10-4.png" width="672" /></p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
 <p>How do the patch metrics from <code>landscapemetrics</code> help you understand how an organism interacts with its environment? For 3 metrics of your choice, explain in 1-2 sentences what the metric tells us about an organism’s interaction with its environment. Feel free to use examples. Refer to the <code>list_lsm()</code> results above. You may also want to refer to the FRAGSTATS documentation for more in-depth coverage (warning: this is a large document, I suggest searching for the patch metric term. Page 77 contains the start of the “metrics” discussion, but page 92 contains a condensed table): <a href="https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html" class="uri">https://www.umass.edu/landeco/research/fragstats/documents/fragstats_documents.html</a></p>

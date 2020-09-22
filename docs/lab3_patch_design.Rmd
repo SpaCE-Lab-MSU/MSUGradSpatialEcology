@@ -46,7 +46,7 @@ If you previously saved your workspace and want to load it here, do so this way:
 **NOTES on R packages used in this lab:**
 
 (1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("ggplot2","raster","sp","rgdal","maptools","rgeos")) {`
+`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","maps","GISTools")) {`
 `  if (!require(package, character.only=T, quietly=T)) {`
 
 `    install.packages(package)`
@@ -83,6 +83,7 @@ If you run into errors installing landscape metrics or applying it, try this ins
 
 Load the packages:
 ```{r, message=FALSE, results='hide',warning=FALSE}
+library(dplyr)
 library(ggplot2)
 library(raster)
 library(sp)
@@ -92,6 +93,8 @@ library(maptools)
 library(landscapemetrics)
 library(landscapetools)
 library(FedData)
+library(maps)
+library(GISTools)
 ```
 
 The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Through `FedData` we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select "Metadata". Metadata contain data about data. Search for "proj" to find the projection information) https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml. It's Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf), Lab 2's links, or resources on D2L.
@@ -184,11 +187,84 @@ hood_nlcd<-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc<-spTransform(hood, merc.proj)
-# See if you can add a legend - what are the classifications? https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
-unique(hood_nlcd)
 
-plot(hood_nlcd,legend = FALSE)
+# Plot it with raster package which uses base R plotting:
+plot(hood_nlcd)
 plot(hood.merc,add=TRUE, lwd=2, border='white')
+# The plot above doesn't have a legend, a north arrow, or a scalebar. Add those.
+# For more on adding legends with raster (and classifying), see: https://www.earthdatascience.org/courses/earth-analytics/lidar-raster-data-r/classify-raster/
+# To add a legend you need to refer to the NLCD classes https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
+
+# You can look at the color codes for the legend of the raster (tif) in R like this:
+hood_nlcd@legend
+
+# This is from the current pal_nlcd command on the FedData github site: https://github.com/cran/FedData/blob/master/R/NLCD_FUNCTIONS.R). I've updated the color codes below to match the hood_nlcd codings (both the "code" and the associated "class" and "description")
+pal_nlcd <- function() {
+  data.frame(
+    class = c("water", "water",
+              "developed", "developed", "developed", "developed",
+              "barren",
+              "forest", "forest", "forest",
+              "shrubland", "shrubland",
+              "herbaceous", "herbaceous", "herbaceous", "herbaceous",
+              "planted", "planted",
+              "wetlands", "wetlands"),
+    code = as.character(c(11, 12,
+             21, 22, 23, 24,
+             31,
+             41, 42, 43,
+             51, 52,
+             71, 72, 73, 74,
+             81, 82,
+             90, 95)),
+    description = c("Open Water", "Perennial Ice/Snow",
+                    "Developed, Open Space", "Developed, Low Intensity", "Developed, Medium Intensity", "Developed, High Intensity",
+                    "Barren Land (Rock/Sand/Clay)",
+                    "Deciduous Forest", "Evergreen Forest", "Mixed Forest",
+                    "Dwarf Scrub", "Scrub/Shrub",
+                    "Grassland/Herbaceous", "Sedge/Herbaceuous", "Lichens", "Moss",
+                    "Pasture/Hay", "Cultivated Crops",
+                    "Woody Wetlands", "Emergent Herbaceous Wetlands"),
+    color = c("#466B9F", "#D1DEF8",
+              "#DEC5C5", "#D99282", "#EB0000", "#AB0000",
+              "#B3AC9F",
+              "#68AB5F", "#1C5F2C", "#B5C58F",
+              "#A58C30", "#CCB879",
+              "#E2E2C1", "#C9C977", "#99C147", "#77AD93",
+              "#DCD939", "#AB6C28",
+              "#B8D9EB", "#6C9FB8"),
+    stringsAsFactors = FALSE)
+}
+
+```
+Pull out the relevant land cover code and description for the legend. The first 2 lines of code below uses dplyr to filter those that match `hood_nlcd` land cover classes. 
+
+Plot the `hood_nlcd` with raster package which uses base R plotting: xpd=FALSE is the default to clip plot to plotting region. Leave a little room at the bottom for the legend with "mai";  c(bottom, left, top, right)); units in inches.
+
+x and y in the `legend` command are relative to the plotted figure units (which are meters); adjust these for a new raster or your RStudio plotting window size.
+
+Note that the legend is correct for the colors but the mapping to pixels in the plot itself is not. See if you can figure out how to fix this (Optional for this lab).
+```{r, message=FALSE, results='hide',warning=FALSE, fig.width=6, fig.height=8}
+NLCD <- as.matrix(table(raster::values(hood_nlcd)))
+cols <- dplyr::filter(pal_nlcd(), code %in% row.names(NLCD))
+
+# Plot
+par(xpd = FALSE,mai = c(2.5, 0.5, 1, 1)) 
+plot(hood_nlcd, legend=FALSE,axes=TRUE,box=FALSE,col=cols$color,
+     xlab="Easting (m)", ylab="Northing (m)",
+     main="Hood Management Area Land Cover") 
+par(xpd = TRUE) # reset to limit plotting to figure region
+legend(x = -13580000, y = 5650000, legend = cols$description, fill = cols$color, 
+       ncol = 2,  cex = 0.7, inset = 0.9) 
+
+# Add a scalebar with the raster package
+?scalebar # units are in your raster units (m) but you can display in km
+scalebar(10000, type="bar", divs = 2, label = c(0,50,100),below="km")
+# Add a north arrow with GISTools package
+north.arrow(x=-13565000, y=5730000, len = 1000, cex.lab = 0.75, col = "black", fg = "red")
+
+# You may need to clear the graphic to reset the graphics settings if you are going to make more plots after this.
+#graphics.off()
 ```
 
 If you have trouble with the `FedData` package, the code below will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins. 
@@ -271,9 +347,9 @@ list_lsm(level='patch')
 #look at just Forested patches; subset out class==1 for forest
 hood_metrics_for <- subset(hood_metrics, class == 1)
 
-# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively.
+# Since hood_metrics_for is a tibble, we use this format for plotting (using ggplot2). Note that the y axis scale varies by plot when faceting by metric below. We use a log10 scale for the x axis to visualize the spread more effectively. Note that we tell the code below to use dplyr for the "select" function because this command is also used by the MASS package, which is loaded with R.
 hood_for_metrics_hist<-hood_metrics_for %>%
-     select(value, metric) %>%
+     dplyr::select(value, metric) %>%
      na.omit() %>%
      ggplot(aes(value, fill = metric, color = metric)) +
      geom_density(alpha = 0.2)+
