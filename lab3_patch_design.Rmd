@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 3"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 9, 2019, Sep 17, 2020"
+date: "Sep 2016; rev. Sep 9, 2019, Sep 17-21, 2020"
 urlcolor: blue
 ---
 
@@ -244,7 +244,7 @@ Plot the `hood_nlcd` with raster package which uses base R plotting: xpd=FALSE i
 x and y in the `legend` command are relative to the plotted figure units (which are meters); adjust these for a new raster or your RStudio plotting window size.
 
 Note that the legend is correct for the colors but the mapping to pixels in the plot itself is not. See if you can figure out how to fix this (Optional for this lab).
-```{r, message=FALSE, results='hide',warning=FALSE, fig.width=6, fig.height=8}
+```{r, message=FALSE, warning=FALSE, fig.width=6, fig.height=8}
 NLCD <- as.matrix(table(raster::values(hood_nlcd)))
 cols <- dplyr::filter(pal_nlcd(), code %in% row.names(NLCD))
 
