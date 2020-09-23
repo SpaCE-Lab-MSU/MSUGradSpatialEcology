@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 3"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 9, 2019, Sep 17, 2020"
+date: "Sep 2016; rev. Sep 9, 2019, Sep 17-21, 2020"
 urlcolor: blue
 ---
 
@@ -20,8 +20,8 @@ We will be using the R package, `landscapemetrics` to compute patch metrics. Bef
 Start working in R:
 ```{r, message=FALSE, results='hide',warning=FALSE}
 ##### STARTING UP R
-# Clear all existing data
-rm(list=ls())
+# Clear all existing data (or don't and just make sure you start with a newly opened RStudio session; see why this may not be so great for reproducibility: https://rstats.wtf/save-source.html#rm-list-ls)
+rm(list=ls()) 
 
 # Close graphics devices
 graphics.off()
@@ -46,7 +46,7 @@ If you previously saved your workspace and want to load it here, do so this way:
 **NOTES on R packages used in this lab:**
 
 (1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","maps","GISTools")) {`
+`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","GISTools")) {`
 `  if (!require(package, character.only=T, quietly=T)) {`
 
 `    install.packages(package)`
@@ -93,7 +93,6 @@ library(maptools)
 library(landscapemetrics)
 library(landscapetools)
 library(FedData)
-library(maps)
 library(GISTools)
 ```
 
@@ -132,11 +131,14 @@ us.aea.proj <- CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=
 # First let's make a shapefile of just Oregon from the entire US shapefile:
 or <- uss[uss$NAME =="Oregon",] 
 
+# Set up a 1 by 2 layout for plots (but don't forget to switch back to a single plot layout below
+par(mfrow=c(1,2))
 # Plot Oregon
 plot(or, main="Latitude, Longitude NAD83")
 # Practice projecting, and plot again - 
 or1<-spTransform(or, us.aea.proj)
 plot(or1, main="Albers Equal Area Conic")
+par(mfrow=c(1,1)) # single plot layout
 
 # Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
 # Refer to the extent (min and max x and y) of the shapefile, "or1"
@@ -174,7 +176,7 @@ plot(mgmt1,main="Hood Wildlife Management Unit, Oregon")
 plot(hood,add=T,col="red")
 ```
 
-Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is.
+Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is, and see the NOTE below.
 ```{r, message=FALSE, results='hide',warning=FALSE}
 ?get_nlcd
  
@@ -187,8 +189,46 @@ hood_nlcd<-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc<-spTransform(hood, merc.proj)
+```
+**NOTE** If you have trouble with the `FedData` package, the code below will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins. If you didn't have trouble with the `FedData` package extracting the NLCD data, skip to the section below starting with "Plot hood_nlcd with raster package which uses base R plotting:"
 
-# Plot it with raster package which uses base R plotting:
+`if(! file.exists('or_nlcd.zip')){`
+
+` download.file("http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip",`         
+
+`dest=file.path(data_path,"or_nlcd.zip"), mode="wb")`
+
+` }`
+
+` unzip (file.path(data_path,"or_nlcd.zip"), exdir = data_path)`
+
+` or_nlcd <- raster(file.path(data_path,"./OR_NLCD_2011/nlcd_or_20111"))`
+
+` save.image("lab3.RData")`
+ 
+Take a look at or_nlcd from 2011 - it is projected in lcc.
+
+`or_nlcd`
+ 
+Crop or_nlcd by hood
+
+`hood_nlcd<-crop(or_nlcd, extent(hood))`
+
+`hood_nlcd <- mask(x = hood_nlcd, mask = hood)`
+
+`plot(hood_nlcd)`
+
+`plot(hood,add=TRUE, lwd=2, border='white')`
+
+If you want to output a raster as a tif
+
+`?writeRaster`
+
+`writeRaster(raster, "raster.tif")`
+
+
+Plot hood_nlcd with `raster` package which uses base R plotting:
+```{r, message=FALSE, results='hide',warning=FALSE}
 plot(hood_nlcd)
 plot(hood.merc,add=TRUE, lwd=2, border='white')
 # The plot above doesn't have a legend, a north arrow, or a scalebar. Add those.
@@ -237,14 +277,14 @@ pal_nlcd <- function() {
 }
 
 ```
-Pull out the relevant land cover code and description for the legend. The first 2 lines of code below uses dplyr to filter those that match `hood_nlcd` land cover classes. 
+Pull out the relevant land cover code and description for the legend. The first 2 lines of code below uses `dplyr` to filter those that match `hood_nlcd` land cover classes. 
 
-Plot the `hood_nlcd` with raster package which uses base R plotting: xpd=FALSE is the default to clip plot to plotting region. Leave a little room at the bottom for the legend with "mai";  c(bottom, left, top, right)); units in inches.
+Plot the `hood_nlcd` with raster package which uses base R plotting: `xpd=FALSE` is the default to clip plot to plotting region. Leave a little room at the bottom for the legend with `mai`;  c(bottom, left, top, right)); units in inches.
 
 x and y in the `legend` command are relative to the plotted figure units (which are meters); adjust these for a new raster or your RStudio plotting window size.
 
-Note that the legend is correct for the colors but the mapping to pixels in the plot itself is not. See if you can figure out how to fix this (Optional for this lab).
-```{r, message=FALSE, results='hide',warning=FALSE, fig.width=6, fig.height=8}
+Note that the legend is correct for the colors but the mapping to pixels in the plot itself is not. See if you can figure out how to fix this (This is optional for this lab).
+```{r, message=FALSE, warning=FALSE, fig.width=6, fig.height=8}
 NLCD <- as.matrix(table(raster::values(hood_nlcd)))
 cols <- dplyr::filter(pal_nlcd(), code %in% row.names(NLCD))
 
@@ -267,41 +307,6 @@ north.arrow(x=-13565000, y=5730000, len = 1000, cex.lab = 0.75, col = "black", f
 #graphics.off()
 ```
 
-If you have trouble with the `FedData` package, the code below will import the 2011 Oregon NLCD directly (54 MB); it may take a few mins. 
-
-`if(! file.exists('or_nlcd.zip')){`
-
-` download.file("http://oe.oregonexplorer.info/ExternalContent/SpatialDataforDownload/OR_NLCD_2011.zip",`         
-
-`dest=file.path(data_path,"or_nlcd.zip"), mode="wb")`
-
-` }`
-
-` unzip (file.path(data_path,"or_nlcd.zip"), exdir = data_path)`
-
-` or_nlcd <- raster(file.path(data_path,"./OR_NLCD_2011/nlcd_or_20111"))`
-
-` save.image("lab3.RData")`
- 
-Take a look at or_nlcd from 2011 - it is projected in lcc.
-
-`or_nlcd`
- 
-Crop or_nlcd by hood
-
-`hood_nlcd<-crop(or_nlcd, extent(hood))`
-
-`hood_nlcd <- mask(x = hood_nlcd, mask = hood)`
-
-`plot(hood_nlcd)`
-
-`plot(hood,add=TRUE, lwd=2, border='white')`
-
-If you want to output a raster as a tif
-
-`?writeRaster`
-
-`writeRaster(raster, "raster.tif")`
 
 
 Now work with the `landscapemetrics` R package to compute different patch and landscape statistics.
