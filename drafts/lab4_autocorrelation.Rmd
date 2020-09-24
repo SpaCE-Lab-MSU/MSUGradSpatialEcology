@@ -1,21 +1,23 @@
 ---
-title: "MSU Graduate Spatial Ecology Lab 3"
+title: "MSU Graduate Spatial Ecology Lab 4"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 9, 2019, Sep 17-21, 2020"
+date: "Sep 2015; rev. Sep 24, 2019, Sep 23, 2020"
 urlcolor: blue
 ---
 
-# Lab 3: Patch Metrics & Spatial Design
+# Lab 4: Spatial Autocorrelation
 
-*[RMarkdown version of this Lab](lab3_patch_design.Rmd)*
+*[RMarkdown version of this Lab](lab4_autocorrelation.Rmd)*
 
-This lab has 2 Parts. Part 1 involves computing patch metrics. Part 2 involves applying patch metrics to design a sampling scheme. You will need to hand in a single PDF produced from your R Markdown file with code, plots, and answers to Questions 1-4, to D2L. When referring to the code below it may be more useful to use the .Rmd file linked above. You will need to be connected to the internet to complete this lab.
+# Lab 4: Spatial Autocorrelation (Moran's I, Mantel Test)
+This lab has 2 Parts. You need to hand in Part 1&2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. Submit to D2L Lab 4 Assignment  by the start of Lab 5. When referring to the code below it may be more useful to use the .Rmd file associated with the PDF.
 
-At the end of Lab 3 is Homework in preparation for Lab 4 (familiarizing yourself with GitHub). 
+# Part 1: Moran's I
+A. Generate global Moran's I statistic for Elevation in the brycesite data used in our Lab 1: http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html. 
+east=easting; north=northing. Use "Moran.I" in package "ape". Check assumptions and transform your data if necessary.
 
-## Part 1: Patch Metrics 
-
-We will be using the R package, `landscapemetrics` to compute patch metrics. Before we can do that, we need to set up the directories and obtain data.
+# Moran's I in package `ape` 
+Note that I'm commenting out the output in the code below; you will need to run this in R to see the output.
 
 Start working in R:
 ```{r, message=FALSE, results='hide',warning=FALSE}
@@ -33,20 +35,20 @@ if(!dir.exists(output_path)){
   dir.create(output_path)
 }
 
-# Create the folders (directories) "data" and "lab2" - If they exist already, this command won't over-write them.
-data_path<-(file.path("data","lab3"))
+# Create the folders (directories) "data" and "lab4" - If they exist already, this command won't over-write them.
+data_path<-(file.path("data","lab4"))
 if(!dir.exists(data_path)){
   dir.create(data_path,recursive = TRUE)
 }
 ```
 If you previously saved your workspace and want to load it here, do so this way: 
 
-`load(file.path(output_path,"lab3.RData"))`
+`load(file.path(output_path,"lab4.RData"))`
      
 **NOTES on R packages used in this lab:**
 
 (1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","GISTools")) {`
+`for (package in c("ape", "ncf", "ggplot2", "sp", "labdsv", "ggmap", "proj4", "rgdal")) {`
 `  if (!require(package, character.only=T, quietly=T)) {`
 
 `    install.packages(package)`
@@ -57,67 +59,52 @@ If you previously saved your workspace and want to load it here, do so this way:
 
 `}`
 
-(2) `FedData` should be installed from github and requires `data.table` package first. If the installation below for FedData doesn't work for you, I have included another approach to obtain 2011 NLCD data for Oregon, described farther down.
-
-`install.packages("data.table", type="binary")`
-
-`library(data.table)`
-
-`install.packages("remotes")`
-
-`remotes::install_github("ropensci/FedData")`
-
-`library(FedData)`
-
-(3) The packages `landscapemetrics` and `landscapetools` may require loading separately.
-
-`install.packages("landscapemetrics")`
-
-`install.packages("landscapetools")`
-
-If you run into errors installing landscape metrics or applying it, try this installation instead:
-
-`devtools::install_github("r-spatialecology/landscapemetrics")`
-
-`library(landscapemetrics)`
-
 Load the packages:
 ```{r, message=FALSE, results='hide',warning=FALSE}
 library(dplyr)
 library(ggplot2)
-library(raster)
+library(ape)
+library(ncf)
 library(sp)
-library(rgdal)
-library(rgeos)
-library(maptools)
-library(landscapemetrics)
-library(landscapetools)
+library(labdsv)
 library(FedData)
-library(GISTools)
 ```
 
-The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Through `FedData` we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select "Metadata". Metadata contain data about data. Search for "proj" to find the projection information) https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml. It's Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf), Lab 2's links, or resources on D2L.
-
-
-Practice working with shapefiles and projecting:
+Read in data
 ```{r, message=FALSE, results='hide',warning=FALSE}
-# Create a polygon the state of Oregon from the States of US shapefile
-if(! file.exists(file.path(data_path,'uss.zip'))){
-  download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_state_20m.zip", dest=file.path(data_path,"uss.zip"), mode="wb") 
-}
-unzip (file.path(data_path,"uss.zip"), exdir = data_path)
+# Call the data directly because it's loaded in labdsv
+data(brycesite)
 
-# Read in the shapefile with rgdal package.
-uss <- readOGR(file.path(data_path,"cb_2014_us_state_20m.shp"))
+## If you wanted to read it in, you would do so this way:
+# if(! file.exists(file.path(data_path,'brycesite.R'))){
+#   download.file("http://ecology.msu.montana.edu/labdsv/R/labs/lab2/brycesite.R", dest=file.path(data_path,"brycesite.R"), mode="wb") 
+# }
+# site<- read.table(file.path(data_path,"brycesite.R",header=TRUE, row.names=1), exdir = data_path)
 
-#Take a look at the shapefile info. Its CRS is here: https://epsg.io/42310.
-summary(uss)
-# What are the first 6 lines of uss?
-head(uss)
-# Plot it. See that it's showing the states and territories of the US.
-plot(uss)
-# What are the unique entries in the field, NAME?
-unique(uss$NAME)
+site<-brycesite
+# Take a look at the site, remove any NAs in locations
+head(site)
+summary(site)
+site<-subset(site, site$east != "NA",)
+site<-subset(site, site$north != "NA",)
+
+# Plot the data in space, by elevation
+coords <- site[, c("east", "north")]
+coordinates(coords) <- c("east", "north")
+crs.geo <- CRS("+proj=utm +zone=12 +datum=WGS84")
+proj4string(coords) <- crs.geo   
+dat <- site[,c("plotcode", "elev")]
+elevdat <- SpatialPointsDataFrame(coords = coords, data = dat)
+spplot(elevdat, zcol = "elev")
+
+# Take a look at the underlying elevation from the National Elevation Dataset (NED)
+# Returns a raster
+NED <- get_ned(
+  template = elevdat,
+  label = "bryce"
+)
+plot(NED)
+points(elevdat$elev)
 ```
 
 **Projecting**
@@ -155,13 +142,10 @@ Depending on your computer, these polygons will still be too big to extract NLCD
 **Repeat the same process as above, but with the management unit, Hood.**
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
-mgmt_file <- file.path(data_path,"mgmt.zip")
-
-if(! file.exists(mgmt_file)){
- download.file("https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip",dest=mgmt_file, mode="wb") 
+if(! file.exists('mgmt.zip')){
+ download.file("https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip",dest=file.path(data_path,"mgmt.zip"), mode="wb") 
 }
-
-unzip(mgmt_file, exdir = data_path)
+unzip (file.path(data_path,"mgmt.zip"), exdir = data_path)
 mgmt<-readOGR(file.path(data_path,"wmu24poly.shp"))
 
 summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
@@ -402,10 +386,10 @@ The commands, `drawExtent` and `extent` are both ways to specify the extent of d
 
 `drawExtent` is in the raster package: http://www.inside-r.org/packages/cran/raster/docs/drawExtent. You have to have plotted a map first (and then click on it). This won't be possible if you're running a script via job submission on HPCC. You can also use `extent`, also in the raster package, to define boundaries: http://www.inside-r.org/packages/cran/raster/docs/extent
 
-## OPTIONAL Homework in preparation for Lab 4:
-An optional portion of Lab 4 will use GitHub - you can decide whether or not to use GitHub.  GitHub is a versioning program helpful for collaborating and tracking changes in code. You can think of it as a Google Docs version for tracking code changes (you can also use it with text). If you are familiar with GitHub, no need to go over the following, but if you are not familiar, work through the following tutorials [personally, I use the Desktop version but any version will work]:
+## Homework in preparation for Lab 4:
+In Lab 4 we will introduce GitHub, a versioning program helpful for collaborating and tracking changes in code. You can think of it as a Google Docs version for tracking code changes (you can also use it with text). If you are familiar with GitHub, no need to go over the following, but if you are not familiar, please work through the following tutorials [personally, I use the Desktop version but any version will work]:
 
-If you would like to get some practice using GitHub with Lab 4, please complete this first short tutorial ahead of Lab 4:
+At a minimum, please complete this first short tutorial ahead of Lab 4:
 
 1. Command line version: https://guides.github.com/activities/hello-world/ 
 

@@ -416,10 +416,13 @@ plot(or1,add=T, col=&quot;blue&quot;)</code></pre>
 <p><img src="lab3_patch_design_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <p>Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let’s try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish &amp; Wildlife Units: <a href="https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp" class="uri">https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp</a>.</p>
 <p><strong>Repeat the same process as above, but with the management unit, Hood.</strong></p>
-<pre class="r"><code>if(! file.exists(&#39;mgmt.zip&#39;)){
- download.file(&quot;https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip&quot;,dest=file.path(data_path,&quot;mgmt.zip&quot;), mode=&quot;wb&quot;) 
+<pre class="r"><code>mgmt_file &lt;- file.path(data_path,&quot;mgmt.zip&quot;)
+
+if(! file.exists(mgmt_file)){
+ download.file(&quot;https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip&quot;,dest=mgmt_file, mode=&quot;wb&quot;) 
 }
-unzip (file.path(data_path,&quot;mgmt.zip&quot;), exdir = data_path)
+
+unzip(mgmt_file, exdir = data_path)
 mgmt&lt;-readOGR(file.path(data_path,&quot;wmu24poly.shp&quot;))
 
 summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
@@ -619,10 +622,10 @@ show_correlation(hood_for_corr, method = &quot;pearson&quot;)</code></pre>
 <p><code>drawExtent</code> is in the raster package: <a href="http://www.inside-r.org/packages/cran/raster/docs/drawExtent" class="uri">http://www.inside-r.org/packages/cran/raster/docs/drawExtent</a>. You have to have plotted a map first (and then click on it). This won’t be possible if you’re running a script via job submission on HPCC. You can also use <code>extent</code>, also in the raster package, to define boundaries: <a href="http://www.inside-r.org/packages/cran/raster/docs/extent" class="uri">http://www.inside-r.org/packages/cran/raster/docs/extent</a></p>
 </div>
 </div>
-<div id="homework-in-preparation-for-lab-4" class="section level2">
-<h2>Homework in preparation for Lab 4:</h2>
-<p>In Lab 4 we will introduce GitHub, a versioning program helpful for collaborating and tracking changes in code. You can think of it as a Google Docs version for tracking code changes (you can also use it with text). If you are familiar with GitHub, no need to go over the following, but if you are not familiar, please work through the following tutorials [personally, I use the Desktop version but any version will work]:</p>
-<p>At a minimum, please complete this first short tutorial ahead of Lab 4:</p>
+<div id="optional-homework-in-preparation-for-lab-4" class="section level2">
+<h2>OPTIONAL Homework in preparation for Lab 4:</h2>
+<p>An optional portion of Lab 4 will use GitHub - you can decide whether or not to use GitHub. GitHub is a versioning program helpful for collaborating and tracking changes in code. You can think of it as a Google Docs version for tracking code changes (you can also use it with text). If you are familiar with GitHub, no need to go over the following, but if you are not familiar, work through the following tutorials [personally, I use the Desktop version but any version will work]:</p>
+<p>If you would like to get some practice using GitHub with Lab 4, please complete this first short tutorial ahead of Lab 4:</p>
 <ol style="list-style-type: decimal">
 <li>Command line version: <a href="https://guides.github.com/activities/hello-world/" class="uri">https://guides.github.com/activities/hello-world/</a></li>
 </ol>
