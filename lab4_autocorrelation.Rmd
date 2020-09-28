@@ -9,7 +9,7 @@ urlcolor: blue
 
 *[RMarkdown version of this Lab](lab4_autocorrelation.Rmd)*
 
-This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. 
+This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. OPTIONAL: If you would like to test out GitHub in completing this lab, complete your .Rmd file in RStudio and push your PDF (and your .Rmd if you want) to a repository. You can add the link to the GitHub file when you submit to D2L. Please also submit your PDF to D2L.
 
 This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html and http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html
 A few notes: east=easting; north=northing; elev is recorded in feet; we will convert to metric.
