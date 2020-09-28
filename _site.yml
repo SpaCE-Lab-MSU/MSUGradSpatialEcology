@@ -11,4 +11,6 @@ navbar:
       href: lab2_scale.html
     - text: "Lab 3: R"
       href: lab3_patch_design.html
+    - text: "Lab 4: R"
+      href: lab4_autocorrelation.html
       

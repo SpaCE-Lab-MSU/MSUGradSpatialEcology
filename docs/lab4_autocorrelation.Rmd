@@ -5,11 +5,10 @@ date: "Sep 2015; rev. Sep 24, 2019, Sep 23, 2020"
 urlcolor: blue
 ---
 
-# Lab 4: Spatial Autocorrelation
+# Lab 4: Spatial Autocorrelation (Moran's I, Mantel Test)
 
 *[RMarkdown version of this Lab](lab4_autocorrelation.Rmd)*
 
-# Lab 4: Spatial Autocorrelation (Moran's I, Mantel Test)
 This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. 
 
 This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html and http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html
@@ -17,7 +16,12 @@ A few notes: east=easting; north=northing; elev is recorded in feet; we will con
 
 These data come from a vegetation survey in Bryce Canyon National Park, Utah. It's an amazing place with unique formations! For more about Bryce Canyon see: https://www.nps.gov/brca/index.htm
 
-<center><src="https://upload.wikimedia.org/wikipedia/commons/4/4d/USA_10654_Bryce_Canyon_Luca_Galuzzi_2007.jpg"></center>
+```{r, echo=FALSE}
+# Define variable containing url
+url <- "https://upload.wikimedia.org/wikipedia/commons/4/4d/USA_10654_Bryce_Canyon_Luca_Galuzzi_2007.jpg"
+```
+<center><img src="`r url`"></center>
+https://upload.wikimedia.org/wikipedia/commons/4/4d/USA_10654_Bryce_Canyon_Luca_Galuzzi_2007.jpg
 
 # Part 1: More practice plotting spatial data
 
@@ -50,7 +54,7 @@ If you previously saved your workspace and want to load it here, do so this way:
 **NOTES on R packages used in this lab:**
 
 (1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("ape", "ncf", "ggplot2", "sp", "labdsv", "ggmap", "proj4", "rgdal","ggspatial")) {`
+`for (package in c("ape", "ncf", "ggplot2", "sp", "labdsv", "ggmap", "proj4", "rgdal","ggspatial","raster")) {`
 `  if (!require(package, character.only=T, quietly=T)) {`
 
 `    install.packages(package)`
@@ -72,6 +76,7 @@ library(labdsv)
 library(FedData)
 library(ggspatial)
 library(ggmap)
+library(raster)
 
 # Apply ggplot2 theme to remove gray background and set the base font size as 14. See:  https://ggplot2.tidyverse.org/reference/ggtheme.html for more theme options.
 theme_set(theme_classic(base_size = 14))
@@ -113,8 +118,8 @@ NED <- get_ned(
 
 *Plot the elevation raster and the vegetation data plot locations on the same map. Practice using ggplot2 for this plotting.* First, project the raster to the veg data projection so we can plot them together (you could instead project the veg data shapefile (which is vector data) with the raster CRS, and you should project vector rather than the raster if you plan on doing any spatial analysis with them both). We're just plotting so it's ok.
 ```{r, message=FALSE, results='hide',warning=FALSE}
-crs(NED)
-NED<-projectRaster(NED,crs = crs(coords))
+raster::crs(NED)
+NED<-projectRaster(NED,crs = raster::crs(coords))
 
 # Create a dataframe out of the NED raster. This is a necessary step for plotting rasters with ggplot2. 
 NED_df = as.data.frame(NED, xy = TRUE)
@@ -176,6 +181,8 @@ p + geom_point(aes(x = east, y = north,  colour = elev), data = elevdat.dat, siz
   theme(legend.position="right")
 ```
 
+# Part 2: Moran's I and Mantel test
+
 ## Moran's I in package `ape` 
 Check assumptions about the elevation data; an assumption of the Moran's I test is that data are normally distributed. Determine whether data should be transformed. Some transformations to consider: square-root, log.
 
@@ -214,7 +221,7 @@ Moran.I(site$log.elev, w, scaled = T, na.rm = T, alternative = "two.sided")
 Moran.I(site$elev, w, scaled = T, na.rm = T, alternative = "two.sided")
 ```
 
-## QUESTION 1
+### QUESTION 1:
 Interpret Moran's I results. Is there a more appropriate form of elevation data (transformed or non-transformed) for this test?
 
 
@@ -234,11 +241,12 @@ length(which(fit$p <= 0.05))
 
 plot(fit$mean.of.class, fit$correlation, pch = 19, "black", ylab = "Correlation coefficient", xlab = "Distance (mean of class)", main = "Correlogram for elevation change")
 ```
-## QUESTION 2: 
+
+### QUESTION 2: 
 Plot and interpret your correlograms. Explain your choice of Distance Classes. 
 
 
-## QUESTION 3: 
+### QUESTION 3: 
 Perform a statistical test to determine if your peaks are significant. Hint: look at your correlog output. Which ones are significant?
 
 ## Mantel Test
@@ -255,13 +263,13 @@ mant.results <- ape::mantel.test(m1 = data.dist, m2 = elev.dist, nperm = 999, al
 
 Next, choose another variable from the 'site' dataframe. Plot the variable (see the code for plotting elevation, above).
 
-## QUESTION 4: 
+### QUESTION 4: 
 What are the general patterns of the variable across space? Do you expect your variable to be spatially correlated with elevation across the study region? Why or why not?
 
 
 Finally, run a Mantel test between your new variable and elevation to look at correlations between the matrices of the two variables.
 
-## QUESTION 5: 
+### QUESTION 5: 
 Interpret the results of the Mantel test relative to your predictions from Question 4.
 
 
