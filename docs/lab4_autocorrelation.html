@@ -298,7 +298,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 4</h1>
 <h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
-<h4 class="date">Sep 2015; rev. Sep 24, 2019, Sep 23, 2020</h4>
+<h4 class="date">Sep 2015; rev. Sep 24, 2019, Sep 23-27, 2020</h4>
 
 </div>
 
@@ -307,7 +307,8 @@ $(document).ready(function () {
 <h1>Lab 4: Spatial Autocorrelation (Moran’s I, Mantel Test)</h1>
 <p><em><a href="lab4_autocorrelation.Rmd">RMarkdown version of this Lab</a></em></p>
 <p>This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. OPTIONAL: If you would like to test out GitHub in completing this lab, complete your .Rmd file in RStudio and push your PDF (and your .Rmd if you want) to a repository. You can add the link to the GitHub file when you submit to D2L. Please also submit your PDF to D2L.</p>
-<p>This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html</a> and <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html</a> A few notes: east=easting; north=northing; elev is recorded in feet; we will convert to metric.</p>
+<p>This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html</a> and <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html</a></p>
+<p>The variable list for the site variables is here: <a href="https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite" class="uri">https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite</a>. A few notes: east=easting; north=northing; elev is recorded in feet; we will convert to metric.</p>
 <p>These data come from a vegetation survey in Bryce Canyon National Park, Utah. It’s an amazing place with unique formations! For more about Bryce Canyon see: <a href="https://www.nps.gov/brca/index.htm" class="uri">https://www.nps.gov/brca/index.htm</a></p>
 <center>
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/USA_10654_Bryce_Canyon_Luca_Galuzzi_2007.jpg">
@@ -557,7 +558,7 @@ plot(fit$mean.of.class, fit$correlation, pch = 19, &quot;black&quot;, ylab = &qu
 </div>
 <div id="question-3" class="section level3">
 <h3>QUESTION 3:</h3>
-<p>Perform a statistical test to determine if your peaks are significant. Hint: look at your correlog output. Which ones are significant?</p>
+<p>Perform a statistical test to determine if your peaks are significant. Hint: look at your <code>correlog</code> output. Which ones are significant?</p>
 </div>
 </div>
 <div id="mantel-test" class="section level2">
@@ -569,15 +570,17 @@ elev.dist &lt;- as.matrix(dist(cbind(site$elev, site$elev)))
 
 # Run a Mantel test on the two matrices
 mant.results &lt;- ape::mantel.test(m1 = data.dist, m2 = elev.dist, nperm = 999, alternative = &#39;two.sided&#39;)</code></pre>
-<p>Next, choose another variable from the ‘site’ dataframe. Plot the variable (see the code for plotting elevation, above).</p>
+<p>Next, choose a NEW VARIABLE from the <code>site</code> dataframe. Plot the variable in space (see the code for plotting elevation on a map, above). The variable list for the site variables is here: <a href="https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite" class="uri">https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite</a>.</p>
 <div id="question-4" class="section level3">
 <h3>QUESTION 4:</h3>
-<p>What are the general patterns of the variable across space? Do you expect your variable to be spatially correlated with elevation across the study region? Why or why not?</p>
-<p>Finally, run a Mantel test between your new variable and elevation to look at correlations between the matrices of the two variables.</p>
+<p>What are the general patterns of the NEW VARIABLE across space? Do you expect your NEW VARIABLE to be spatially correlated with elevation across the study region? Why or why not?</p>
 </div>
 <div id="question-5" class="section level3">
 <h3>QUESTION 5:</h3>
-<p>Interpret the results of the Mantel test relative to your predictions from Question 4.</p>
+<p>Run a Mantel test to look at correlations between the matrices of the two variables (a Mantel test between your NEW VARIABLE distance matrix and <code>elev.dist</code>).</p>
+<p>You will need to create your <code>NEWVARIABLE.dist</code> like this:</p>
+<p><code>NEWVARIABLE.dist &lt;- as.matrix(dist(cbind(site$NEWVARIABLE, site$NEWVARIABLE)))</code></p>
+<p>Interpret the results of the Mantel tests relative to your predictions from Question 4. You may want to run <code>correlog()</code> on your NEW VARIABLE to help with interpretation.</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>

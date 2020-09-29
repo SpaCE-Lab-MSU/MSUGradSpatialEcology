@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 4"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2015; rev. Sep 24, 2019, Sep 23, 2020"
+date: "Sep 2015; rev. Sep 24, 2019, Sep 23-27, 2020"
 urlcolor: blue
 ---
 
@@ -12,6 +12,8 @@ urlcolor: blue
 This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. OPTIONAL: If you would like to test out GitHub in completing this lab, complete your .Rmd file in RStudio and push your PDF (and your .Rmd if you want) to a repository. You can add the link to the GitHub file when you submit to D2L. Please also submit your PDF to D2L.
 
 This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html and http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html
+
+The variable list for the site variables is here: https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite. 
 A few notes: east=easting; north=northing; elev is recorded in feet; we will convert to metric.
 
 These data come from a vegetation survey in Bryce Canyon National Park, Utah. It's an amazing place with unique formations! For more about Bryce Canyon see: https://www.nps.gov/brca/index.htm
@@ -247,7 +249,7 @@ Plot and interpret your correlograms. Explain your choice of Distance Classes.
 
 
 ### QUESTION 3: 
-Perform a statistical test to determine if your peaks are significant. Hint: look at your correlog output. Which ones are significant?
+Perform a statistical test to determine if your peaks are significant. Hint: look at your `correlog` output. Which ones are significant?
 
 ## Mantel Test
 Now use the Mantel test to compare differences in elevation at specified points to the distance between those points. This will help you determine whether plots that are closer together have more similar elevations, and if plots that are farther apart have more dissimilar elevations. In this case we're treating the space between sampling locations (their geography) as the predictor variable which is predicting the elevation values.  
@@ -261,16 +263,19 @@ elev.dist <- as.matrix(dist(cbind(site$elev, site$elev)))
 mant.results <- ape::mantel.test(m1 = data.dist, m2 = elev.dist, nperm = 999, alternative = 'two.sided')
 ```
 
-Next, choose another variable from the 'site' dataframe. Plot the variable (see the code for plotting elevation, above).
+Next, choose a NEW VARIABLE from the `site` dataframe. Plot the variable in space (see the code for plotting elevation on a map, above). The variable list for the site variables is here: https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite.
 
 ### QUESTION 4: 
-What are the general patterns of the variable across space? Do you expect your variable to be spatially correlated with elevation across the study region? Why or why not?
-
-
-Finally, run a Mantel test between your new variable and elevation to look at correlations between the matrices of the two variables.
+What are the general patterns of the NEW VARIABLE across space? Do you expect your NEW VARIABLE to be spatially correlated with elevation across the study region? Why or why not? 
 
 ### QUESTION 5: 
-Interpret the results of the Mantel test relative to your predictions from Question 4.
+Run a Mantel test to look at correlations between the matrices of the two variables (a Mantel test between your NEW VARIABLE distance matrix and `elev.dist`). 
+
+You will need to create your `NEWVARIABLE.dist` like this:
+
+`NEWVARIABLE.dist <- as.matrix(dist(cbind(site$NEWVARIABLE, site$NEWVARIABLE)))`
+
+Interpret the results of the Mantel tests relative to your predictions from Question 4. You may want to run `correlog()` on your NEW VARIABLE to help with interpretation.
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
