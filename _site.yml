@@ -5,12 +5,23 @@ include: ["*.Rmd"]
 navbar:
   title: "MSU Grad Spatial Ecology"
   left:
-    - text: "Lab 1: R"
+    - text: "Lab 1"
       href: lab1_R.html  
-    - text: "Lab 2: R"
+    - text: "Lab 2"
       href: lab2_scale.html
-    - text: "Lab 3: R"
+    - text: "Lab 3"
       href: lab3_patch_design.html
-    - text: "Lab 4: R"
+    - text: "Lab 4"
       href: lab4_autocorrelation.html
-      
+    - text: "Lab 5"
+      href: lab5_variograms.html
+    - text: "Lab 6"
+      href: lab6_interp_connect.html
+    - text: "Lab 7"
+      href: lab7_opendata.html
+    - text: "Lab 8"
+      href: lab8_sdm1.html
+    - text: "Lab 9"
+      href: lab9_sdm2.html
+    - text: "Lab 10"
+      href: lab10_sdm3.html      
