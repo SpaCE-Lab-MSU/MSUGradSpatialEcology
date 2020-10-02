@@ -101,12 +101,8 @@ library(lattice)
 
 (2) For Package rgdal, if it does not load properly, you may need to install GDAL first:
 
-for Windows:
-https://trac.osgeo.org/gdal/wiki/DownloadSource (GDAL)
-https://download.osgeo.org/proj/ (PROJ4)
-
-for Macs:
-http://www.kyngchaos.com/software/archive/gdal-complete/ (GDAL)
+PROJ (>= 4.8.0, https://proj.org/download.html) 
+GDAL (>= 1.11.4, https://gdal.org/download.html)
 
 For Package geoR, you may need to install (or re-install) XQuartz if you're on a Mac: XQuartz: https://www.xquartz.org/.
 
@@ -339,7 +335,6 @@ You can visualize a measure of spatial clustering/dispersion over a range of dis
 url <- "https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png"
 ```
 <center><img src="`r url`"></center>
-https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png
 
 
 Suppose we want to determine how Douglas Fir trees are distributed in these data - are they Clustered? Dispersed? Random? At what scale? And is the pattern significant? First pull out Douglas Fir from the dataset. Then plot it.
@@ -361,15 +356,13 @@ legend("topleft", pch=1, legend=leg.vals, col="darkgreen",
 
 ```
 
-You can start to see some clustering of small DBH in the northwestern corner. Let's quantify the distribution across the study area. Create a SpatialPointsDataFrame to generate a point pattern object from the Douglas Fir data. First create a SpatialPointsDataFrame from dfir. Then apply an edge correction. The edge correction is necessary because a hard edge (boundary) on the data extent will under-estimate the pattern since there are no neighboring points outside the data boundary. We need to specify which points will be used for the correction vs. the actual calculation. See this diagram in <a rel="Multi-Distance Spatial Cluster Analysis (Ripley's K Function) (Spatial Statistics)" href=
-https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm">:
+You can start to see some clustering of small DBH in the northwestern corner. Let's quantify the distribution across the study area. Create a SpatialPointsDataFrame to generate a point pattern object from the Douglas Fir data. Then apply an edge correction. The edge correction is necessary because a hard edge (boundary) on the data extent will under-estimate the pattern since there are no neighboring points outside the data boundary. We need to specify which points will be used for the correction vs. the actual calculation. See this diagram in [Multi-Distance Spatial Cluster Analysis (Ripley's K Function) (Spatial Statistics)](https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm).
 
 ```{r, echo=FALSE}
 # Define variable containing url
 url <- "https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif"
 ```
 <center><img src="`r url`"></center>
-https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif
 
 We will use the `best` option for the correction from the `Kest` function:
 ```{r, message=FALSE, results='hide',warning=FALSE}
@@ -384,7 +377,7 @@ plot(K.dfir, main="Ripley's K function for Douglas Fir")
 plot(envelope(dfir.ppp, Kest, correction="best", nsim = 500))
 ```
 
-Notice how the entire plot for Douglas Fir data (black solid line) is below the theoretical curve. Values higher than the theoretical line (red dotted line) reflect clustering, and values below the theoretical line reflect dispersion. The plot indicates that even though we observed clustering in one region, the Douglas Fir is clustered across the entire study area, at nearly all scales. At very local scales (close to r=0) the lines overlap indicating that there is not strong clustering at those short distances. Repeat the process above to try it out on another species to see how two species compare.
+Notice how the entire plot for Douglas Fir data (black solid line) is above the theoretical curve. Values higher than the theoretical line (red dotted line) reflect clustering, and values below the theoretical line reflect dispersion. The plot indicates that even though we observed clustering in one region by plotting the occurrence data above, Douglas Fir is clustered across the entire study area, at nearly all scales. At very local scales (close to r=0) the curves overlap indicating that there is not strong clustering at those short distances. Repeat the process above to try it out on another species to see how two species compare.
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.

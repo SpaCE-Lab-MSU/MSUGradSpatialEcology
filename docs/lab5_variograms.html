@@ -384,8 +384,7 @@ library(lattice)</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>For Package rgdal, if it does not load properly, you may need to install GDAL first:</li>
 </ol>
-<p>for Windows: <a href="https://trac.osgeo.org/gdal/wiki/DownloadSource" class="uri">https://trac.osgeo.org/gdal/wiki/DownloadSource</a> (GDAL) <a href="https://download.osgeo.org/proj/" class="uri">https://download.osgeo.org/proj/</a> (PROJ4)</p>
-<p>for Macs: <a href="http://www.kyngchaos.com/software/archive/gdal-complete/" class="uri">http://www.kyngchaos.com/software/archive/gdal-complete/</a> (GDAL)</p>
+<p>PROJ (&gt;= 4.8.0, <a href="https://proj.org/download.html" class="uri">https://proj.org/download.html</a>) GDAL (&gt;= 1.11.4, <a href="https://gdal.org/download.html" class="uri">https://gdal.org/download.html</a>)</p>
 <p>For Package geoR, you may need to install (or re-install) XQuartz if you’re on a Mac: XQuartz: <a href="https://www.xquartz.org/" class="uri">https://www.xquartz.org/</a>.</p>
 <p><em>If you installed GDAL, restart your computer and start at the top of the lab</em></p>
 <p><strong>Spatial data visualization</strong> (from <a href="FOR870_Lab5_spatialdataviz_variograms.pdf">Exploring spatial data in R</a></p>
@@ -571,7 +570,6 @@ plot(vario.DBH.resid.x, omni=TRUE, main=&quot;DBH residuals&quot;, lty=1,
 <center>
 <img src="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png">
 </center>
-<p><a href="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png" class="uri">https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png</a></p>
 <p>Suppose we want to determine how Douglas Fir trees are distributed in these data - are they Clustered? Dispersed? Random? At what scale? And is the pattern significant? First pull out Douglas Fir from the dataset. Then plot it.</p>
 <pre class="r"><code>library(sp)
 library(spatstat)
@@ -588,12 +586,10 @@ leg.vals &lt;- round(quantile(dfDBH),0)
 legend(&quot;topleft&quot;, pch=1, legend=leg.vals, col=&quot;darkgreen&quot;, 
        pt.cex=sqrt(leg.vals)/10, bty=&quot;n&quot;, title=&quot;DBH (cm) of Douglas Fir&quot;)</code></pre>
 <p><img src="lab5_variograms_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>You can start to see some clustering of small DBH in the northwestern corner. Let’s quantify the distribution across the study area. Create a SpatialPointsDataFrame to generate a point pattern object from the Douglas Fir data. First create a SpatialPointsDataFrame from dfir. Then apply an edge correction. The edge correction is necessary because a hard edge (boundary) on the data extent will under-estimate the pattern since there are no neighboring points outside the data boundary. We need to specify which points will be used for the correction vs. the actual calculation. See this diagram in <a rel="Multi-Distance Spatial Cluster Analysis (Ripley's K Function) (Spatial Statistics)" href=
-https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm">:</p>
+<p>You can start to see some clustering of small DBH in the northwestern corner. Let’s quantify the distribution across the study area. Create a SpatialPointsDataFrame to generate a point pattern object from the Douglas Fir data. Then apply an edge correction. The edge correction is necessary because a hard edge (boundary) on the data extent will under-estimate the pattern since there are no neighboring points outside the data boundary. We need to specify which points will be used for the correction vs. the actual calculation. See this diagram in <a href="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm">Multi-Distance Spatial Cluster Analysis (Ripley’s K Function) (Spatial Statistics)</a>.</p>
 <center>
 <img src="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif">
 </center>
-<p><a href="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif" class="uri">https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif</a></p>
 <p>We will use the <code>best</code> option for the correction from the <code>Kest</code> function:</p>
 <pre class="r"><code>dfir.sp&lt;-dfir
 coordinates(dfir.sp) &lt;- c(&quot;East_m&quot;,&quot;North_m&quot;)
@@ -606,7 +602,7 @@ plot(K.dfir, main=&quot;Ripley&#39;s K function for Douglas Fir&quot;)</code></p
 <pre class="r"><code># Is the pattern significant? Apply an envelope using 500 simulations to create the 95% confidence interval around the theoretical line.
 plot(envelope(dfir.ppp, Kest, correction=&quot;best&quot;, nsim = 500))</code></pre>
 <p><img src="lab5_variograms_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
-<p>Notice how the entire plot for Douglas Fir data (black solid line) is below the theoretical curve. Values higher than the theoretical line (red dotted line) reflect clustering, and values below the theoretical line reflect dispersion. The plot indicates that even though we observed clustering in one region, the Douglas Fir is clustered across the entire study area, at nearly all scales. At very local scales (close to r=0) the lines overlap indicating that there is not strong clustering at those short distances. Repeat the process above to try it out on another species to see how two species compare.</p>
+<p>Notice how the entire plot for Douglas Fir data (black solid line) is above the theoretical curve. Values higher than the theoretical line (red dotted line) reflect clustering, and values below the theoretical line reflect dispersion. The plot indicates that even though we observed clustering in one region by plotting the occurrence data above, Douglas Fir is clustered across the entire study area, at nearly all scales. At very local scales (close to r=0) the curves overlap indicating that there is not strong clustering at those short distances. Repeat the process above to try it out on another species to see how two species compare.</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
