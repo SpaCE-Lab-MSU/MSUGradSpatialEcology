@@ -56,7 +56,7 @@ https://www.dataone.org/
 7) Include suggestions of R packages to use when importing these data, and any code that is necessary to import them. If it is not possible to use R code to import data directly (e.g., as we did with the gbif data), include a link to the host site's directions for uploading these data, and a brief description of how they can be uploaded. Also include a small image of some of these data (a map you create including scalebar, axes, legend, and north arrow, or a screen shot from the website showing the map is fine). 
 
 
-The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2010. Hence, the template below for gbif uses the largest living lemur, *Indri indri*, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF. 
+The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2012. Hence, the template below for gbif uses the largest living lemur, *Indri indri*, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF. 
 
 
 ## Example Tamplate for GBIF: Global Biodiversity Information Facility 
