@@ -1,0 +1,104 @@
+---
+title: "MSU Graduate Spatial Ecology Lab 7"
+author: "Phoebe Zarnetske; plz@msu.edu"
+date: "Oct 14, 2020"
+urlcolor: blue
+---
+
+# Lab 7: Open Data
+
+*[RMarkdown version of this Lab](lab7_opendata.Rmd)*
+
+In this lab, the focus is on open access data (a.k.a. publicly available data). Open access data is vital to moving science forward - both in terms of advancing basic science but also applied science. Open data is also essential to be able to make decisions based on the "best available science" including informing policy and management. 
+
+In Lab 1, you were introduced to the FAIR Data Principles; the idea that data should be Findable, Accessible, Interoperable, and Reusable (FAIR). Wilkinson et al. (2016) outlines these standards.
+
+Wilkinson, M. D., M. Dumontier, Ij. J. Aalbersberg, G. Appleton, M. Axton, A. Baak, N. Blomberg, J.-W. Boiten, L. B. da Silva Santos, P. E. Bourne, J. Bouwman, A. J. Brookes, T. Clark, M. Crosas, I. Dillo, O. Dumon, S. Edmunds, C. T. Evelo, R. Finkers, A. Gonzalez-Beltran, A. J. G. Gray, P. Groth, C. Goble, J. S. Grethe, J. Heringa, P. A. C. ’t Hoen, R. Hooft, T. Kuhn, R. Kok, J. Kok, S. J. Lusher, M. E. Martone, A. Mons, A. L. Packer, B. Persson, P. Rocca-Serra, M. Roos, R. van Schaik, S.-A. Sansone, E. Schultes, T. Sengstag, T. Slater, G. Strawn, M. A. Swertz, M. Thompson, J. van der Lei, E. van Mulligen, J. Velterop, A. Waagmeester, P. Wittenburg, K. Wolstencroft, J. Zhao, and B. Mons. 2016. The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3:160018. DOI:10.1038/sdata.2016.18.
+
+Please review these principles as you will need to address them in your write-up. You can also review the FAIR Principles at this website: https://www.go-fair.org/fair-principles/
+
+### Open Data Summary: 
+For this lab assignment, you will summarize a publicly available spatially-explicit dataset (i.e., data are geographically referenced) using the RMarkdown template below. I suggest you find a dataset related to your graduate work and planned paper for the course as this will help you explore potential data for your analyses. You will need to hand in a PDF or HTML produced from R Markdown, including any images, plots, code, and text for answers to the questions. 
+
+**The following open access datasets have already been summarized, so find a different open access dataset.**
+
+MTBS, DNR Forest Cover (IFMAP), National Phenology Network, Historical DNR Forest Cover, NAWQA, North American Breeding Bird Survey, PRISM Climate Data, National Oceanic and Atmospheric Administration (NOAA) Climate Data, GBIF spatial occurrences, MEaSUReS 25km resolution snow cover data, Ocean Biogeographic Information System (OBIS), The National Land Cover Database (NLCD), Terra MODIS Vegetation Continuous Fields (VCF), WorldClim climate data.
+
+If you're stuck on selecting a dataset, try searching global, national, and state-level data repositories like these (which each contain numerous spatially referenced datasets):
+
+https://edg.epa.gov/metadata/catalog/main/home.page
+
+https://gis-michigan.opendata.arcgis.com/
+
+https://www.usgs.gov/products/data-and-tools/gis-data
+
+https://www.neonscience.org/
+
+https://portal.edirepository.org/nis/home.jsp 
+
+https://www.dataone.org/
+
+
+**Follow the R markdown template below to include the following:** 
+
+1) The category of data
+
+2) A short description of the data (range of spatial grain & extent, the range of temporal grain & extent) - more detail than is in the example below
+
+3) A link to the data online
+
+4) Linked data logo if applicable
+
+5) Data use policy link
+
+6) How do these data align with the FAIR Data Principles? In a few sentences, evaluate how well these data meet the Findable, Accessible, Interoperable, and Reusable (FAIR) Principles.
+
+7) Include suggestions of R packages to use when importing these data, and any code that is necessary to import them. If it is not possible to use R code to import data directly (e.g., as we did with the gbif data), include a link to the host site's directions for uploading these data, and a brief description of how they can be uploaded. Also include a small image of some of these data (a map you create including scalebar, axes, legend, and north arrow, or a screen shot from the website showing the map is fine). 
+
+
+The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2010. Hence, the template below for gbif uses the largest living lemur, *Indri indri*, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF. 
+
+
+## Example Tamplate for GBIF: Global Biodiversity Information Facility 
+**1. Data Category:** Species Occurrences
+
+**2. Data Description:** GBIF is the Global Biodiversity Information Facility which provides free and open access to biodiversity data. Spatial and temporal scale of occurrences varies, depending on the species of interest. 
+
+**3. Data Link:** http://www.gbif.org/
+
+**4. Image/icon/logo for these data**
+
+![GBIF Logo](https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png)
+
+**5. Data Use Policy:** http://www.gbif.org/using-data/summary
+
+**6. How these Data align with the FAIR Data Principles** [Insert a few sentences evaluating how well these data meet the Findable, Accessible, Interoperable, and Reusable (FAIR) Principles]
+
+**7. Use with R:** GBIF data on species occurrences can be downloaded directly for certain species by using the R package "dismo", as shown below for *Indri indri* (the largest living lemur). For use with software other than R, select different filters to download occurrence data here: http://www.gbif.org/occurrence/search.
+
+```{r, echo=FALSE}
+# Define variable containing url
+url1 <- "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Indri_%28Indri_indri%29.jpg/600px-Indri_%28Indri_indri%29.jpg"
+```
+<center><img src="`r url1`"></center>
+Indri (*Indri indri*), Analamazaotra Special Reserve, Madagascar. Charles J Sharp 2018.
+
+
+```{r}
+library(dismo)     # package to easily download gbif occurrence data
+library(raster)     
+library(sp)
+library(jsonlite)
+indri.gbif <- gbif("Indri", "indri", geo=T) # plot occurrences
+# higher resolution country outline: getData using raster package. Also see: http://www.gadm.org/
+mada<-getData("GADM",country="MDG",level=0)
+plot(mada, main="Indri indri GBIF occurrence records")
+points(indri.gbif$lon,indri.gbif$lat,pch=19, cex=0.5, col="blue")
+
+# Continue plotting to add a north arrow, scalebar, and axes for the plot.
+```
+
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+
