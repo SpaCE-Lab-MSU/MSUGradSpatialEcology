@@ -328,10 +328,12 @@ $(document).ready(function () {
 <p>In Lab 1, you were introduced to the FAIR Data Principles; the idea that data should be Findable, Accessible, Interoperable, and Reusable (FAIR). Wilkinson et al. (2016) outlines these standards.</p>
 <p>Wilkinson, M. D., M. Dumontier, Ij. J. Aalbersberg, G. Appleton, M. Axton, A. Baak, N. Blomberg, J.-W. Boiten, L. B. da Silva Santos, P. E. Bourne, J. Bouwman, A. J. Brookes, T. Clark, M. Crosas, I. Dillo, O. Dumon, S. Edmunds, C. T. Evelo, R. Finkers, A. Gonzalez-Beltran, A. J. G. Gray, P. Groth, C. Goble, J. S. Grethe, J. Heringa, P. A. C. ’t Hoen, R. Hooft, T. Kuhn, R. Kok, J. Kok, S. J. Lusher, M. E. Martone, A. Mons, A. L. Packer, B. Persson, P. Rocca-Serra, M. Roos, R. van Schaik, S.-A. Sansone, E. Schultes, T. Sengstag, T. Slater, G. Strawn, M. A. Swertz, M. Thompson, J. van der Lei, E. van Mulligen, J. Velterop, A. Waagmeester, P. Wittenburg, K. Wolstencroft, J. Zhao, and B. Mons. 2016. The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3:160018. <a href="DOI:10.1038/sdata.2016.18" class="uri">DOI:10.1038/sdata.2016.18</a>.</p>
 <p>Please review these principles as you will need to address them in your write-up. You can also review the FAIR Principles at this website: <a href="https://www.go-fair.org/fair-principles/" class="uri">https://www.go-fair.org/fair-principles/</a></p>
+<p>Interested in contributing to open access data? Citizen Science is another area that has been growing in popularity and utility for gaining data across space and time. These data come with their own considerations as they are not systematically collected. Check out <a href="https://www.inaturalist.org/">iNaturalist</a> or <a href="https://ebird.org/home">eBird</a> as two well established citizen science datasets. Consider joining as a user! The records contributed by citizen scientists that are considered “research grade” are incorporated into GBIF!</p>
+<p><img src="https://static.inaturalist.org/sites/1-shareable_image.png?1573071871" style="width:15.0%" alt="iNaturalist Logo" /> <img src="https://pbs.twimg.com/profile_images/1230924849754918912/zPviC75p.jpg" style="width:15.0%" alt="eBird Logo" /></p>
 <div id="open-data-summary" class="section level3">
 <h3>Open Data Summary:</h3>
 <p>For this lab assignment, you will summarize a publicly available spatially-explicit dataset (i.e., data are geographically referenced) using the RMarkdown template below. I suggest you find a dataset related to your graduate work and planned paper for the course as this will help you explore potential data for your analyses. You will need to hand in a PDF or HTML produced from R Markdown, including any images, plots, code, and text for answers to the questions.</p>
-<p><strong>The following open access datasets have already been summarized, so find a different open access dataset.</strong></p>
+<p><strong>The following open access datasets have already been summarized in prior semesters of this course, so please find a different open access dataset.</strong></p>
 <p>MTBS, DNR Forest Cover (IFMAP), National Phenology Network, Historical DNR Forest Cover, NAWQA, North American Breeding Bird Survey, PRISM Climate Data, National Oceanic and Atmospheric Administration (NOAA) Climate Data, GBIF spatial occurrences, MEaSUReS 25km resolution snow cover data, Ocean Biogeographic Information System (OBIS), The National Land Cover Database (NLCD), Terra MODIS Vegetation Continuous Fields (VCF), WorldClim climate data.</p>
 <p>If you’re stuck on selecting a dataset, try searching global, national, and state-level data repositories like these (which each contain numerous spatially referenced datasets):</p>
 <p><a href="https://edg.epa.gov/metadata/catalog/main/home.page" class="uri">https://edg.epa.gov/metadata/catalog/main/home.page</a></p>
@@ -340,6 +342,7 @@ $(document).ready(function () {
 <p><a href="https://www.neonscience.org/" class="uri">https://www.neonscience.org/</a></p>
 <p><a href="https://portal.edirepository.org/nis/home.jsp" class="uri">https://portal.edirepository.org/nis/home.jsp</a></p>
 <p><a href="https://www.dataone.org/" class="uri">https://www.dataone.org/</a></p>
+<p>Our <a href="https://www.communityecologylab.com/macrosystems-biology--patterns-of-biodiversity.html">bioXgeo</a> research group has also compiled a list of several abiotic satellite remotely-sensed data that could be useful for your research here: <a href="https://bioxgeo.github.io/bioXgeo_ProductsTable/" class="uri">https://bioxgeo.github.io/bioXgeo_ProductsTable/</a>. Links to those data are in the last column.</p>
 <p><strong>Follow the R markdown template below to include the following:</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>The category of data</p></li>
@@ -350,7 +353,7 @@ $(document).ready(function () {
 <li><p>How do these data align with the FAIR Data Principles? In a few sentences, evaluate how well these data meet the Findable, Accessible, Interoperable, and Reusable (FAIR) Principles.</p></li>
 <li><p>Include suggestions of R packages to use when importing these data, and any code that is necessary to import them. If it is not possible to use R code to import data directly (e.g., as we did with the gbif data), include a link to the host site’s directions for uploading these data, and a brief description of how they can be uploaded. Also include a small image of some of these data (a map you create including scalebar, axes, legend, and north arrow, or a screen shot from the website showing the map is fine).</p></li>
 </ol>
-<p>The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2010. Hence, the template below for gbif uses the largest living lemur, <em>Indri indri</em>, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF.</p>
+<p>The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2012. Hence, the template below for gbif uses the largest living lemur, <em>Indri indri</em>, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF.</p>
 </div>
 <div id="example-tamplate-for-gbif-global-biodiversity-information-facility" class="section level2">
 <h2>Example Tamplate for GBIF: Global Biodiversity Information Facility</h2>
@@ -366,9 +369,9 @@ $(document).ready(function () {
 <p><strong>6. How these Data align with the FAIR Data Principles</strong> [Insert a few sentences evaluating how well these data meet the Findable, Accessible, Interoperable, and Reusable (FAIR) Principles]</p>
 <p><strong>7. Use with R:</strong> GBIF data on species occurrences can be downloaded directly for certain species by using the R package “dismo”, as shown below for <em>Indri indri</em> (the largest living lemur). For use with software other than R, select different filters to download occurrence data here: <a href="http://www.gbif.org/occurrence/search" class="uri">http://www.gbif.org/occurrence/search</a>.</p>
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Indri_%28Indri_indri%29.jpg/600px-Indri_%28Indri_indri%29.jpg">
+<img src="PL_Zarnetske_2012-05-10_65.JPG">
 </center>
-<p>Indri (<em>Indri indri</em>), Analamazaotra Special Reserve, Madagascar. Charles J Sharp 2018.</p>
+<p>Indri (<em>Indri indri</em>), Analamazaotra Special Reserve, Madagascar. Phoebe L. Zarnetske 2012.</p>
 <pre class="r"><code>library(dismo)     # package to easily download gbif occurrence data
 library(raster)     
 library(sp)

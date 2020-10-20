@@ -17,10 +17,16 @@ Wilkinson, M. D., M. Dumontier, Ij. J. Aalbersberg, G. Appleton, M. Axton, A. Ba
 
 Please review these principles as you will need to address them in your write-up. You can also review the FAIR Principles at this website: https://www.go-fair.org/fair-principles/
 
+Interested in contributing to open access data? Citizen Science is another area that has been growing in popularity and utility for gaining data across space and time. These data come with their own considerations as they are not systematically collected. Check out [iNaturalist](https://www.inaturalist.org/) or [eBird](https://ebird.org/home) as two well established citizen science datasets. Consider joining as a user! The records contributed by citizen scientists that are considered "research grade" are incorporated into GBIF!
+
+![iNaturalist Logo](https://static.inaturalist.org/sites/1-shareable_image.png?1573071871){height=15%, width=15%}
+![eBird Logo](https://pbs.twimg.com/profile_images/1230924849754918912/zPviC75p.jpg){height=15%, width=15%}
+
+
 ### Open Data Summary: 
 For this lab assignment, you will summarize a publicly available spatially-explicit dataset (i.e., data are geographically referenced) using the RMarkdown template below. I suggest you find a dataset related to your graduate work and planned paper for the course as this will help you explore potential data for your analyses. You will need to hand in a PDF or HTML produced from R Markdown, including any images, plots, code, and text for answers to the questions. 
 
-**The following open access datasets have already been summarized, so find a different open access dataset.**
+**The following open access datasets have already been summarized in prior semesters of this course, so please find a different open access dataset.**
 
 MTBS, DNR Forest Cover (IFMAP), National Phenology Network, Historical DNR Forest Cover, NAWQA, North American Breeding Bird Survey, PRISM Climate Data, National Oceanic and Atmospheric Administration (NOAA) Climate Data, GBIF spatial occurrences, MEaSUReS 25km resolution snow cover data, Ocean Biogeographic Information System (OBIS), The National Land Cover Database (NLCD), Terra MODIS Vegetation Continuous Fields (VCF), WorldClim climate data.
 
@@ -37,6 +43,9 @@ https://www.neonscience.org/
 https://portal.edirepository.org/nis/home.jsp 
 
 https://www.dataone.org/
+
+Our [bioXgeo](https://www.communityecologylab.com/macrosystems-biology--patterns-of-biodiversity.html) research group has also compiled a list of several abiotic satellite remotely-sensed data that could be useful for your research here:
+https://bioxgeo.github.io/bioXgeo_ProductsTable/. Links to those data are in the last column. 
 
 
 **Follow the R markdown template below to include the following:** 
@@ -78,10 +87,10 @@ The example template below is for GBIF species occurrence data. Lemurs happen to
 
 ```{r, echo=FALSE}
 # Define variable containing url
-url1 <- "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Indri_%28Indri_indri%29.jpg/600px-Indri_%28Indri_indri%29.jpg"
+pic <- "PL_Zarnetske_2012-05-10_65.jpg"
 ```
-<center><img src="`r url1`"></center>
-Indri (*Indri indri*), Analamazaotra Special Reserve, Madagascar. Charles J Sharp 2018.
+<center><img src="`r pic`"></center>
+Indri (*Indri indri*), Analamazaotra Special Reserve, Madagascar. Phoebe L. Zarnetske 2012.
 
 
 ```{r}
