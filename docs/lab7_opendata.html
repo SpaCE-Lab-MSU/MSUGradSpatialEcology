@@ -329,7 +329,7 @@ $(document).ready(function () {
 <p>Wilkinson, M. D., M. Dumontier, Ij. J. Aalbersberg, G. Appleton, M. Axton, A. Baak, N. Blomberg, J.-W. Boiten, L. B. da Silva Santos, P. E. Bourne, J. Bouwman, A. J. Brookes, T. Clark, M. Crosas, I. Dillo, O. Dumon, S. Edmunds, C. T. Evelo, R. Finkers, A. Gonzalez-Beltran, A. J. G. Gray, P. Groth, C. Goble, J. S. Grethe, J. Heringa, P. A. C. ’t Hoen, R. Hooft, T. Kuhn, R. Kok, J. Kok, S. J. Lusher, M. E. Martone, A. Mons, A. L. Packer, B. Persson, P. Rocca-Serra, M. Roos, R. van Schaik, S.-A. Sansone, E. Schultes, T. Sengstag, T. Slater, G. Strawn, M. A. Swertz, M. Thompson, J. van der Lei, E. van Mulligen, J. Velterop, A. Waagmeester, P. Wittenburg, K. Wolstencroft, J. Zhao, and B. Mons. 2016. The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3:160018. <a href="DOI:10.1038/sdata.2016.18" class="uri">DOI:10.1038/sdata.2016.18</a>.</p>
 <p>Please review these principles as you will need to address them in your write-up. You can also review the FAIR Principles at this website: <a href="https://www.go-fair.org/fair-principles/" class="uri">https://www.go-fair.org/fair-principles/</a></p>
 <p>Interested in contributing to open access data? Citizen Science is another area that has been growing in popularity and utility for gaining data across space and time. These data come with their own considerations as they are not systematically collected. Check out <a href="https://www.inaturalist.org/">iNaturalist</a> or <a href="https://ebird.org/home">eBird</a> as two well established citizen science datasets. Consider joining as a user! The records contributed by citizen scientists that are considered “research grade” are incorporated into GBIF!</p>
-<p><img src="https://static.inaturalist.org/sites/1-shareable_image.png?1573071871" style="width:15.0%" alt="iNaturalist Logo" /> <img src="https://pbs.twimg.com/profile_images/1230924849754918912/zPviC75p.jpg" style="width:15.0%" alt="eBird Logo" /></p>
+<p><img src="https://static.inaturalist.org/sites/1-shareable_image.png?1573071871" style="width:20.0%" alt="iNaturalist Logo" /> <img src="https://pbs.twimg.com/profile_images/1230924849754918912/zPviC75p.jpg" style="width:15.0%" alt="eBird Logo" /></p>
 <div id="open-data-summary" class="section level3">
 <h3>Open Data Summary:</h3>
 <p>For this lab assignment, you will summarize a publicly available spatially-explicit dataset (i.e., data are geographically referenced) using the RMarkdown template below. I suggest you find a dataset related to your graduate work and planned paper for the course as this will help you explore potential data for your analyses. You will need to hand in a PDF or HTML produced from R Markdown, including any images, plots, code, and text for answers to the questions.</p>
@@ -355,8 +355,8 @@ $(document).ready(function () {
 </ol>
 <p>The example template below is for GBIF species occurrence data. Lemurs happen to be my absolute favorite animal and I was lucky enough to travel to Madagascar to see several species in 2012. Hence, the template below for gbif uses the largest living lemur, <em>Indri indri</em>, as an example species occurrence dataset. GBIF is the example shown here; you cannot submit your open dataset as GBIF.</p>
 </div>
-<div id="example-tamplate-for-gbif-global-biodiversity-information-facility" class="section level2">
-<h2>Example Tamplate for GBIF: Global Biodiversity Information Facility</h2>
+<div id="example-template-for-gbif-global-biodiversity-information-facility" class="section level2">
+<h2>Example Template for GBIF: Global Biodiversity Information Facility</h2>
 <p><strong>1. Data Category:</strong> Species Occurrences</p>
 <p><strong>2. Data Description:</strong> GBIF is the Global Biodiversity Information Facility which provides free and open access to biodiversity data. Spatial and temporal scale of occurrences varies, depending on the species of interest.</p>
 <p><strong>3. Data Link:</strong> <a href="http://www.gbif.org/" class="uri">http://www.gbif.org/</a></p>
@@ -372,8 +372,10 @@ $(document).ready(function () {
 <img src="PL_Zarnetske_2012-05-10_65.JPG">
 </center>
 <p>Indri (<em>Indri indri</em>), Analamazaotra Special Reserve, Madagascar. Phoebe L. Zarnetske 2012.</p>
-<pre class="r"><code>library(dismo)     # package to easily download gbif occurrence data
-library(raster)     
+<pre class="r"><code>library(dismo)     # package to easily download gbif occurrence data</code></pre>
+<pre><code>## Loading required package: raster</code></pre>
+<pre><code>## Loading required package: sp</code></pre>
+<pre class="r"><code>library(raster)     
 library(sp)
 library(jsonlite)
 indri.gbif &lt;- gbif(&quot;Indri&quot;, &quot;indri&quot;, geo=T) # plot occurrences</code></pre>
