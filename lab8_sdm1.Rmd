@@ -1,0 +1,86 @@
+---
+title: "MSU Graduate Spatial Ecology Lab 8"
+author: "Phoebe Zarnetske; plz@msu.edu"
+date: "Nov 6, 2020"
+urlcolor: blue
+---
+
+# Lab 8: Intro to SDMs
+
+*[RMarkdown version of this Lab](lab8_sdm1.Rmd)*
+
+During the last lab (Lab 7) you viewed the GBIF symposium talks which provided some examples of research involving data from GBIF and their use in SDMs. In this lab, you will be introduced to species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you'll be working through the first part of it in this lab. Over the next two labs, you will continue working through the vignette.   
+
+For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette. You can find the PDF of the vignette here: https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf, and as HTML here: https://rspatial.org/raster/sdm/index.html.
+
+**First**, work through the vignette Part 1 (Chapters 1-4). 
+
+**Second**, answer the dismo vignette Exercises 2.8 (#1-5) using a species of your choice (not *Solanum acaule*; select a species with at least 50 occurrence records - it doesn't have to be the African elephant). Note that Question 4 asks you to use `gmap` to make a basemap - this may not work because it requires a link with Google Maps. If `gmap` doesn't work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 & 7 are optional and will not be graded. 
+
+**Third**, choose one of the types of SDMs from the list below - each student will select a different model, so indicate your choice soon on the Lab 8 Google Doc so that we don't have duplicates. 
+
+Use the template below to generate a standard summary R Markdown-generated HTML file. This will help you get up to speed on next week's topic (model types), and when posted on D2L, will enable all of you have a quick guide to differen model types. Hint: scan forward in the dismo vignette for descriptions of some of these. Otherwise, check the papers uploaded for next week and Google Scholar. In addition to the `dismo` R package, rome of these models are also run through the R package, `biomod2`: https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html. Below is a list of SDM types. If you have another model in mind that is not on the list, check with me first. 
+
+generalized linear model (GLM)
+
+generalized additive model (GAM)
+
+Maxent
+
+Bioclim (or surface range envelope)
+
+GARP
+
+boosted regression (decision) trees (BRT or GBM)
+
+random forests
+
+classification trees (CART)
+
+mahalanobis distance
+
+generalized dissimilarity models (GDM)
+
+artificial neural network (ANN)
+
+DOMAIN
+
+
+**What to hand in as 2 separate files:**
+
+(1) You will need to hand in a PDF or HTML produced from R Markdown showing your work on the vignette with a different species, including any images, plots, code, and text for answers to Exercises 2.6 (#1-5). 
+
+(2) A separate HTML file produced from the R Markdown template below, describing one type of species distribution model. I will be posting these submissions for you all to see on D2L, so your SDM model summary will become a resource for the class.
+
+
+## Template for your summary of a Species Distribution Model 
+
+**Follow the R markdown template below to include the following:** 
+
+**Model Name:** Name the model type
+
+**Model Category:** Regression/Machine Learning/Hybrid/etc.
+
+**Model Description:** General description of how this model works. 
+
+**Model Assumptions:** Any assumptions you'd need to know about the model and about the data's distribution, etc.
+
+**Model Response Data:** A description of the types of data used in this model (Presence/absence, Presence-Only, Pseudo-Absence, Abundance, etc.)
+
+**Model Explanatory Data:** A description of the types of data used as predictors/explanatory variables in this model (categorical okay? only continuous?)
+
+**Model Links and Use with R:** an html link to R packages on the CRAN site that employ this model (with brief description), and links to any helpful websites that officially describe this model
+
+**Example Papers:** list at least 2 full references for publications that use this model to generate a SDM.
+
+**Example with R:** Provide annotated code to load the required package(s) to run the model. 
+
+```{r}
+library(dismo)     # package to run the model
+```
+
+
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+

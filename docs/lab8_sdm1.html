@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Phoebe Zarnetske; plz@msu.edu" />
+
+
+<title>MSU Graduate Spatial Ecology Lab 8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">MSU Grad Spatial Ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="lab1_R.html">Lab 1</a>
+</li>
+<li>
+  <a href="lab2_scale.html">Lab 2</a>
+</li>
+<li>
+  <a href="lab3_patch_design.html">Lab 3</a>
+</li>
+<li>
+  <a href="lab4_autocorrelation.html">Lab 4</a>
+</li>
+<li>
+  <a href="lab5_variograms.html">Lab 5</a>
+</li>
+<li>
+  <a href="lab6_interp_connect.html">Lab 6</a>
+</li>
+<li>
+  <a href="lab7_opendata.html">Lab 7</a>
+</li>
+<li>
+  <a href="lab8_sdm1.html">Lab 8</a>
+</li>
+<li>
+  <a href="lab9_sdm2.html">Lab 9</a>
+</li>
+<li>
+  <a href="lab10_sdm3.html">Lab 10</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 8</h1>
+<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
+<h4 class="date">Nov 6, 2020</h4>
+
+</div>
+
+
+<div id="lab-8-intro-to-sdms" class="section level1">
+<h1>Lab 8: Intro to SDMs</h1>
+<p><em><a href="lab8_sdm1.Rmd">RMarkdown version of this Lab</a></em></p>
+<p>During the last lab (Lab 7) you viewed the GBIF symposium talks which provided some examples of research involving data from GBIF and their use in SDMs. In this lab, you will be introduced to species distribution models (SDMs) using the R package, <code>dismo</code>: <a href="https://cran.r-project.org/web/packages/dismo/index.html" class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>. The package contains a great vignette and you’ll be working through the first part of it in this lab. Over the next two labs, you will continue working through the vignette.</p>
+<p>For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette. You can find the PDF of the vignette here: <a href="https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf" class="uri">https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf</a>, and as HTML here: <a href="https://rspatial.org/raster/sdm/index.html" class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
+<p><strong>First</strong>, work through the vignette Part 1 (Chapters 1-4).</p>
+<p><strong>Second</strong>, answer the dismo vignette Exercises 2.8 (#1-5) using a species of your choice (not <em>Solanum acaule</em>; select a species with at least 50 occurrence records - it doesn’t have to be the African elephant). Note that Question 4 asks you to use <code>gmap</code> to make a basemap - this may not work because it requires a link with Google Maps. If <code>gmap</code> doesn’t work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 &amp; 7 are optional and will not be graded.</p>
+<p><strong>Third</strong>, choose one of the types of SDMs from the list below - each student will select a different model, so indicate your choice soon on the Lab 8 Google Doc so that we don’t have duplicates.</p>
+<p>Use the template below to generate a standard summary R Markdown-generated HTML file. This will help you get up to speed on next week’s topic (model types), and when posted on D2L, will enable all of you have a quick guide to differen model types. Hint: scan forward in the dismo vignette for descriptions of some of these. Otherwise, check the papers uploaded for next week and Google Scholar. In addition to the <code>dismo</code> R package, rome of these models are also run through the R package, <code>biomod2</code>: <a href="https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html" class="uri">https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html</a>. Below is a list of SDM types. If you have another model in mind that is not on the list, check with me first.</p>
+<p>generalized linear model (GLM)</p>
+<p>generalized additive model (GAM)</p>
+<p>Maxent</p>
+<p>Bioclim (or surface range envelope)</p>
+<p>GARP</p>
+<p>boosted regression (decision) trees (BRT or GBM)</p>
+<p>random forests</p>
+<p>classification trees (CART)</p>
+<p>mahalanobis distance</p>
+<p>generalized dissimilarity models (GDM)</p>
+<p>artificial neural network (ANN)</p>
+<p>DOMAIN</p>
+<p><strong>What to hand in as 2 separate files:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>You will need to hand in a PDF or HTML produced from R Markdown showing your work on the vignette with a different species, including any images, plots, code, and text for answers to Exercises 2.6 (#1-5).</p></li>
+<li><p>A separate HTML file produced from the R Markdown template below, describing one type of species distribution model. I will be posting these submissions for you all to see on D2L, so your SDM model summary will become a resource for the class.</p></li>
+</ol>
+<div id="template-for-your-summary-of-a-species-distribution-model" class="section level2">
+<h2>Template for your summary of a Species Distribution Model</h2>
+<p><strong>Follow the R markdown template below to include the following:</strong></p>
+<p><strong>Model Name:</strong> Name the model type</p>
+<p><strong>Model Category:</strong> Regression/Machine Learning/Hybrid/etc.</p>
+<p><strong>Model Description:</strong> General description of how this model works.</p>
+<p><strong>Model Assumptions:</strong> Any assumptions you’d need to know about the model and about the data’s distribution, etc.</p>
+<p><strong>Model Response Data:</strong> A description of the types of data used in this model (Presence/absence, Presence-Only, Pseudo-Absence, Abundance, etc.)</p>
+<p><strong>Model Explanatory Data:</strong> A description of the types of data used as predictors/explanatory variables in this model (categorical okay? only continuous?)</p>
+<p><strong>Model Links and Use with R:</strong> an html link to R packages on the CRAN site that employ this model (with brief description), and links to any helpful websites that officially describe this model</p>
+<p><strong>Example Papers:</strong> list at least 2 full references for publications that use this model to generate a SDM.</p>
+<p><strong>Example with R:</strong> Provide annotated code to load the required package(s) to run the model.</p>
+<pre class="r"><code>library(dismo)     # package to run the model</code></pre>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
