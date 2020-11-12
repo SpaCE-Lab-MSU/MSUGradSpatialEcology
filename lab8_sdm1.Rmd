@@ -17,7 +17,27 @@ For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette.
 
 **First**, work through the vignette Part 1 (Chapters 1-4). 
 
-**Second**, answer the dismo vignette Exercises 2.8 (#1-5) using a species of your choice (not *Solanum acaule*; select a species with at least 50 occurrence records - it doesn't have to be the African elephant). Note that Question 4 asks you to use `gmap` to make a basemap - this may not work because it requires a link with Google Maps. If `gmap` doesn't work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 & 7 are optional and will not be graded. 
+**Second**, answer the dismo vignette Exercises 2.8 (#1-5; and copied below) using a species of your choice (not *Solanum acaule*; select a species with at least 50 occurrence records - it doesn't have to be the African elephant). Note that Question 4 asks you to use `gmap` to make a basemap - this may not work because it requires a link with Google Maps. If `gmap` doesn't work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 & 7 are optional and will not be graded. 
+
+Here are the questions from the `dismo` vignette:
+
+*Exercises 2.8*
+
+1. Use the gbif function to download records for the African elephant (or another species of your preference, try to get one with between 10 and 100 records). Use option “geo=FALSE” to also get records with no (numerical) georeference.
+
+2. Summarize the data: how many records are there, how many have coordinates, how many records without coordinates have a textual georeference (locality description)?
+
+3. Use the ‘geocode’ function to georeference up to 10 records without coordinates
+
+4. Make a simple map of all the records, using a color and symbol to distinguish between the coordinates from gbif and the ones returned by Google (via the geocode function). Use ‘gmap’ to create a basemap. **See note above; gmap may not work so just use another basemap.
+
+5. Do you think the observations are a reasonable representation of the distribution (and ecological niche) of the species?
+
+OPTIONAL:
+
+6. Use the ‘rasterize’ function to create a raster of the number of observations and make a map. Use “wrld_simpl” from the maptools package for country boundaries.
+
+7. Map the uncertainty associated with the georeferences. Some records in data returned by gbif have that. You can also extract it from the data returned by the geocode function.
 
 **Third**, choose one of the types of SDMs from the list below - each student will select a different model, so indicate your choice soon on the Lab 8 Google Doc so that we don't have duplicates. 
 
