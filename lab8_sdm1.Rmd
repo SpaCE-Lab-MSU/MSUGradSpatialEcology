@@ -27,7 +27,7 @@ Here are the questions from the `dismo` vignette:
 
 2. Summarize the data: how many records are there, how many have coordinates, how many records without coordinates have a textual georeference (locality description)?
 
-3. Use the ‘geocode’ function to georeference up to 10 records without coordinates
+3. Use the ‘geocode’ function to georeference up to 10 records without coordinates - if this doesn't work for you, skip it (if it asks you for a Google API, you do not need to complete this step; instead just use data that are already geocoded).
 
 4. Make a simple map of all the records, using a color and symbol to distinguish between the coordinates from gbif and the ones returned by Google (via the geocode function). Use ‘gmap’ to create a basemap. **See note above; gmap may not work so just use another basemap.
 

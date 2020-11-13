@@ -337,7 +337,7 @@ $(document).ready(function () {
 <ol style="list-style-type: decimal">
 <li><p>Use the gbif function to download records for the African elephant (or another species of your preference, try to get one with between 10 and 100 records). Use option “geo=FALSE” to also get records with no (numerical) georeference.</p></li>
 <li><p>Summarize the data: how many records are there, how many have coordinates, how many records without coordinates have a textual georeference (locality description)?</p></li>
-<li><p>Use the ‘geocode’ function to georeference up to 10 records without coordinates</p></li>
+<li><p>Use the ‘geocode’ function to georeference up to 10 records without coordinates - if this doesn’t work for you, skip it (if it asks you for a Google API, you do not need to complete this step; instead just use data that are already geocoded).</p></li>
 <li><p>Make a simple map of all the records, using a color and symbol to distinguish between the coordinates from gbif and the ones returned by Google (via the geocode function). Use ‘gmap’ to create a basemap. **See note above; gmap may not work so just use another basemap.</p></li>
 <li><p>Do you think the observations are a reasonable representation of the distribution (and ecological niche) of the species?</p></li>
 </ol>
@@ -378,8 +378,6 @@ $(document).ready(function () {
 <p><strong>Example Papers:</strong> list at least 2 full references for publications that use this model to generate a SDM.</p>
 <p><strong>Example with R:</strong> Provide annotated code to load the required package(s) to run the model.</p>
 <pre class="r"><code>library(dismo)     # package to run the model</code></pre>
-<pre><code>## Loading required package: raster</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
