@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Phoebe Zarnetske; plz@msu.edu" />
+
+
+<title>MSU Graduate Spatial Ecology Lab 9</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">MSU Grad Spatial Ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="lab1_R.html">Lab 1</a>
+</li>
+<li>
+  <a href="lab2_scale.html">Lab 2</a>
+</li>
+<li>
+  <a href="lab3_patch_design.html">Lab 3</a>
+</li>
+<li>
+  <a href="lab4_autocorrelation.html">Lab 4</a>
+</li>
+<li>
+  <a href="lab5_variograms.html">Lab 5</a>
+</li>
+<li>
+  <a href="lab6_interp_connect.html">Lab 6</a>
+</li>
+<li>
+  <a href="lab7_opendata.html">Lab 7</a>
+</li>
+<li>
+  <a href="lab8_sdm1.html">Lab 8</a>
+</li>
+<li>
+  <a href="lab9_sdm2.html">Lab 9</a>
+</li>
+<li>
+  <a href="lab10_sdm3.html">Lab 10</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 9</h1>
+<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
+<h4 class="date">Nov 6, 2020</h4>
+
+</div>
+
+
+<div id="lab-9-sdms-model-fitting-prediction-evaluation" class="section level1">
+<h1>Lab 9: SDMs: Model fitting, prediction, evaluation</h1>
+<p><em><a href="lab9_sdm1.Rmd">RMarkdown version of this Lab</a></em></p>
+<p>This lab is a continuation of species distribution models (SDMs) using the R package, <code>dismo</code>: <a href="https://cran.r-project.org/web/packages/dismo/index.html" class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8’s portion of the vignette with your species of choice before starting on Lab 9.</p>
+<p>For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the PDF of the vignette here: <a href="https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf" class="uri">https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf</a>, and as HTML here: <a href="https://rspatial.org/raster/sdm/index.html" class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
+<center>
+<img src="tempseasonality.jpg">
+</center>
+<div id="bioclimatic-variables" class="section level2">
+<h2>Bioclimatic Variables</h2>
+<p>In Ch. 4 of the vignette, you were introduced to environmental predictors, and specifically bioclimatic variables. The dismo vignette reads in <a href="https://www.worldclim.org/">WorldClim</a> bioclimatic variables. Worldclim interpolates temperature and precipitation from weather stations to create a modeled representation of these data. Note that you can create bioclimatic variables from any gridded climate data source using the command <code>biovars</code>. For example, you could use satellite remote sensing (direct measures instead of interpolated) - <a href="https://modis.gsfc.nasa.gov/data/dataprod/">NASA’s MODIS land surface temperature</a> and <a href="https://www.nasa.gov/mission_pages/GPM/main/index.html">NASA’s GPM (global precipitation measurement)</a>. Or you could use <a href="https://prism.oregonstate.edu/">PRISM</a> data if you’re working in the United States.</p>
+<p>The 19 Bioclimatic Variables are listed below. Metadata for these data can be found <a href="https://worldclim.org/data/v1.4/formats.html">here</a>.</p>
+<p><em>UNITS: the units for temperature are an order of magnitude larger: °C x 10, and ‘mm’ is the unit for precipitation.</em></p>
+<p>BIO1 = Annual Mean Temperature</p>
+<p>BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))</p>
+<p>BIO3 = Isothermality (BIO2/BIO7) (×100)</p>
+<p>BIO4 = Temperature Seasonality (standard deviation ×100)</p>
+<p>BIO5 = Max Temperature of Warmest Month</p>
+<p>BIO6 = Min Temperature of Coldest Month</p>
+<p>BIO7 = Temperature Annual Range (BIO5-BIO6)</p>
+<p>BIO8 = Mean Temperature of Wettest Quarter</p>
+<p>BIO9 = Mean Temperature of Driest Quarter</p>
+<p>BIO10 = Mean Temperature of Warmest Quarter</p>
+<p>BIO11 = Mean Temperature of Coldest Quarter</p>
+<p>BIO12 = Annual Precipitation</p>
+<p>BIO13 = Precipitation of Wettest Month</p>
+<p>BIO14 = Precipitation of Driest Month</p>
+<p>BIO15 = Precipitation Seasonality (Coefficient of Variation)</p>
+<p>BIO16 = Precipitation of Wettest Quarter</p>
+<p>BIO17 = Precipitation of Driest Quarter</p>
+<p>BIO18 = Precipitation of Warmest Quarter</p>
+<p>BIO19 = Precipitation of Coldest Quarter</p>
+</div>
+<div id="what-to-hand-in-for-lab-9" class="section level2">
+<h2>What to hand in for Lab 9:</h2>
+<p>Work through Part 2 (Ch. 5-7) of the vignette with the example dataset. Choose a different species than the one provided in the vignette (different than the <em>Bradypus</em> species; it would be easiest to select the species you chose in Lab 8 since you already completed that section). <em>Note that the extraction of the environmental predictors occurs in Chapter 4 of the vignette, so if you choose a different species than you used in Lab 8, you will need to go back to earlier portions of the vignette.</em> Re-create Ch. 5-7 of the vignette with your species of interest, constraining the region of your study area to your species known range (ensure that you remove outliers from zoos, incorrect locations by looking up the known range from an independent source).</p>
+<p>For more background information on <strong>AUC and Spatial Sorting Bias</strong>, see the additional text below the QUESTIONS.</p>
+<p><em>NOTE:</em> In Ch. 5-7 of the vignette, when creating the reduced model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12), you can choose to select different bioclimatic variables - see the list of bioclimatic variables above. You should choose a different subset only if the results of your full model (containing the fuller set of bioclimatic variables) suggest a different set, or if you have <em>a priori</em> knowledge of the species-climate relationship.</p>
+<p>Show your work (code and output) for this portion of the vignette (Chapters 5-7). You can either add on to Lab 8’s .Rmd file of the vignette that you already produced to create a longer PDF, or you can hand in a new PDF with just Lab 9’s section included. Either way, please hand in a PDF produced from your .Rmd file to show all your work for Ch. 5-7.</p>
+<p>After completing the vignette with your species of choice, answer the following QUESTIONS:</p>
+<div id="question-1" class="section level3">
+<h3>QUESTION 1:</h3>
+<p>Describe the differences you observe in the mapped prediction between the full model, and the reduced model. Which mapped prediction is closer to the known distribution of the species? Provide a source and image (e.g., screenshot) of an independent source showing the range map of the species.</p>
+</div>
+<div id="question-2" class="section level3">
+<h3>QUESTION 2:</h3>
+<p>Which model, the full or reduced model, performs better? Why? Include plots and model statistics to help with your explanation.</p>
+<p><strong>Extra information on AUC and Spatial Sorting Bias (SSB):</strong> In general AUC improves with larger geographic extents. As with most of these metrics, you should only compare them across models that have the same input data (meaning the same records for occurrences; same number of rows of unique presence and absence locations). Splitting data into training and testing makes the model susceptible to being influenced by the actual distances between the testing and training data in space. To remove this bias, you can subset the data into training and testing with pairwise distance sampling (<code>pwdSample</code> in <code>dismo</code> package).</p>
+<p>Type the following to see the full details on the <code>pwdSample</code> command:</p>
+<pre class="r"><code>library(dismo)
+?pwdSample</code></pre>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
