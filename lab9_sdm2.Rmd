@@ -1,13 +1,13 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 9"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Nov 6, 2020"
+date: "Nov 13, 2020"
 urlcolor: blue
 ---
 
 # Lab 9: SDMs: Model fitting, prediction, evaluation
 
-*[RMarkdown version of this Lab](lab9_sdm1.Rmd)*
+*[RMarkdown version of this Lab](lab9_sdm2.Rmd)*
 
 This lab is a continuation of species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8's portion of the vignette with your species of choice before starting on Lab 9.
 
