@@ -11,7 +11,7 @@ urlcolor: blue
 
 This lab is a continuation of species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8's portion of the vignette with your species of choice before starting on Lab 9.
 
-For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the PDF of the vignette here: https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf, and as HTML here: https://rspatial.org/raster/sdm/index.html. 
+For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the PDF of the vignette here: [sdm.pdf](sdm.pdf), and as HTML here: https://rspatial.org/raster/sdm/index.html. 
 
 ```{r, echo=FALSE}
 # Define variable containing url
