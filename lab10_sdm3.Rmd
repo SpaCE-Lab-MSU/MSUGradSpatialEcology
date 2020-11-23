@@ -1,0 +1,38 @@
+---
+title: "MSU Graduate Spatial Ecology Lab 10"
+author: "Phoebe Zarnetske; plz@msu.edu"
+date: "Nov 22, 2020"
+urlcolor: blue
+---
+
+# Lab 10: SDMs: Modeling Methods
+
+*[RMarkdown version of this Lab](lab10_sdm3.Rmd)*
+
+This lab is a continuation of species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you worked through the first part of it in Lab 8, and the second part in Lab 9. You should complete Lab 8 & 9's portion of the vignette with your species of choice before starting on Lab 10.
+
+For this lab, you will work through Part 3 (Chapters 8-13) of the dismo vignette. You can find the PDF of the vignette here: [sdm.pdf](sdm.pdf), and as HTML here: https://rspatial.org/raster/sdm/index.html. 
+
+```{r, echo=FALSE}
+# Define variable containing url
+pic <- "sdm82-1.png"
+```
+<center><img src="`r pic`"></center>
+Comparison of outputs for various SDM algorithms from the `dismo` vignette.
+
+## Types of SDM Models
+In Lab 8, you filled in a template describing a particular type of SDM of your choice. See D2L for those summaries as a reference. 
+
+For this Lab, work through Ch. 8-13 (from Modeling Methods through Geographic Modles) with your species' data from Lab 9. Get as far as you can by building multiple models with different algorithms, and comparing them. Working on the Geographic Models (Ch. 13) is optional.
+
+After completing the vignette with your species of choice, answer the following QUESTIONS:
+
+### QUESTION 1: 
+Describe the differences you observe in the mapped prediction between the different modeling algorithms. Which mapped prediction is closer to the known distribution of the species? Provide a source and image (e.g., screenshot) of an independent source showing the range map of the species. 
+
+### QUESTION 2:
+Of all the models you tried, which model performs best for your species' data? Why? Include plots and model statistics to help with your explanation. Do you agree that model averaging (i.e., ensemble modeling) is superior to selecting one top model? Why or why not?
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+

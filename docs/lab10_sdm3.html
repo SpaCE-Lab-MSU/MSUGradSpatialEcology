@@ -12,7 +12,7 @@
 <meta name="author" content="Phoebe Zarnetske; plz@msu.edu" />
 
 
-<title>MSU Graduate Spatial Ecology Lab 9</title>
+<title>MSU Graduate Spatial Ecology Lab 10</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -314,64 +314,34 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 9</h1>
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 10</h1>
 <h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
-<h4 class="date">Nov 13, 2020</h4>
+<h4 class="date">Nov 22, 2020</h4>
 
 </div>
 
 
-<div id="lab-9-sdms-model-fitting-prediction-evaluation" class="section level1">
-<h1>Lab 9: SDMs: Model fitting, prediction, evaluation</h1>
-<p><em><a href="lab9_sdm2.Rmd">RMarkdown version of this Lab</a></em></p>
-<p>This lab is a continuation of species distribution models (SDMs) using the R package, <code>dismo</code>: <a href="https://cran.r-project.org/web/packages/dismo/index.html" class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8’s portion of the vignette with your species of choice before starting on Lab 9.</p>
-<p>For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the PDF of the vignette here: <a href="sdm.pdf">sdm.pdf</a>, and as HTML here: <a href="https://rspatial.org/raster/sdm/index.html" class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
+<div id="lab-10-sdms-modeling-methods" class="section level1">
+<h1>Lab 10: SDMs: Modeling Methods</h1>
+<p><em><a href="lab10_sdm3.Rmd">RMarkdown version of this Lab</a></em></p>
+<p>This lab is a continuation of species distribution models (SDMs) using the R package, <code>dismo</code>: <a href="https://cran.r-project.org/web/packages/dismo/index.html" class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>. The package contains a great vignette and you worked through the first part of it in Lab 8, and the second part in Lab 9. You should complete Lab 8 &amp; 9’s portion of the vignette with your species of choice before starting on Lab 10.</p>
+<p>For this lab, you will work through Part 3 (Chapters 8-13) of the dismo vignette. You can find the PDF of the vignette here: <a href="sdm.pdf">sdm.pdf</a>, and as HTML here: <a href="https://rspatial.org/raster/sdm/index.html" class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
 <center>
-<img src="tempseasonality.jpg">
+<img src="sdm82-1.png">
 </center>
-<div id="bioclimatic-variables" class="section level2">
-<h2>Bioclimatic Variables</h2>
-<p>In Ch. 4 of the vignette, you were introduced to environmental predictors, and specifically bioclimatic variables. The dismo vignette reads in <a href="https://www.worldclim.org/">WorldClim</a> bioclimatic variables. Worldclim interpolates temperature and precipitation from weather stations to create a modeled representation of these data. Note that you can create bioclimatic variables from any gridded climate data source using the command <code>biovars</code>. For example, you could use satellite remote sensing (direct measures instead of interpolated) - <a href="https://modis.gsfc.nasa.gov/data/dataprod/">NASA’s MODIS land surface temperature</a> and <a href="https://www.nasa.gov/mission_pages/GPM/main/index.html">NASA’s GPM (global precipitation measurement)</a>. Or you could use <a href="https://prism.oregonstate.edu/">PRISM</a> data if you’re working in the United States.</p>
-<p>The 19 Bioclimatic Variables are listed below. Metadata for these data can be found <a href="https://worldclim.org/data/v1.4/formats.html">here</a>.</p>
-<p><em>UNITS: the units for temperature are an order of magnitude larger: °C x 10, and ‘mm’ is the unit for precipitation.</em></p>
-<p>BIO1 = Annual Mean Temperature</p>
-<p>BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))</p>
-<p>BIO3 = Isothermality (BIO2/BIO7) (×100)</p>
-<p>BIO4 = Temperature Seasonality (standard deviation ×100)</p>
-<p>BIO5 = Max Temperature of Warmest Month</p>
-<p>BIO6 = Min Temperature of Coldest Month</p>
-<p>BIO7 = Temperature Annual Range (BIO5-BIO6)</p>
-<p>BIO8 = Mean Temperature of Wettest Quarter</p>
-<p>BIO9 = Mean Temperature of Driest Quarter</p>
-<p>BIO10 = Mean Temperature of Warmest Quarter</p>
-<p>BIO11 = Mean Temperature of Coldest Quarter</p>
-<p>BIO12 = Annual Precipitation</p>
-<p>BIO13 = Precipitation of Wettest Month</p>
-<p>BIO14 = Precipitation of Driest Month</p>
-<p>BIO15 = Precipitation Seasonality (Coefficient of Variation)</p>
-<p>BIO16 = Precipitation of Wettest Quarter</p>
-<p>BIO17 = Precipitation of Driest Quarter</p>
-<p>BIO18 = Precipitation of Warmest Quarter</p>
-<p>BIO19 = Precipitation of Coldest Quarter</p>
-</div>
-<div id="what-to-hand-in-for-lab-9" class="section level2">
-<h2>What to hand in for Lab 9:</h2>
-<p>Work through Part 2 (Ch. 5-7) of the vignette with the example dataset. Choose a different species than the one provided in the vignette (different than the <em>Bradypus</em> species; it would be easiest to select the species you chose in Lab 8 since you already completed that section). <em>Note that the extraction of the environmental predictors occurs in Chapter 4 of the vignette, so if you choose a different species than you used in Lab 8, you will need to go back to earlier portions of the vignette.</em> Re-create Ch. 5-7 of the vignette with your species of interest, constraining the region of your study area to your species known range (ensure that you remove outliers from zoos, incorrect locations by looking up the known range from an independent source).</p>
-<p>For more background information on <strong>AUC and Spatial Sorting Bias</strong>, see the additional text below the QUESTIONS.</p>
-<p><em>NOTE:</em> In Ch. 5-7 of the vignette, when creating the reduced model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12), you can choose to select different bioclimatic variables - see the list of bioclimatic variables above. You should choose a different subset only if the results of your full model (containing the fuller set of bioclimatic variables) suggest a different set, or if you have <em>a priori</em> knowledge of the species-climate relationship.</p>
-<p>Show your work (code and output) for this portion of the vignette (Chapters 5-7). You can either add on to Lab 8’s .Rmd file of the vignette that you already produced to create a longer PDF, or you can hand in a new PDF with just Lab 9’s section included. Either way, please hand in a PDF produced from your .Rmd file to show all your work for Ch. 5-7.</p>
+<p>Comparison of outputs for various SDM algorithms from the <code>dismo</code> vignette.</p>
+<div id="types-of-sdm-models" class="section level2">
+<h2>Types of SDM Models</h2>
+<p>In Lab 8, you filled in a template describing a particular type of SDM of your choice. See D2L for those summaries as a reference.</p>
+<p>For this Lab, work through Ch. 8-13 (from Modeling Methods through Geographic Modles) with your species’ data from Lab 9. Get as far as you can by building multiple models with different algorithms, and comparing them. Working on the Geographic Models (Ch. 13) is optional.</p>
 <p>After completing the vignette with your species of choice, answer the following QUESTIONS:</p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
-<p>Describe the differences you observe in the mapped prediction between the full model, and the reduced model. Which mapped prediction is closer to the known distribution of the species? Provide a source and image (e.g., screenshot) of an independent source showing the range map of the species.</p>
+<p>Describe the differences you observe in the mapped prediction between the different modeling algorithms. Which mapped prediction is closer to the known distribution of the species? Provide a source and image (e.g., screenshot) of an independent source showing the range map of the species.</p>
 </div>
 <div id="question-2" class="section level3">
 <h3>QUESTION 2:</h3>
-<p>Which model, the full or reduced model, performs better? Why? Include plots and model statistics to help with your explanation.</p>
-<p><strong>Extra information on AUC and Spatial Sorting Bias (SSB):</strong> In general AUC improves with larger geographic extents. As with most of these metrics, you should only compare them across models that have the same input data (meaning the same records for occurrences; same number of rows of unique presence and absence locations). Splitting data into training and testing makes the model susceptible to being influenced by the actual distances between the testing and training data in space. To remove this bias, you can subset the data into training and testing with pairwise distance sampling (<code>pwdSample</code> in <code>dismo</code> package).</p>
-<p>Type the following to see the full details on the <code>pwdSample</code> command:</p>
-<pre class="r"><code>library(dismo)
-?pwdSample</code></pre>
+<p>Of all the models you tried, which model performs best for your species’ data? Why? Include plots and model statistics to help with your explanation. Do you agree that model averaging (i.e., ensemble modeling) is superior to selecting one top model? Why or why not?</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
