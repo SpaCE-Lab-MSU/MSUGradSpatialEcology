@@ -1,16 +1,16 @@
 ---
-title: "MSU Graduate Spatial Ecology Fall 2020"
+title: "MSU Graduate Spatial Ecology Fall 2022"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Aug 19, 2020"
+date: "Sep 2, 2022"
 urlcolor: blue
 ---
 
 ## Welcome {-}
 
 
-This website contains the lab exercises for the MSU Graduate course: Spatial Ecology (FOR870), Fall 2020. Labs will be posted through the semester. The labs are generally mixtures of background, code with descriptive text, and results. Most labs have exercises for you to produce working code and output such as plots, and will require R and RStudio. Please read the instructions under "LAB" on D2L, and on the Syllabus. These contain due dates, how to submit your Lab assignments, and expectations. If you are coming to this website and are not enrolled in the course, feel free to try out the exercises.
+This website contains the lab exercises for the MSU Graduate course: Spatial Ecology (IBIO870; cross-listed FW/FOR), Fall 2022. Labs will be posted through the semester. The labs are generally mixtures of background, code with descriptive text, and results. Most labs have exercises for you to produce working code and output such as plots, and will require R and RStudio. Please read the instructions under "LAB" on D2L, and on the Syllabus. These contain due dates, how to submit your Lab assignments, and expectations. If you are coming to this website and are not enrolled in the course, feel free to try out the exercises.
 
-Please note that this website is Version 1.0, and includes labs recently updated from previous semesters of Spatial Ecology. Please let me know if anything is unclear.
+Please note that this website is Version 1.1, and includes labs recently updated from previous semesters of Spatial Ecology. Please let me know if anything is unclear.
 
 ### Requirements
 
@@ -49,7 +49,7 @@ A few labs need other files to be complete, and if these are necessary they will
 I don't expect you to be familiar with git or GitHub (which you may have heard of) but this is a convenient way to make all of the R source code and data files available to you. We will go over an introduction to GitHub in a future Lab.
 
 ### Lab Community Forum
-Please see the Syllabus and D2L for a full description of the Lab Community Forum. The Lab Community Forum is a collection of Google Docs in the course Google Shared Drive, one for each Lab. Further Instructions are found at the top of each Lab Community Forum Google Doc. Remember that even if you don't have a question to post to the Lab Community Forum, you can add in some helpful tips you came across while using R that relate to the Lab. Participation in this course includes contributions to this Forum. See D2L "LABS" for the link. 
+Please see the Syllabus and D2L for a full description of the Lab Community Forum. The Lab Community Forum is a collection of Google Docs in the course Google Shared Drive, one for each Lab. Further instructions are found at the top of each Lab Community Forum Google Doc. Remember that even if you don't have a question to post to the Lab Community Forum, you can add in some helpful tips you came across while using R that relate to the Lab. Participation in this course includes contributions to this Forum. See D2L "LABS" for the link. 
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020; 2022 by Phoebe Zarnetske</a>.

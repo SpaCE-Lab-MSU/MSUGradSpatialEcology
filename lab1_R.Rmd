@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 1"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 4, 2018, Aug 18-Sep 4, 2020"
+date: "Sep 2016; rev. Sep 4, 2018, Aug 18-Sep 4, 2020, Sep 2, 2022"
 urlcolor: blue
 ---
 
@@ -34,7 +34,7 @@ You can also review the FAIR Principles at this website: https://www.go-fair.org
 
 One of the most important (and time consuming) steps with your data is organizing it. The readings for this lab will focus on that. Rather than work in Excel or another point and click program, R will enable you to track your changes from the very beginning. This is extremely important because chances are, you’ll need to re-run your scripts at some point during your analysis because you’ve realized you made some mistake along the way. It also vastly reduces human error because it provides you with a track record for reproducible research.  
 
-Please make sure you have read Borer et al. (2009) and White et al. (2013) and are familiar with proper data entry and management. If you follow these guidelines I guarantee you’ll be more efficient. For more in-depth information, see the 2011 ESA workshop, “How to Manage Ecological Data for Effective Use and Re-use”: https://www.dataone.org/esa-2011-how-manage-ecological-data-effective-use-and-re-use. The papers are on D2L, as are links to other data management resources in our Resources folder. 
+Please make sure you have read Borer et al. (2009) and White et al. (2013) and are familiar with proper data entry and management. If you follow these guidelines I guarantee you’ll be more efficient. For more in-depth information, see this publication from the British Ecological Society: “A Guide to Data Management in Ecology and Evolution”: https://www.britishecologicalsociety.org/wp-content/uploads/Publ_Data-Management-Booklet.pdf. The papers are on D2L, as are links to other data management resources in our Resources folder. 
 
 Elizabeth T. Borer, Eric W. Seabloom, Matthew B. Jones, and Mark Schildhauer 2009. Some Simple Guidelines for Effective Data Management. Bulletin of the Ecological Society of America 90:205–214. http://dx.doi.org/10.1890/0012-9623-90.2.205  
 
@@ -46,7 +46,7 @@ White, E., E. Baldridge, Z. T. Brym, K. J. Locey, D. J. McGlinn, and S. R. Supp.
 See the main page for this website to learn more about downloading R (https://www.r-project.org/) and RStudio (https://www.rstudio.com/). Please make sure you're using the most recent version of R. R developers have funny names for R versions. Can you figure out their theme? You will use RStudio for lab (which runs R and has a nice layout… it also contains R Markdown which we will use for generating Lab Assignment reports; see related homework ahead of Lab 2 at the end of this document).  
  
 Some helpful tips when starting up R:
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, results='hide', warning=FALSE}
 # Clear all existing data
 rm(list=ls())
 
@@ -182,4 +182,4 @@ a.	Watch the intro video here: http://rmarkdown.rstudio.com/lesson-1.html
 b.	Work through the tutorial and cover “How it Works”, “Code Chunks”, and “Markdown Basics”. I recommend using “KnitR” when you want to publish (i.e., click on “knit to HTML”, “knit to PDF”, etc. in the pull-down menu in RStudio).
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.
