@@ -294,7 +294,7 @@ $(document).ready(function () {
 <div id="lab-1-r-data-management-ggplot2-stommel-diagram" class="section level1">
 <h1>Lab 1: R, Data Management, ggplot2, Stommel Diagram</h1>
 <p><em><a href="lab1_R.Rmd">Download RMarkdown Source code for this lab</a></em><br />
-Refer to the Welcome page of this website for the “Requirements” for working on each lab (create “/data/lab1” and also run any script from your course folder).</p>
+Refer to the Welcome page of this website for the “Requirements” for working on each lab (run any script from your course folder).</p>
 <p>This lab has 3 Parts in addition to your participation in the Lab Community Forum for this lab (link to the Google Shared Drive on D2L in the description for “LABS”). Note that you only need to hand in Part 3 (Stommel Diagram), due in the D2L Lab 1 Assignment Box by the Lab Due Date (refer to the Syllabus for exact date).</p>
 <p>At the end of Lab 1 is Homework in preparation for Lab 2.</p>
 <div id="part-1-r-data-management" class="section level2">
@@ -370,29 +370,10 @@ load(file.path(data_path,&quot;lab1.RData&quot;))</code></pre>
 <p>As you go, save your R script. (Refer to shortcut in File-Save menu).</p>
 </div>
 </div>
-<div id="part-2-practice-with-r-and-ggplot2" class="section level2">
-<h2>Part 2: Practice with R and ggplot2</h2>
-<p>Ahead of the course, I recommended working through this R tutorial: <a href="https://datacarpentry.org/R-ecology-lesson/index.html" class="uri">https://datacarpentry.org/R-ecology-lesson/index.html</a>. If you would like more practice, complete Part 2 of this lab. You don’t need to hand in anything for this portion of the lab. If you get stuck, ask a question on the Lab Community Forum for Lab 1. If you are already a pro at <strong>ggplot2</strong> and R, you can skip this and begin working on Part 3 and the Homework prep for Lab 2. However, you should still weigh in on the Lab Community Forum to offer advice / relevant tips to your colleagues.</p>
-<p>Data for the following exercise are also on D2L in the Lab 1 folder.</p>
-<p>Navigate to: <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html</a> and continue to the 2-panel plot on the next page: <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html</a> These are exercises written by Dr. David Roberts, Montana State University. He has written several R packages: <a href="http://ecology.msu.montana.edu/droberts/droberts.html" class="uri">http://ecology.msu.montana.edu/droberts/droberts.html</a>. For more info on the data used in the tutorial see: <a href="http://www.davidzeleny.net/anadat-r/doku.php/en:data:bryce" class="uri">http://www.davidzeleny.net/anadat-r/doku.php/en:data:bryce</a></p>
-<p>NOTE: if you run into issues loading the bryceveg data files, just type in R: <strong>install.packages(labdsv)</strong> press Enter (hard return), then <strong>library(labdsv)</strong> to install the <strong>labdsv</strong> package. The <strong>labdsv</strong> package contains all the datasets.</p>
-<p>Practice your skills with <strong>ggplot2</strong> by recreating the following plots in <strong>ggplot2</strong>: (note the 4th plot is a 2-part plot from ).</p>
-<p><img src="data/lab1/cedfspc.png" alt="Plot 1:" /> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/cedfspc.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/cedfspc.png</a></p>
-<p><img src="data/lab1/spc_histo2.png" alt="Plot 2:" /> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spc_histo2.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spc_histo2.png</a></p>
-<p><img src="data/lab1/spcplt.png" alt="Plot 3:" /> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spcplt.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab1/spcplt.png</a></p>
-<div class="figure">
-<img src="data/lab1/elev_av_depth.png" alt="" />
-<p class="caption">Plot 4:</p>
-</div>
-<p><a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab2/elev_av_depth.png" class="uri">http://ecology.msu.montana.edu/labdsv/R/labs/lab2/elev_av_depth.png</a></p>
-<p>Relevant commands include:</p>
-<p>geom_point (<a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_point.html</a>)</p>
-<p>geom_histogram (<a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_histogram.html</a>)</p>
-<p>geom_text (<a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_text.html</a>)</p>
-<p>ggsave (<a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="uri">https://ggplot2.tidyverse.org/reference/ggsave.html</a>)</p>
-<p>labs (<a href="https://ggplot2.tidyverse.org/reference/labs.html" class="uri">https://ggplot2.tidyverse.org/reference/labs.html</a>)</p>
-<p>facet_grid (<a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="uri">https://ggplot2.tidyverse.org/reference/facet_grid.html</a>)</p>
-<p>facet_wrap (<a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="uri">https://ggplot2.tidyverse.org/reference/facet_wrap.html</a>)</p>
+<div id="part-2-practice-with-r-data-manipulation-and-ggplot2" class="section level2">
+<h2>Part 2: Practice with R: data manipulation, and ggplot2</h2>
+<p>You don’t need to hand in anything for this portion of the lab.</p>
+<p>Ahead of the course, I recommended working through this R tutorial: <a href="https://datacarpentry.org/R-ecology-lesson/index.html" class="uri">https://datacarpentry.org/R-ecology-lesson/index.html</a>. Take some time to look through it if you haven’t already. You won’t be able to finish the whole tutorial in one lab, but if it looks unfamiliar to you, I recommend working through those sections in the early part of the semester (you can skip the SQL section). Note that some of the later lessons require data merged in previous sections and all the original data is found via a link on the first page. While I don’t require you to hand anything in, the tutorial is a good reference especially for data manipulation and <em>ggplot2</em>.</p>
 </div>
 <div id="part-3-stommel-diagram" class="section level2">
 <h2>Part 3: Stommel Diagram</h2>
@@ -404,11 +385,11 @@ load(file.path(data_path,&quot;lab1.RData&quot;))</code></pre>
 <p class="caption">Plot 5:</p>
 </div>
 <p>You can see that the ships cover a narrower range within the satellite range but also overlap the finer scales of the moorings).</p>
-<p>Write a brief paragraph describing the diagram and pointing out key relationships. Include relevant in-line citations and a list of references. If you hand-draw the diagram, scan it in or take a photo of it to make it digital and embed it in your Word document, PDF, or PowerPoint along with your written description. Submit a single file to the D2L Assignment Box for Lab 1.</p>
+<p>Write a paragraph describing your diagram and pointing out key relationships. Include relevant in-line citations and a list of references. If you hand-draw the diagram, scan it in or take a photo of it to make it digital and embed it in your Word document, PDF, or PowerPoint along with your written description. Submit a single file to the D2L Assignment Box for Lab 1. Feel free to use the Lab Community Forum for discussions about your Stommel diagrams as you prepare them.</p>
 </div>
 <div id="homework-in-preparation-for-lab-2" class="section level2">
 <h2>Homework in preparation for Lab 2:</h2>
-<p>R MARKDOWN: R Markdown is an authoring framework for R code and output. It’s handy because it produces nice summaries of your work in HTML or PDF or other formats. This document was made in Markdown via RStudio. a. Watch the intro video here: <a href="http://rmarkdown.rstudio.com/lesson-1.html" class="uri">http://rmarkdown.rstudio.com/lesson-1.html</a> b. Work through the tutorial and cover “How it Works”, “Code Chunks”, and “Markdown Basics”. I recommend using “KnitR” when you want to publish (i.e., click on “knit to HTML”, “knit to PDF”, etc. in the pull-down menu in RStudio).</p>
+<p>R MARKDOWN: R Markdown is an authoring framework for R code and output. It’s handy because it produces nice summaries of your work in HTML or PDF or other formats. This website was made in Markdown via RStudio. a. Watch the intro video here: <a href="http://rmarkdown.rstudio.com/lesson-1.html" class="uri">http://rmarkdown.rstudio.com/lesson-1.html</a> b. Work through the tutorial and cover “How it Works”, “Code Chunks”, and “Markdown Basics”. I recommend using “KnitR” when you want to publish (i.e., click on “knit to HTML”, “knit to PDF”, etc. in the pull-down menu in RStudio).</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
