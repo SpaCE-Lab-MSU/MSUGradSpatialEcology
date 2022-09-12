@@ -1,5 +1,5 @@
 ---
-title: "MSU Graduate Spatial Ecology Fall 2022"
+title: "MSU Graduate Spatial Ecology Fall 2022 - FS22 Branch"
 author: "Phoebe Zarnetske; plz@msu.edu"
 date: "Sep 2, 2022"
 urlcolor: blue

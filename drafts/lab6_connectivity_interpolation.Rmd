@@ -1,0 +1,149 @@
+---
+title: "MSU Graduate Spatial Ecology Lab 6"
+author: "Phoebe Zarnetske; plz@msu.edu"
+date: "Oct 6-7, 2020"
+urlcolor: blue
+---
+
+# Lab 6: Connectivity, Interpolation
+
+This lab has 2 Options for completion: 
+1. Connectivity - `grainscape` R package
+2. Interpolation - `gstat` R package
+
+For the option you choose, you need to hand in a PDF produced from R Markdown (or if you have trouble knitting, you can copy and paste into a Word doc and save as PDF), including output plots, any statistics, code, and text for answers to the questions for either Connectivity or Interpolation. 
+
+
+##1. Option 1: Connectivity with `grainscape` R package
+Landscape connectivity reflects how well patches on a landscape are connected. Applications in conservation biology include corridor analysis and resilience of networks of reserves. Landscape connectivity can tell us how difficult or easy it is to travel between patches across a landscape, depending on the organism or phenomena of interest. If you would like to learn about quantifying connectivity across a landscape, work through the *[`grainscape` vignette](https://cran.r-project.org/web/packages/grainscape/vignettes/grainscape_vignette.pdf)*. Here is the *[RMarkdown version of the `grainscape` Connectivity Vignette](https://github.com/achubaty/grainscape/blob/master/vignettes/grainscape_vignette.Rmd)*
+
+Work through the grainscape vignette at least through *Modeling with Grainscape* - you can continue on if you'd like (it is a long vignette). Read the first few pages of *Landscape networks with 1D and 2D nodes* to be able to answer one of the questions below. Turn in your work on the vignette to show how far you completed, plus the questions below. Even if you do not finish the entire vignette, answer all of the following questions:
+
+###`grainscape`: Question 1 
+Answer the following questions in a few sentences each:
+What is a minimum planar graph? 
+What is a Voronoi tessellation? 
+What is a 2D node and how does it compare with a 1D node? 
+
+###`grainscape`: Question 2 
+How do the analyses presented in this vignette relate to analyses you would perform with Fragstats patch metrics? How are they similar and how are they different?
+
+###`grainscape`: Question 3 
+For a given species or phenomena moving across a landscape, how would you use ecological theory, and knowledge of the species natural history or phenomena, to assign resistance values and create a minimum planar graph? Use an example to explain your answer.
+
+###`grainscape`: Question 4 
+How does spatial scale of land cover or elevation data affect the interpretation of connectivity?
+
+
+##2. Interpolation with `gstat` R package
+If you would like more practice fitting variograms and applying a variogram fit to interpolate between points in a different R package to create a smooth surface, complete the *[`gstat` vignette](https://cran.r-project.org/web/packages/gstat/vignettes/gstat.pdf)*. After completing the vignette with the meuse data, complete the vignette again to construct variograms and interpolate using a dataset of your choice with a continuous variable that is associated with geographic coordinates. If you don't have a dataset of your own, you could use the Bryce Canyon species and site data from Lab 4 or the WEF data from Lab 5. For any dataset you choose, select just 1 response variable of interest (e.g., as is done with "zinc" with the meuse data).
+
+*Optional Resource:* You may also find this exercise helpful in explaining some additional aspects of interpolation: https://rspatial.org/raster/analysis/4-interpolation.html. It uses the `gstat` package as well, but with precipitation data in California from the `rspatial` R package.
+
+
+When working through the *[`gstat` vignette](https://cran.r-project.org/web/packages/gstat/vignettes/gstat.pdf)* with the data you chose, fit 2 types of variograms. The example with the meuse data fits a Spherical and an Exponential model. See `?fit.variogram` and `?vgm` for options.
+
+Answer the following questions:
+
+###`gstat`: Question 1 
+How does the choice of the variogram models you chose (e.g., "Exp", "Sph", "Gau", "Mat"), affect the interpolation outcome? Make 2 interpolation plots, one from each model and explain why they differ. If they are very similar, explain why they are similar. 
+
+###`gstat`: Question 2 
+In the section: "7. Conditional Simulation", describe in your own words what the 4 different simulations are doing. What happens if you change `nmax` to a different value? Hint type `?krig` for details on this command.
+
+###`gstat`: Question 3
+What could be causing the interpolated pattern in the variable that you are observing? What are some potential explanatory variables that influence the interpolated response variable? Provide a reference to back up your explanation.
+
+
+Below is some example code for starting to use bryceveg and brycesite.
+
+*Start working in R:*
+```{r, message=FALSE, warning=FALSE}
+##### STARTING UP R
+# Clear all existing data (or don't and just make sure you start with a newly opened RStudio session; see why this may not be so great for reproducibility: https://rstats.wtf/save-source.html#rm-list-ls)
+rm(list=ls()) 
+
+# Close graphics devices
+graphics.off()
+
+# Set the paths for your work
+output_path<-("output")
+# if this folder doesn't exist, create it
+if(!dir.exists(output_path)){
+  dir.create(output_path)
+}
+
+# Create the folders (directories) "data" and "lab6" - If they exist already, this command won't over-write them.
+data_path<-(file.path("data","lab6"))
+if(!dir.exists(data_path)){
+  dir.create(data_path,recursive = TRUE)
+}
+```
+If you previously saved your workspace and want to load it here, do so this way: 
+
+`load(file.path(output_path,"lab6.RData"))`
+
+**NOTES on R packages used in this lab:**
+
+(1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
+`for (package in c("gstat","sp","labdsv")) {`
+`  if (!require(package, character.only=T, quietly=T)) {`
+
+`    install.packages(package)`
+
+`    library(package, character.only=T)`
+
+`  }`
+
+`}`
+
+Load the packages:
+```{r, message=FALSE, results='hide',warning=FALSE}
+library(gstat)
+library(sp)
+library(labdsv)
+```
+
+Example code for starting with the bryceveg and brycesite data. Merge it into one dataframe, containing only points with valid coordinates.
+```{r, message=FALSE, results='hide',warning=FALSE}
+data(bryceveg)
+data(brycesite)
+veg<-bryceveg
+site<-brycesite
+# Calculate species richness by plot
+spc.rich <- apply(veg,1,sum)
+spc.rich <- spc.rich[-109] 
+rich<-data.frame(spc.rich)
+
+east <- na.omit(site$east)
+north <- na.omit(site$north)
+
+rich <- cbind(Row.Names = rownames(rich), rich)
+site <- cbind(Row.Names = rownames(site), site)
+row.names(rich)<-NULL
+row.names(site)<-NULL
+# Merge these data together
+rs<-merge(rich,site,by=c("Row.Names"))
+
+# Make points a matrix for coordinates by referencing the 8th column "east" and the 11th column "north".
+names(rs)
+rsp <- as.matrix(rs[c(8,11)])
+
+# make spatial points dataframe
+rs1<-SpatialPointsDataFrame(rsp,rs) 
+
+# make grid
+rs_grid = spsample(rs1, type = "regular", cellsize = c(40,40))
+gridded(rs_grid) = TRUE
+
+# assign coordinates
+coordinates(rs)<- ~east+north
+```
+
+If you're using bryceveg, next, make a bubble plot for the species richness, and continue following the `gstat` vignette in *3 Spatial data frames*.
+
+
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+
