@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 2"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 9, 2019, Aug 18-Sep 10, 2020"
+date: "Sep 2016; rev. Sep 9, 2019, Aug 18-Sep 10, 2020, Sep 12, 2022"
 urlcolor: blue
 ---
 
@@ -27,14 +27,13 @@ For Mac: MacTex: http://www.tug.org/mactex/
 For PC: MikTex: http://www.miktex.org/2.9/setup
 some details on setting up with MikTex: https://latex.org/forum/viewtopic.php?t=7999
 
-If you have trouble knitting to PDF directly in RStudio, you can also save to HTML and when you open the HTML in a browser, you can "save as PDF" or "print to PDF" directly from the browser. Just make sure what you end up handing in originated as a .Rmd file and presents the code and plots and lab writeup clearly.
-
+If you have trouble knitting to PDF directly in RStudio, you can also save to HTML and when you open the HTML in a browser, you can "save as PDF" or "print to PDF" directly from the browser. Just make sure what you end up handing in originated as a .Rmd file and presents the code and plots and lab writeup clearly - if it renders in HTML well, then you can hand HTML in (Note that D2L does not render HTML well inside D2L; as long as it works in a browser, it should be ok).
 
 ### Interested in more detail on how to use RMarkdown and knitr?
 
 Here is a great mini tutorial from EarthLab illustrating how to get started with RMarkdown in RStudio. Note that Lesson 2 is the intro to RMarkdown & Knitr: https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/ 
 
-EarthLab's Lesson 5 goes over how to knit to PDF. 
+EarthLab's Lesson 5 goes over how to knit to PDF or HTML. 
 https://www.earthdatascience.org/courses/earth-analytics/document-your-science/knit-rmarkdown-document-to-pdf/
 
 
@@ -69,7 +68,7 @@ plot(pressure)
 `warning = FALSE` will not print the R warnings beneath it; TRUE is the default. 
 
 ## Part 2: Intro to mapping in R & Scale
-R is ok for making maps - it's getting better. If you want something super pretty or very complicated, it is probably better to go with QGIS or ArcGIS. However, you can make some nice maps in R with some basic commands, and because it's all scripted, it's useful for reproducible research. 
+R is ok for making maps - it's getting better. If you want something super pretty or very complicated, it is probably better to go with QGIS (free) or ArcGIS (not free). However, you can make some nice maps in R with some basic commands, and because it's all scripted, it's useful for reproducible research. 
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
 ##### STARTING UP R
@@ -105,9 +104,14 @@ for (package in c("raster","sp","rgdal","dismo")) {
   }
 }
 
+# Don't worry about rgdal warning; it works. It has to do with the eventual switch to other packages that depend on rgdal.
+
 # If you get a warning that says: there is no package called 'raster' (or another package) type into your R console: 
 # package(raster)
 # library(raster)
+
+# If you haven't updated your packages in a while, see if any need updating.
+# In RStudio: Tools: Check for Package Updates.
 ```
 
 ### Coordinate Reference Systems & Projection
@@ -125,20 +129,27 @@ Great overview: https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/OverviewCoord
 for the proj4 strings see www.spatialreference.org or search on https://epsg.io/
 
 ```{r, message=FALSE, results='hide',warning=FALSE}
-# USA BOUNDARY SHAPEFILE: download it from the web [note that you may need to change the exdir location depending on where you want it to be saved]
+# USA BOUNDARY SHAPEFILE from the US Census Bureau (https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html);  download it from the web [note that you may need to change the exdir location depending on where you want it to be saved]
 if(! file.exists(file.path(data_path,'us.zip'))){
- download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip", dest=file.path(data_path,"us.zip"), mode="wb") 
+ download.file("https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_nation_20m.zip", dest=file.path(data_path,"us.zip"), mode="wb") 
 }
 
 unzip (file.path(data_path,"us.zip"), exdir = data_path)
 # Read in the shapefile with rgdal package
-us <- readOGR(file.path(data_path,"cb_2014_us_nation_20m.shp"))
+us <- readOGR(file.path(data_path,"cb_2021_us_nation_20m.shp"))
 # Note that shapefiles are actually a collection of many files. If you move a shapefile manually, be sure to copy all of the files.
 
 # take a look at the shapefile info
 summary(us)
 ```
-Uh oh! It's not projected, is that a problem? The proj4string states that it's a geographic coordinate system (rather than a projected coordinate system). Geographic systems include angular unit of measure, a prime meridian, and a datum (based on a spheroid). Latitude and Longitude describe any location in geographic coordinate system. If we wanted to do some exact measurements of distances or areas, it would be better to use a projection. This is because projections transform a 3D surface (Earth; a sphere) into a 2D surface and maintain constant lengths and angles, preserving area. Geographic systems have different lengths and and angles depending on the location within the spatial data. Geographic systems are often used with Google Maps.
+
+Uh oh! It's not projected, is that a problem? The proj4string states that it's a geographic coordinate system (rather than a projected coordinate system). 
+
+All Census Bureau generated shapefiles are in Global Coordinate System North American Datum of 1983 (GCS NAD83). Each .prj file contains the following:
+GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137,
+298.257222101]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]
+
+So in this case the CRS is a geographic coordinate system (rather than a projected coordinate system). Geographic systems include angular unit of measure, a prime meridian, and a datum (based on a spheroid). Latitude and Longitude describe any location in geographic coordinate system, in unites of degrees. If we wanted to do some exact measurements of distances or areas, it would be better to use a projection. This is because projections transform a 3D surface (Earth; a sphere) into a 2D surface and maintain constant lengths and angles, preserving area. Geographic systems have different lengths and and angles depending on the location within the spatial data. Google Maps uses a Web Mercator projection (flat Earth): https://en.wikipedia.org/wiki/Web_Mercator_projection.
 
 ### Projecting Data
 ```{r, message=FALSE, results='hide',warning=FALSE}
@@ -155,42 +166,43 @@ plot(us.equal)
 ```
 
 ### Reading in data from gbif.org - the Global Biodiversity Information Facility 
-Add some point data for a species from GBIF.org. Get GBIF data with function gbif() from the *dismo* R package or choose your own favorite organism (in the US). Check the GBIF site first to see how many occurrences you'll be importing http://www.gbif.org/occurrence/search - enter your species name in the search window. Click on "filter" and scientific name. Puma concolor has 12115+ records, and may take a few mins to import. Choose a different species in the US with a smaller number if you don't want to wait so long. 
+Add some point data for a species from GBIF.org. Get GBIF data with function gbif() from the *dismo* R package or choose your own favorite organism (in the US). Check the GBIF site first to see how many occurrences you'll be importing http://www.gbif.org/occurrence/search - enter your species name in the search window. Click on "filter" and scientific name. Puma concolor has 17000+ records, and may take a few mins to import. Choose a different species in the US with a smaller number if you don't want to wait so long (but it's only a few mins). 
 
 ```{r, message=FALSE, warning=FALSE}
 # Take a look at the command "gbif" to see what options exist for importing data.
 ?gbif
-# Import the occurrence data on Puma concolor - I am using 'nrecs = 300' here to cut down on download time. To answer the lab questions, it would be better to use all the available records for the species you choose.
-puma.gbif <- gbif("Puma", "concolor", geo=T, nrecs=300) 
+# Import the occurrence data on Puma concolor.
+puma.gbif <- gbif("Puma", "concolor", geo=T) 
 # plot occurrences
 par(mfcol=c(1,1))
-plot(us)
+plot(us, main="Puma concolor observations")
 points(puma.gbif$lon, puma.gbif$lat,
        pch=19, cex=0.3, col="blue")
 # important: longitude goes first and hence the order
-# lat=column 105; lon is column 118
+# lat=column 114; lon=column 127
 names(puma.gbif) 
 # remove NA values if they exist in lat or lon
 puma1<-subset(puma.gbif, puma.gbif$lat != "NA",)
 puma1<-subset(puma1, puma1$lon != "NA",)
+dim(puma.gbif)
 dim(puma1)
-# So really only 5922 records are georeferenced.
+# So really only 10217 of the 17038 records are georeferenced.
 
 # puma.gbif is just a dataframe. We need it to become spatial.
 # This defines the CRS for the US in WGS 1984 (world geographic 1984). 
 wgs1984.proj <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 
 # Reference the columns with "lon" and "lat" to make a spatial points dataframe
-puma <- SpatialPoints(coords=puma1[,c(118,105)], proj4string=wgs1984.proj)
+puma <- SpatialPoints(coords=puma1[,c(114,127)], proj4string=wgs1984.proj)
 
 # Occasionally the GBIF data are updated and column order changes. Instead of 
 # referencing the column number, it's better to call it out by name:
 puma <- SpatialPoints(coords=puma1[,c("lon","lat")], proj4string=wgs1984.proj)
 
 # Reproject puma to Albers Equal Area Projection so it matches
-# the US Map
+# the Conterminous US Map
 puma.equal <- spTransform(puma, us.atlas.proj)
-plot(us.equal)
+plot(us.equal, main="Puma concolor observations")
 points(puma.equal, pch=19, cex=0.3, col="blue")
 
 ### CREATE AN EMPTY GRID - this will define the extent of the study area
@@ -285,12 +297,12 @@ Some tips on plotting LEGENDS with rasters ("distribution" below) and shapefiles
 Here are some useful bits of code:
 ```{r, message=FALSE, results='hide',warning=FALSE}
 # Regions of US shapefile
-download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_region_20m.zip",
+download.file("http://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_region_20m.zip",
               dest=file.path(data_path,"usr.zip"), mode="wb") 
 unzip( file.path(data_path,"usr.zip"), exdir = data_path)
 
-# read in the shapefile
-usr <- readOGR(file.path(data_path,"cb_2014_us_region_20m.shp"))
+# read in the US Regions shapefile
+usr <- readOGR(file.path(data_path,"cb_2021_us_region_20m.shp"))
 ## take a look at the shapefile info
 summary(usr)
 ## follow the steps above for projecting it to WGS 1984, then to US National Atlas Equal-Area.
@@ -308,13 +320,11 @@ Read about NLCD here (https://www.mrlc.gov/) and view the short video: https://w
 **OPTIONAL MSU HPCC info:**
 In past years we have used the MSU HPCC for this lab, but we will not be doing so this year. We will be using a smaller chunk of the data so you can run it on your computer. 
 
-If you're interested in learning about the HPCC here is the go-to Introduction website:
-https://wiki.hpcc.msu.edu/display/TEAC/Introduction+to+HPCC
+If you're interested in learning about the HPCC here is the HPCC website: https://docs.icer.msu.edu and training workshops and courses:
+https://docs.icer.msu.edu/#hpcc-workshops-and-training
 
-There are also Intro to HPCC workshops offered monthly through iCER; free but registration required https://icer.msu.edu/upcoming-workshops) 
-
-If you are not familiar with basic Linux commands, check out the HPCC Intro to Linux online courses at the wiki link above. You can also check them out here: https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition. 
+If you are not familiar with basic Linux commands, check out the HPCC Intro to Linux online courses at the link above (now on D2L). You can also check them out here: https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition. 
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.
 

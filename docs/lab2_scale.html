@@ -14,22 +14,36 @@
 
 <title>MSU Graduate Spatial Ecology Lab 2</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -42,32 +56,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -77,10 +66,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -97,40 +82,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -158,7 +116,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -170,7 +128,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -181,10 +139,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -196,7 +167,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -310,39 +280,84 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
 <h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 2</h1>
-<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
-<h4 class="date">Sep 2016; rev. Sep 9, 2019, Aug 18-Sep 10, 2020</h4>
+<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu"
+class="email">plz@msu.edu</a></h4>
+<h4 class="date">Sep 2016; rev. Sep 9, 2019, Aug 18-Sep 10, 2020, Sep
+12, 2022</h4>
 
 </div>
 
 
-<div id="lab-2-r-markdown-intro-to-mapping-in-r-scale" class="section level1">
+<div id="lab-2-r-markdown-intro-to-mapping-in-r-scale"
+class="section level1">
 <h1>Lab 2: R Markdown, Intro to mapping in R &amp; Scale</h1>
-<p><em><a href="lab2_scale.Rmd">RMarkdown version of this Lab</a></em></p>
-<p>This lab has 2 Parts. You need to hand in Part 2 via the D2L Lab 2 Assignment Folder by start of Lab 3. When referring to the code below it may be more useful to use the .Rmd file linked above. You will need to be connected to the internet to complete this lab.</p>
+<p><em><a href="lab2_scale.Rmd">RMarkdown version of this
+Lab</a></em></p>
+<p>This lab has 2 Parts. You need to hand in Part 2 via the D2L Lab 2
+Assignment Folder by start of Lab 3. When referring to the code below it
+may be more useful to use the .Rmd file linked above. You will need to
+be connected to the internet to complete this lab.</p>
 <p>At the end of Lab 2 is Homework in preparation for Lab 3.</p>
 <div id="part-1-r-markdown" class="section level2">
 <h2>Part 1: R Markdown</h2>
-<p>R Markdown is an authoring framework for R code and output. R Markdown is part word-processor, part R output. It enables you to generate nice reports with R code, figures, tables, and text. It’s handy because it produces neat summaries of your work in HTML or PDF or other formats (Word docs). This document was made in Markdown via RStudio. From now on, you’ll be handing in all of your lab assignments as PDFs produced from R Markdown.</p>
-<p>R Markdown is especially helpful with collaborative research and coursework, and is often used in supplemental materials with publications. If you haven’t already watched the R Markdown tutorial, you may want to refer to it when putting together your lab write-up: <a href="http://rmarkdown.rstudio.com/lesson-1.html" class="uri">http://rmarkdown.rstudio.com/lesson-1.html</a> (including “How it Works”, “Code Chunks”, and “Markdown Basics”). I recommend using “KnitR” in RStudio when you want to publish (i.e., click on “knit to HTML”, “knit to PDF”, etc. in the pull-down menu in RStudio).</p>
-<p>When you click the <strong>Knit</strong> button in R Studio (looks like a knitting needle with ball of yarn) a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.</p>
+<p>R Markdown is an authoring framework for R code and output. R
+Markdown is part word-processor, part R output. It enables you to
+generate nice reports with R code, figures, tables, and text. It’s handy
+because it produces neat summaries of your work in HTML or PDF or other
+formats (Word docs). This document was made in Markdown via RStudio.
+From now on, you’ll be handing in all of your lab assignments as PDFs
+produced from R Markdown.</p>
+<p>R Markdown is especially helpful with collaborative research and
+coursework, and is often used in supplemental materials with
+publications. If you haven’t already watched the R Markdown tutorial,
+you may want to refer to it when putting together your lab write-up: <a
+href="http://rmarkdown.rstudio.com/lesson-1.html"
+class="uri">http://rmarkdown.rstudio.com/lesson-1.html</a> (including
+“How it Works”, “Code Chunks”, and “Markdown Basics”). I recommend using
+“KnitR” in RStudio when you want to publish (i.e., click on “knit to
+HTML”, “knit to PDF”, etc. in the pull-down menu in RStudio).</p>
+<p>When you click the <strong>Knit</strong> button in R Studio (looks
+like a knitting needle with ball of yarn) a document will be generated
+that includes both content as well as the output of any embedded R code
+chunks within the document.</p>
 <div id="help-with-knitting-to-pdf" class="section level3">
 <h3>Help with knitting to PDF</h3>
-<p>You may need to install a TEX program to knit to PDF. Try knitting first to PDF, if this doesn’t work here is a suggestion (this may take a while to download):</p>
-<p>For Mac: MacTex: <a href="http://www.tug.org/mactex/" class="uri">http://www.tug.org/mactex/</a> For PC: MikTex: <a href="http://www.miktex.org/2.9/setup" class="uri">http://www.miktex.org/2.9/setup</a> some details on setting up with MikTex: <a href="https://latex.org/forum/viewtopic.php?t=7999" class="uri">https://latex.org/forum/viewtopic.php?t=7999</a></p>
-<p>If you have trouble knitting to PDF directly in RStudio, you can also save to HTML and when you open the HTML in a browser, you can “save as PDF” or “print to PDF” directly from the browser. Just make sure what you end up handing in originated as a .Rmd file and presents the code and plots and lab writeup clearly.</p>
+<p>You may need to install a TEX program to knit to PDF. Try knitting
+first to PDF, if this doesn’t work here is a suggestion (this may take a
+while to download):</p>
+<p>For Mac: MacTex: <a href="http://www.tug.org/mactex/"
+class="uri">http://www.tug.org/mactex/</a> For PC: MikTex: <a
+href="http://www.miktex.org/2.9/setup"
+class="uri">http://www.miktex.org/2.9/setup</a> some details on setting
+up with MikTex: <a href="https://latex.org/forum/viewtopic.php?t=7999"
+class="uri">https://latex.org/forum/viewtopic.php?t=7999</a></p>
+<p>If you have trouble knitting to PDF directly in RStudio, you can also
+save to HTML and when you open the HTML in a browser, you can “save as
+PDF” or “print to PDF” directly from the browser. Just make sure what
+you end up handing in originated as a .Rmd file and presents the code
+and plots and lab writeup clearly - if it renders in HTML well, then you
+can hand HTML in (Note that D2L does not render HTML well inside D2L; as
+long as it works in a browser, it should be ok).</p>
 </div>
-<div id="interested-in-more-detail-on-how-to-use-rmarkdown-and-knitr" class="section level3">
+<div id="interested-in-more-detail-on-how-to-use-rmarkdown-and-knitr"
+class="section level3">
 <h3>Interested in more detail on how to use RMarkdown and knitr?</h3>
-<p>Here is a great mini tutorial from EarthLab illustrating how to get started with RMarkdown in RStudio. Note that Lesson 2 is the intro to RMarkdown &amp; Knitr: <a href="https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/" class="uri">https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/</a></p>
-<p>EarthLab’s Lesson 5 goes over how to knit to PDF. <a href="https://www.earthdatascience.org/courses/earth-analytics/document-your-science/knit-rmarkdown-document-to-pdf/" class="uri">https://www.earthdatascience.org/courses/earth-analytics/document-your-science/knit-rmarkdown-document-to-pdf/</a></p>
+<p>Here is a great mini tutorial from EarthLab illustrating how to get
+started with RMarkdown in RStudio. Note that Lesson 2 is the intro to
+RMarkdown &amp; Knitr: <a
+href="https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/"
+class="uri">https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/</a></p>
+<p>EarthLab’s Lesson 5 goes over how to knit to PDF or HTML. <a
+href="https://www.earthdatascience.org/courses/earth-analytics/document-your-science/knit-rmarkdown-document-to-pdf/"
+class="uri">https://www.earthdatascience.org/courses/earth-analytics/document-your-science/knit-rmarkdown-document-to-pdf/</a></p>
 </div>
-<div id="some-basics-of-rmarkdown-are-included-below" class="section level3">
+<div id="some-basics-of-rmarkdown-are-included-below"
+class="section level3">
 <h3>Some basics of RMarkdown are included below:</h3>
 <p>In RMarkdown, you can embed an R code chunk like this:</p>
 <pre class="r"><code>summary(cars)</code></pre>
@@ -354,19 +369,32 @@ $(document).ready(function () {
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
 <pre class="r"><code>summary(cars)</code></pre>
-<p><code>results = 'hide'</code> will omit the printout (suppressing the summary of the dataframe cars) R Markdown can print or hide certain portions of your code and output. This is helpful especially when you don’t want to include long print-outs in a report. For lab assignments, please don’t include long R printouts, e.g., printing an entire dataset.</p>
+<p><code>results = 'hide'</code> will omit the printout (suppressing the
+summary of the dataframe cars) R Markdown can print or hide certain
+portions of your code and output. This is helpful especially when you
+don’t want to include long print-outs in a report. For lab assignments,
+please don’t include long R printouts, e.g., printing an entire
+dataset.</p>
 </div>
 <div id="including-plots" class="section level3">
 <h3>Including Plots</h3>
-<p>You can also embed plots, for example with the dataframe, pressure: <img src="lab2_scale_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p><code>echo = FALSE</code> will not print the code beneath it; TRUE is the default. You can also set a figure height and width in the brackets also. Units = inches.</p>
+<p>You can also embed plots, for example with the dataframe, pressure:
+<img src="lab2_scale_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><code>echo = FALSE</code> will not print the code beneath it; TRUE is
+the default. You can also set a figure height and width in the brackets
+also. Units = inches.</p>
 <p><img src="lab2_scale_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p><code>warning = FALSE</code> will not print the R warnings beneath it; TRUE is the default.</p>
+<p><code>warning = FALSE</code> will not print the R warnings beneath
+it; TRUE is the default.</p>
 </div>
 </div>
 <div id="part-2-intro-to-mapping-in-r-scale" class="section level2">
 <h2>Part 2: Intro to mapping in R &amp; Scale</h2>
-<p>R is ok for making maps - it’s getting better. If you want something super pretty or very complicated, it is probably better to go with QGIS or ArcGIS. However, you can make some nice maps in R with some basic commands, and because it’s all scripted, it’s useful for reproducible research.</p>
+<p>R is ok for making maps - it’s getting better. If you want something
+super pretty or very complicated, it is probably better to go with QGIS
+(free) or ArcGIS (not free). However, you can make some nice maps in R
+with some basic commands, and because it’s all scripted, it’s useful for
+reproducible research.</p>
 <pre class="r"><code>##### STARTING UP R
 # Clear all existing data
 rm(list=ls())
@@ -400,29 +428,70 @@ for (package in c(&quot;raster&quot;,&quot;sp&quot;,&quot;rgdal&quot;,&quot;dism
   }
 }
 
+# Don&#39;t worry about rgdal warning; it works. It has to do with the eventual switch to other packages that depend on rgdal.
+
 # If you get a warning that says: there is no package called &#39;raster&#39; (or another package) type into your R console: 
 # package(raster)
-# library(raster)</code></pre>
-<div id="coordinate-reference-systems-projection" class="section level3">
+# library(raster)
+
+# If you haven&#39;t updated your packages in a while, see if any need updating.
+# In RStudio: Tools: Check for Package Updates.</code></pre>
+<div id="coordinate-reference-systems-projection"
+class="section level3">
 <h3>Coordinate Reference Systems &amp; Projection</h3>
-<p>Check out this helpful (and fun) video that explains projections and CRS: <a href="https://ed.ted.com/featured/uTE96JbJ" class="uri">https://ed.ted.com/featured/uTE96JbJ</a> To see why every map we view is relative, check out this interactive site: <a href="https://thetruesize.com/" class="uri">https://thetruesize.com/</a></p>
-<p>Download and read in some spatial data. Spatial data require spatial reference. A common way of defining the spatial reference is with:</p>
-<p><em>proj4</em> = projection information about the spatial data, and</p>
-<p><em>CRS</em> = coordinate reference systems containing projection, datum, and ellipsoid.</p>
-<p>A CRS provides the key for how to interpret spatially referenced data given a specific geometry. It provides information about how to transform a three dimensional angular system into a 2-dimensional planar system. Great overview: <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/OverviewCoordinateReferenceSystems.pdf" class="uri">https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/OverviewCoordinateReferenceSystems.pdf</a> for the proj4 strings see www.spatialreference.org or search on <a href="https://epsg.io/" class="uri">https://epsg.io/</a></p>
-<pre class="r"><code># USA BOUNDARY SHAPEFILE: download it from the web [note that you may need to change the exdir location depending on where you want it to be saved]
+<p>Check out this helpful (and fun) video that explains projections and
+CRS: <a href="https://ed.ted.com/featured/uTE96JbJ"
+class="uri">https://ed.ted.com/featured/uTE96JbJ</a> To see why every
+map we view is relative, check out this interactive site: <a
+href="https://thetruesize.com/"
+class="uri">https://thetruesize.com/</a></p>
+<p>Download and read in some spatial data. Spatial data require spatial
+reference. A common way of defining the spatial reference is with:</p>
+<p><em>proj4</em> = projection information about the spatial data,
+and</p>
+<p><em>CRS</em> = coordinate reference systems containing projection,
+datum, and ellipsoid.</p>
+<p>A CRS provides the key for how to interpret spatially referenced data
+given a specific geometry. It provides information about how to
+transform a three dimensional angular system into a 2-dimensional planar
+system. Great overview: <a
+href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/OverviewCoordinateReferenceSystems.pdf"
+class="uri">https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/OverviewCoordinateReferenceSystems.pdf</a>
+for the proj4 strings see www.spatialreference.org or search on <a
+href="https://epsg.io/" class="uri">https://epsg.io/</a></p>
+<pre class="r"><code># USA BOUNDARY SHAPEFILE from the US Census Bureau (https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html);  download it from the web [note that you may need to change the exdir location depending on where you want it to be saved]
 if(! file.exists(file.path(data_path,&#39;us.zip&#39;))){
- download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip&quot;, dest=file.path(data_path,&quot;us.zip&quot;), mode=&quot;wb&quot;) 
+ download.file(&quot;https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_nation_20m.zip&quot;, dest=file.path(data_path,&quot;us.zip&quot;), mode=&quot;wb&quot;) 
 }
 
 unzip (file.path(data_path,&quot;us.zip&quot;), exdir = data_path)
 # Read in the shapefile with rgdal package
-us &lt;- readOGR(file.path(data_path,&quot;cb_2014_us_nation_20m.shp&quot;))
+us &lt;- readOGR(file.path(data_path,&quot;cb_2021_us_nation_20m.shp&quot;))
 # Note that shapefiles are actually a collection of many files. If you move a shapefile manually, be sure to copy all of the files.
 
 # take a look at the shapefile info
 summary(us)</code></pre>
-<p>Uh oh! It’s not projected, is that a problem? The proj4string states that it’s a geographic coordinate system (rather than a projected coordinate system). Geographic systems include angular unit of measure, a prime meridian, and a datum (based on a spheroid). Latitude and Longitude describe any location in geographic coordinate system. If we wanted to do some exact measurements of distances or areas, it would be better to use a projection. This is because projections transform a 3D surface (Earth; a sphere) into a 2D surface and maintain constant lengths and angles, preserving area. Geographic systems have different lengths and and angles depending on the location within the spatial data. Geographic systems are often used with Google Maps.</p>
+<p>Uh oh! It’s not projected, is that a problem? The proj4string states
+that it’s a geographic coordinate system (rather than a projected
+coordinate system).</p>
+<p>All Census Bureau generated shapefiles are in Global Coordinate
+System North American Datum of 1983 (GCS NAD83). Each .prj file contains
+the following:
+GEOGCS[“GCS_North_American_1983”,DATUM[“D_North_American_1983”,SPHEROID[“GRS_1980”,6378137,
+298.257222101]],PRIMEM[“Greenwich”,0],UNIT[“Degree”,0.017453292519943295]]</p>
+<p>So in this case the CRS is a geographic coordinate system (rather
+than a projected coordinate system). Geographic systems include angular
+unit of measure, a prime meridian, and a datum (based on a spheroid).
+Latitude and Longitude describe any location in geographic coordinate
+system, in unites of degrees. If we wanted to do some exact measurements
+of distances or areas, it would be better to use a projection. This is
+because projections transform a 3D surface (Earth; a sphere) into a 2D
+surface and maintain constant lengths and angles, preserving area.
+Geographic systems have different lengths and and angles depending on
+the location within the spatial data. Google Maps uses a Web Mercator
+projection (flat Earth): <a
+href="https://en.wikipedia.org/wiki/Web_Mercator_projection"
+class="uri">https://en.wikipedia.org/wiki/Web_Mercator_projection</a>.</p>
 </div>
 <div id="projecting-data" class="section level3">
 <h3>Projecting Data</h3>
@@ -438,230 +507,256 @@ us.equal &lt;- spTransform(us, us.atlas.proj)
 plot(us.equal)</code></pre>
 <p><img src="lab2_scale_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="reading-in-data-from-gbif.org---the-global-biodiversity-information-facility" class="section level3">
-<h3>Reading in data from gbif.org - the Global Biodiversity Information Facility</h3>
-<p>Add some point data for a species from GBIF.org. Get GBIF data with function gbif() from the <em>dismo</em> R package or choose your own favorite organism (in the US). Check the GBIF site first to see how many occurrences you’ll be importing <a href="http://www.gbif.org/occurrence/search" class="uri">http://www.gbif.org/occurrence/search</a> - enter your species name in the search window. Click on “filter” and scientific name. Puma concolor has 12115+ records, and may take a few mins to import. Choose a different species in the US with a smaller number if you don’t want to wait so long.</p>
+<div
+id="reading-in-data-from-gbif.org---the-global-biodiversity-information-facility"
+class="section level3">
+<h3>Reading in data from gbif.org - the Global Biodiversity Information
+Facility</h3>
+<p>Add some point data for a species from GBIF.org. Get GBIF data with
+function gbif() from the <em>dismo</em> R package or choose your own
+favorite organism (in the US). Check the GBIF site first to see how many
+occurrences you’ll be importing <a
+href="http://www.gbif.org/occurrence/search"
+class="uri">http://www.gbif.org/occurrence/search</a> - enter your
+species name in the search window. Click on “filter” and scientific
+name. Puma concolor has 17000+ records, and may take a few mins to
+import. Choose a different species in the US with a smaller number if
+you don’t want to wait so long (but it’s only a few mins).</p>
 <pre class="r"><code># Take a look at the command &quot;gbif&quot; to see what options exist for importing data.
 ?gbif
-# Import the occurrence data on Puma concolor - I am using &#39;nrecs = 300&#39; here to cut down on download time. To answer the lab questions, it would be better to use all the available records for the species you choose.
-puma.gbif &lt;- gbif(&quot;Puma&quot;, &quot;concolor&quot;, geo=T, nrecs=300) 
+# Import the occurrence data on Puma concolor.
+puma.gbif &lt;- gbif(&quot;Puma&quot;, &quot;concolor&quot;, geo=T) 
 # plot occurrences
 par(mfcol=c(1,1))
-plot(us)
+plot(us, main=&quot;Puma concolor observations&quot;)
 points(puma.gbif$lon, puma.gbif$lat,
        pch=19, cex=0.3, col=&quot;blue&quot;)</code></pre>
 <p><img src="lab2_scale_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code># important: longitude goes first and hence the order
-# lat=column 105; lon is column 118
+# lat=column 114; lon=column 127
 names(puma.gbif) </code></pre>
-<pre><code>##   [1] &quot;acceptedNameUsage&quot;                                
-##   [2] &quot;acceptedNameUsageID&quot;                              
-##   [3] &quot;acceptedScientificName&quot;                           
-##   [4] &quot;acceptedTaxonKey&quot;                                 
-##   [5] &quot;accessRights&quot;                                     
-##   [6] &quot;adm1&quot;                                             
-##   [7] &quot;adm2&quot;                                             
-##   [8] &quot;associatedOccurrences&quot;                            
-##   [9] &quot;associatedReferences&quot;                             
-##  [10] &quot;associatedSequences&quot;                              
-##  [11] &quot;basisOfRecord&quot;                                    
-##  [12] &quot;bed&quot;                                              
-##  [13] &quot;behavior&quot;                                         
-##  [14] &quot;bibliographicCitation&quot;                            
-##  [15] &quot;catalogNumber&quot;                                    
-##  [16] &quot;class&quot;                                            
-##  [17] &quot;classKey&quot;                                         
-##  [18] &quot;cloc&quot;                                             
-##  [19] &quot;collectionCode&quot;                                   
-##  [20] &quot;collectionID&quot;                                     
-##  [21] &quot;continent&quot;                                        
-##  [22] &quot;coordinatePrecision&quot;                              
-##  [23] &quot;coordinateUncertaintyInMeters&quot;                    
-##  [24] &quot;country&quot;                                          
-##  [25] &quot;crawlId&quot;                                          
-##  [26] &quot;created&quot;                                          
-##  [27] &quot;dataGeneralizations&quot;                              
-##  [28] &quot;datasetID&quot;                                        
-##  [29] &quot;datasetKey&quot;                                       
-##  [30] &quot;datasetName&quot;                                      
-##  [31] &quot;dateIdentified&quot;                                   
-##  [32] &quot;day&quot;                                              
-##  [33] &quot;depth&quot;                                            
-##  [34] &quot;depthAccuracy&quot;                                    
-##  [35] &quot;disposition&quot;                                      
-##  [36] &quot;dynamicProperties&quot;                                
-##  [37] &quot;earliestAgeOrLowestStage&quot;                         
-##  [38] &quot;earliestEonOrLowestEonothem&quot;                      
-##  [39] &quot;earliestEpochOrLowestSeries&quot;                      
-##  [40] &quot;earliestEraOrLowestErathem&quot;                       
-##  [41] &quot;earliestPeriodOrLowestSystem&quot;                     
-##  [42] &quot;elevation&quot;                                        
-##  [43] &quot;elevationAccuracy&quot;                                
-##  [44] &quot;endDayOfYear&quot;                                     
-##  [45] &quot;establishmentMeans&quot;                               
-##  [46] &quot;eventDate&quot;                                        
-##  [47] &quot;eventID&quot;                                          
-##  [48] &quot;eventRemarks&quot;                                     
-##  [49] &quot;eventTime&quot;                                        
-##  [50] &quot;family&quot;                                           
-##  [51] &quot;familyKey&quot;                                        
-##  [52] &quot;fieldNotes&quot;                                       
-##  [53] &quot;fieldNumber&quot;                                      
-##  [54] &quot;footprintWKT&quot;                                     
-##  [55] &quot;formation&quot;                                        
-##  [56] &quot;fullCountry&quot;                                      
-##  [57] &quot;gbifID&quot;                                           
-##  [58] &quot;genericName&quot;                                      
-##  [59] &quot;genus&quot;                                            
-##  [60] &quot;genusKey&quot;                                         
-##  [61] &quot;geodeticDatum&quot;                                    
-##  [62] &quot;geologicalContextID&quot;                              
-##  [63] &quot;georeferencedBy&quot;                                  
-##  [64] &quot;georeferencedDate&quot;                                
-##  [65] &quot;georeferenceProtocol&quot;                             
-##  [66] &quot;georeferenceRemarks&quot;                              
-##  [67] &quot;georeferenceSources&quot;                              
-##  [68] &quot;georeferenceVerificationStatus&quot;                   
-##  [69] &quot;group&quot;                                            
-##  [70] &quot;habitat&quot;                                          
-##  [71] &quot;higherClassification&quot;                             
-##  [72] &quot;higherGeography&quot;                                  
-##  [73] &quot;highestBiostratigraphicZone&quot;                      
-##  [74] &quot;http://rs.tdwg.org/dwc/terms/organismQuantity&quot;    
-##  [75] &quot;http://rs.tdwg.org/dwc/terms/organismQuantityType&quot;
-##  [76] &quot;http://rs.tdwg.org/dwc/terms/sampleSizeUnit&quot;      
-##  [77] &quot;http://rs.tdwg.org/dwc/terms/sampleSizeValue&quot;     
-##  [78] &quot;http://unknown.org/nick&quot;                          
-##  [79] &quot;http://unknown.org/occurrenceDetails&quot;             
-##  [80] &quot;http://unknown.org/recordEnteredBy&quot;               
-##  [81] &quot;http://unknown.org/recordId&quot;                      
-##  [82] &quot;identificationID&quot;                                 
-##  [83] &quot;identificationQualifier&quot;                          
-##  [84] &quot;identificationReferences&quot;                         
-##  [85] &quot;identificationRemarks&quot;                            
-##  [86] &quot;identificationVerificationStatus&quot;                 
-##  [87] &quot;identifiedBy&quot;                                     
-##  [88] &quot;identifier&quot;                                       
-##  [89] &quot;individualCount&quot;                                  
-##  [90] &quot;informationWithheld&quot;                              
-##  [91] &quot;infraspecificEpithet&quot;                             
-##  [92] &quot;installationKey&quot;                                  
-##  [93] &quot;institutionCode&quot;                                  
-##  [94] &quot;institutionID&quot;                                    
-##  [95] &quot;island&quot;                                           
-##  [96] &quot;islandGroup&quot;                                      
-##  [97] &quot;ISO2&quot;                                             
-##  [98] &quot;key&quot;                                              
-##  [99] &quot;kingdom&quot;                                          
-## [100] &quot;kingdomKey&quot;                                       
-## [101] &quot;language&quot;                                         
-## [102] &quot;lastCrawled&quot;                                      
-## [103] &quot;lastInterpreted&quot;                                  
-## [104] &quot;lastParsed&quot;                                       
-## [105] &quot;lat&quot;                                              
-## [106] &quot;latestAgeOrHighestStage&quot;                          
-## [107] &quot;latestEonOrHighestEonothem&quot;                       
-## [108] &quot;latestEpochOrHighestSeries&quot;                       
-## [109] &quot;latestEraOrHighestErathem&quot;                        
-## [110] &quot;latestPeriodOrHighestSystem&quot;                      
-## [111] &quot;license&quot;                                          
-## [112] &quot;lifeStage&quot;                                        
-## [113] &quot;lithostratigraphicTerms&quot;                          
-## [114] &quot;locality&quot;                                         
-## [115] &quot;locationAccordingTo&quot;                              
-## [116] &quot;locationID&quot;                                       
-## [117] &quot;locationRemarks&quot;                                  
-## [118] &quot;lon&quot;                                              
-## [119] &quot;lowestBiostratigraphicZone&quot;                       
-## [120] &quot;member&quot;                                           
-## [121] &quot;modified&quot;                                         
-## [122] &quot;month&quot;                                            
-## [123] &quot;municipality&quot;                                     
-## [124] &quot;nameAccordingTo&quot;                                  
-## [125] &quot;namePublishedIn&quot;                                  
-## [126] &quot;namePublishedInYear&quot;                              
-## [127] &quot;nomenclaturalCode&quot;                                
-## [128] &quot;occurrenceID&quot;                                     
-## [129] &quot;occurrenceRemarks&quot;                                
-## [130] &quot;occurrenceStatus&quot;                                 
-## [131] &quot;order&quot;                                            
-## [132] &quot;orderKey&quot;                                         
-## [133] &quot;organismID&quot;                                       
-## [134] &quot;organismQuantity&quot;                                 
-## [135] &quot;organismQuantityType&quot;                             
-## [136] &quot;organismRemarks&quot;                                  
-## [137] &quot;originalNameUsage&quot;                                
-## [138] &quot;otherCatalogNumbers&quot;                              
-## [139] &quot;ownerInstitutionCode&quot;                             
-## [140] &quot;parentEventID&quot;                                    
-## [141] &quot;parentNameUsage&quot;                                  
-## [142] &quot;phylum&quot;                                           
-## [143] &quot;phylumKey&quot;                                        
-## [144] &quot;preparations&quot;                                     
-## [145] &quot;previousIdentifications&quot;                          
-## [146] &quot;programmeAcronym&quot;                                 
-## [147] &quot;projectId&quot;                                        
-## [148] &quot;protocol&quot;                                         
-## [149] &quot;publishingCountry&quot;                                
-## [150] &quot;publishingOrgKey&quot;                                 
-## [151] &quot;recordedBy&quot;                                       
-## [152] &quot;recordNumber&quot;                                     
-## [153] &quot;references&quot;                                       
-## [154] &quot;reproductiveCondition&quot;                            
-## [155] &quot;rights&quot;                                           
-## [156] &quot;rightsHolder&quot;                                     
-## [157] &quot;sampleSizeUnit&quot;                                   
-## [158] &quot;sampleSizeValue&quot;                                  
-## [159] &quot;samplingEffort&quot;                                   
-## [160] &quot;samplingProtocol&quot;                                 
-## [161] &quot;scientificName&quot;                                   
-## [162] &quot;scientificNameID&quot;                                 
-## [163] &quot;sex&quot;                                              
-## [164] &quot;species&quot;                                          
-## [165] &quot;speciesKey&quot;                                       
-## [166] &quot;specificEpithet&quot;                                  
-## [167] &quot;startDayOfYear&quot;                                   
-## [168] &quot;taxonConceptID&quot;                                   
-## [169] &quot;taxonID&quot;                                          
-## [170] &quot;taxonKey&quot;                                         
-## [171] &quot;taxonomicStatus&quot;                                  
-## [172] &quot;taxonRank&quot;                                        
-## [173] &quot;taxonRemarks&quot;                                     
-## [174] &quot;type&quot;                                             
-## [175] &quot;typeStatus&quot;                                       
-## [176] &quot;typifiedName&quot;                                     
-## [177] &quot;verbatimCoordinateSystem&quot;                         
-## [178] &quot;verbatimElevation&quot;                                
-## [179] &quot;verbatimEventDate&quot;                                
-## [180] &quot;verbatimLocality&quot;                                 
-## [181] &quot;verbatimSRS&quot;                                      
-## [182] &quot;verbatimTaxonRank&quot;                                
-## [183] &quot;vernacularName&quot;                                   
-## [184] &quot;waterBody&quot;                                        
-## [185] &quot;year&quot;                                             
-## [186] &quot;downloadDate&quot;</code></pre>
+<pre><code>##   [1] &quot;acceptedNameUsage&quot;                        
+##   [2] &quot;acceptedScientificName&quot;                   
+##   [3] &quot;acceptedTaxonKey&quot;                         
+##   [4] &quot;accessRights&quot;                             
+##   [5] &quot;adm1&quot;                                     
+##   [6] &quot;adm2&quot;                                     
+##   [7] &quot;associatedOccurrences&quot;                    
+##   [8] &quot;associatedReferences&quot;                     
+##   [9] &quot;associatedSequences&quot;                      
+##  [10] &quot;basisOfRecord&quot;                            
+##  [11] &quot;bed&quot;                                      
+##  [12] &quot;behavior&quot;                                 
+##  [13] &quot;bibliographicCitation&quot;                    
+##  [14] &quot;catalogNumber&quot;                            
+##  [15] &quot;class&quot;                                    
+##  [16] &quot;classKey&quot;                                 
+##  [17] &quot;cloc&quot;                                     
+##  [18] &quot;collectionCode&quot;                           
+##  [19] &quot;collectionID&quot;                             
+##  [20] &quot;collectionKey&quot;                            
+##  [21] &quot;continent&quot;                                
+##  [22] &quot;coordinatePrecision&quot;                      
+##  [23] &quot;coordinateUncertaintyInMeters&quot;            
+##  [24] &quot;country&quot;                                  
+##  [25] &quot;crawlId&quot;                                  
+##  [26] &quot;dataGeneralizations&quot;                      
+##  [27] &quot;datasetID&quot;                                
+##  [28] &quot;datasetKey&quot;                               
+##  [29] &quot;datasetName&quot;                              
+##  [30] &quot;dateIdentified&quot;                           
+##  [31] &quot;day&quot;                                      
+##  [32] &quot;depth&quot;                                    
+##  [33] &quot;depthAccuracy&quot;                            
+##  [34] &quot;disposition&quot;                              
+##  [35] &quot;dynamicProperties&quot;                        
+##  [36] &quot;earliestAgeOrLowestStage&quot;                 
+##  [37] &quot;earliestEonOrLowestEonothem&quot;              
+##  [38] &quot;earliestEpochOrLowestSeries&quot;              
+##  [39] &quot;earliestEraOrLowestErathem&quot;               
+##  [40] &quot;earliestPeriodOrLowestSystem&quot;             
+##  [41] &quot;elevation&quot;                                
+##  [42] &quot;elevationAccuracy&quot;                        
+##  [43] &quot;endDayOfYear&quot;                             
+##  [44] &quot;establishmentMeans&quot;                       
+##  [45] &quot;eventDate&quot;                                
+##  [46] &quot;eventID&quot;                                  
+##  [47] &quot;eventRemarks&quot;                             
+##  [48] &quot;eventTime&quot;                                
+##  [49] &quot;family&quot;                                   
+##  [50] &quot;familyKey&quot;                                
+##  [51] &quot;fieldNotes&quot;                               
+##  [52] &quot;fieldNumber&quot;                              
+##  [53] &quot;footprintSRS&quot;                             
+##  [54] &quot;footprintWKT&quot;                             
+##  [55] &quot;formation&quot;                                
+##  [56] &quot;fullCountry&quot;                              
+##  [57] &quot;gbifID&quot;                                   
+##  [58] &quot;genericName&quot;                              
+##  [59] &quot;genus&quot;                                    
+##  [60] &quot;genusKey&quot;                                 
+##  [61] &quot;geodeticDatum&quot;                            
+##  [62] &quot;geologicalContextID&quot;                      
+##  [63] &quot;georeferencedBy&quot;                          
+##  [64] &quot;georeferencedDate&quot;                        
+##  [65] &quot;georeferenceProtocol&quot;                     
+##  [66] &quot;georeferenceRemarks&quot;                      
+##  [67] &quot;georeferenceSources&quot;                      
+##  [68] &quot;georeferenceVerificationStatus&quot;           
+##  [69] &quot;group&quot;                                    
+##  [70] &quot;habitat&quot;                                  
+##  [71] &quot;higherClassification&quot;                     
+##  [72] &quot;higherGeography&quot;                          
+##  [73] &quot;higherGeographyID&quot;                        
+##  [74] &quot;highestBiostratigraphicZone&quot;              
+##  [75] &quot;hostingOrganizationKey&quot;                   
+##  [76] &quot;http://unknown.org/basionymAuthors&quot;       
+##  [77] &quot;http://unknown.org/basionymYear&quot;          
+##  [78] &quot;http://unknown.org/canonicalName&quot;         
+##  [79] &quot;http://unknown.org/captive&quot;               
+##  [80] &quot;http://unknown.org/language&quot;              
+##  [81] &quot;http://unknown.org/nick&quot;                  
+##  [82] &quot;http://unknown.org/recordEnteredBy&quot;       
+##  [83] &quot;http://unknown.org/recordId&quot;              
+##  [84] &quot;http://unknown.org/recordID&quot;              
+##  [85] &quot;http://unknown.org/rights&quot;                
+##  [86] &quot;http://unknown.org/rightsHolder&quot;          
+##  [87] &quot;http://unknown.org/verbatimScientificName&quot;
+##  [88] &quot;identificationID&quot;                         
+##  [89] &quot;identificationQualifier&quot;                  
+##  [90] &quot;identificationReferences&quot;                 
+##  [91] &quot;identificationRemarks&quot;                    
+##  [92] &quot;identificationVerificationStatus&quot;         
+##  [93] &quot;identifiedBy&quot;                             
+##  [94] &quot;identifier&quot;                               
+##  [95] &quot;individualCount&quot;                          
+##  [96] &quot;informationWithheld&quot;                      
+##  [97] &quot;infraspecificEpithet&quot;                     
+##  [98] &quot;installationKey&quot;                          
+##  [99] &quot;institutionCode&quot;                          
+## [100] &quot;institutionID&quot;                            
+## [101] &quot;institutionKey&quot;                           
+## [102] &quot;isInCluster&quot;                              
+## [103] &quot;island&quot;                                   
+## [104] &quot;islandGroup&quot;                              
+## [105] &quot;ISO2&quot;                                     
+## [106] &quot;iucnRedListCategory&quot;                      
+## [107] &quot;key&quot;                                      
+## [108] &quot;kingdom&quot;                                  
+## [109] &quot;kingdomKey&quot;                               
+## [110] &quot;language&quot;                                 
+## [111] &quot;lastCrawled&quot;                              
+## [112] &quot;lastInterpreted&quot;                          
+## [113] &quot;lastParsed&quot;                               
+## [114] &quot;lat&quot;                                      
+## [115] &quot;latestAgeOrHighestStage&quot;                  
+## [116] &quot;latestEonOrHighestEonothem&quot;               
+## [117] &quot;latestEpochOrHighestSeries&quot;               
+## [118] &quot;latestEraOrHighestErathem&quot;                
+## [119] &quot;latestPeriodOrHighestSystem&quot;              
+## [120] &quot;license&quot;                                  
+## [121] &quot;lifeStage&quot;                                
+## [122] &quot;lithostratigraphicTerms&quot;                  
+## [123] &quot;locality&quot;                                 
+## [124] &quot;locationAccordingTo&quot;                      
+## [125] &quot;locationID&quot;                               
+## [126] &quot;locationRemarks&quot;                          
+## [127] &quot;lon&quot;                                      
+## [128] &quot;lowestBiostratigraphicZone&quot;               
+## [129] &quot;materialSampleID&quot;                         
+## [130] &quot;member&quot;                                   
+## [131] &quot;modified&quot;                                 
+## [132] &quot;month&quot;                                    
+## [133] &quot;municipality&quot;                             
+## [134] &quot;nameAccordingTo&quot;                          
+## [135] &quot;namePublishedIn&quot;                          
+## [136] &quot;namePublishedInYear&quot;                      
+## [137] &quot;nomenclaturalCode&quot;                        
+## [138] &quot;occurrenceID&quot;                             
+## [139] &quot;occurrenceRemarks&quot;                        
+## [140] &quot;occurrenceStatus&quot;                         
+## [141] &quot;order&quot;                                    
+## [142] &quot;orderKey&quot;                                 
+## [143] &quot;organismID&quot;                               
+## [144] &quot;organismQuantity&quot;                         
+## [145] &quot;organismQuantityType&quot;                     
+## [146] &quot;organismRemarks&quot;                          
+## [147] &quot;originalNameUsage&quot;                        
+## [148] &quot;otherCatalogNumbers&quot;                      
+## [149] &quot;ownerInstitutionCode&quot;                     
+## [150] &quot;parentEventID&quot;                            
+## [151] &quot;parentNameUsage&quot;                          
+## [152] &quot;phylum&quot;                                   
+## [153] &quot;phylumKey&quot;                                
+## [154] &quot;preparations&quot;                             
+## [155] &quot;previousIdentifications&quot;                  
+## [156] &quot;programmeAcronym&quot;                         
+## [157] &quot;projectId&quot;                                
+## [158] &quot;protocol&quot;                                 
+## [159] &quot;publishingCountry&quot;                        
+## [160] &quot;publishingOrgKey&quot;                         
+## [161] &quot;recordedBy&quot;                               
+## [162] &quot;recordNumber&quot;                             
+## [163] &quot;references&quot;                               
+## [164] &quot;reproductiveCondition&quot;                    
+## [165] &quot;rights&quot;                                   
+## [166] &quot;rightsHolder&quot;                             
+## [167] &quot;sampleSizeUnit&quot;                           
+## [168] &quot;sampleSizeValue&quot;                          
+## [169] &quot;samplingEffort&quot;                           
+## [170] &quot;samplingProtocol&quot;                         
+## [171] &quot;scientificName&quot;                           
+## [172] &quot;scientificNameID&quot;                         
+## [173] &quot;sex&quot;                                      
+## [174] &quot;species&quot;                                  
+## [175] &quot;speciesKey&quot;                               
+## [176] &quot;specificEpithet&quot;                          
+## [177] &quot;startDayOfYear&quot;                           
+## [178] &quot;taxonConceptID&quot;                           
+## [179] &quot;taxonID&quot;                                  
+## [180] &quot;taxonKey&quot;                                 
+## [181] &quot;taxonomicStatus&quot;                          
+## [182] &quot;taxonRank&quot;                                
+## [183] &quot;taxonRemarks&quot;                             
+## [184] &quot;type&quot;                                     
+## [185] &quot;typeStatus&quot;                               
+## [186] &quot;typifiedName&quot;                             
+## [187] &quot;verbatimCoordinateSystem&quot;                 
+## [188] &quot;verbatimElevation&quot;                        
+## [189] &quot;verbatimEventDate&quot;                        
+## [190] &quot;verbatimIdentification&quot;                   
+## [191] &quot;verbatimLabel&quot;                            
+## [192] &quot;verbatimLocality&quot;                         
+## [193] &quot;verbatimSRS&quot;                              
+## [194] &quot;verbatimTaxonRank&quot;                        
+## [195] &quot;vernacularName&quot;                           
+## [196] &quot;waterBody&quot;                                
+## [197] &quot;year&quot;                                     
+## [198] &quot;downloadDate&quot;</code></pre>
 <pre class="r"><code># remove NA values if they exist in lat or lon
 puma1&lt;-subset(puma.gbif, puma.gbif$lat != &quot;NA&quot;,)
 puma1&lt;-subset(puma1, puma1$lon != &quot;NA&quot;,)
-dim(puma1)</code></pre>
-<pre><code>## [1] 5957  186</code></pre>
-<pre class="r"><code># So really only 5922 records are georeferenced.
+dim(puma.gbif)</code></pre>
+<pre><code>## [1] 17038   198</code></pre>
+<pre class="r"><code>dim(puma1)</code></pre>
+<pre><code>## [1] 10217   198</code></pre>
+<pre class="r"><code># So really only 10217 of the 17038 records are georeferenced.
 
 # puma.gbif is just a dataframe. We need it to become spatial.
 # This defines the CRS for the US in WGS 1984 (world geographic 1984). 
 wgs1984.proj &lt;- CRS(&quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;)
 
 # Reference the columns with &quot;lon&quot; and &quot;lat&quot; to make a spatial points dataframe
-puma &lt;- SpatialPoints(coords=puma1[,c(118,105)], proj4string=wgs1984.proj)
+puma &lt;- SpatialPoints(coords=puma1[,c(114,127)], proj4string=wgs1984.proj)
 
 # Occasionally the GBIF data are updated and column order changes. Instead of 
 # referencing the column number, it&#39;s better to call it out by name:
 puma &lt;- SpatialPoints(coords=puma1[,c(&quot;lon&quot;,&quot;lat&quot;)], proj4string=wgs1984.proj)
 
 # Reproject puma to Albers Equal Area Projection so it matches
-# the US Map
+# the Conterminous US Map
 puma.equal &lt;- spTransform(puma, us.atlas.proj)
-plot(us.equal)
+plot(us.equal, main=&quot;Puma concolor observations&quot;)
 points(puma.equal, pch=19, cex=0.3, col=&quot;blue&quot;)</code></pre>
 <p><img src="lab2_scale_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <pre class="r"><code>### CREATE AN EMPTY GRID - this will define the extent of the study area
@@ -674,7 +769,8 @@ summary(us.equal) </code></pre>
 ## y -2361733 3911163
 ## Is projected: TRUE 
 ## proj4string :
-## [+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs]
+## [+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=sphere +units=m
+## +no_defs]
 ## Data attributes:
 ##    AFFGEOID            GEOID               NAME          
 ##  Length:1           Length:1           Length:1          
@@ -741,30 +837,73 @@ plot(us.equal, add=T)</code></pre>
 save.image(file.path(output_path,&quot;lab2.RData&quot;))</code></pre>
 </div>
 </div>
-<div id="assignment---hand-in-a-r-markdown-produced-pdf-to-d2l-including-the-following" class="section level2">
-<h2>ASSIGNMENT - Hand in a R Markdown-produced PDF to D2L including the following:</h2>
+<div
+id="assignment---hand-in-a-r-markdown-produced-pdf-to-d2l-including-the-following"
+class="section level2">
+<h2>ASSIGNMENT - Hand in a R Markdown-produced PDF to D2L including the
+following:</h2>
 <ol style="list-style-type: decimal">
-<li>Repeat the process above, but create 2 side-by-side plots for 2 new resolutions of your choice. Create both of the plots at the extent of the US Northeast (or if you use another species and it’s not in the Northeast, clip it to another US region). Clip the rasters so they only plot for the extent of the Northeast (or another region depending on the species you choose).</li>
+<li>Repeat the process above, but create 2 side-by-side plots for 2 new
+resolutions of your choice. Create both of the plots at the extent of
+the US Northeast (or if you use another species and it’s not in the
+Northeast, clip it to another US region). Clip the rasters so they only
+plot for the extent of the Northeast (or another region depending on the
+species you choose).</li>
 </ol>
 <ol style="list-style-type: lower-alpha">
-<li><p>ADD A SCALEBAR: See these potential approaches: scalebar.R: <a href="https://rdrr.io/cran/raster/src/R/scalebar.R" class="uri">https://rdrr.io/cran/raster/src/R/scalebar.R</a> and <a href="https://rdrr.io/cran/raster/man/scalebar.html" class="uri">https://rdrr.io/cran/raster/man/scalebar.html</a>. Or: <a href="https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/scalebar" class="uri">https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/scalebar</a> hint: look at the units (and extent) of a raster by typing the name of the raster at the R prompt.</p></li>
-<li><p>ADD A NORTH ARROW: hint: <a href="https://www.rdocumentation.org/packages/GISTools/versions/0.7-4/topics/North%20Arrow" class="uri">https://www.rdocumentation.org/packages/GISTools/versions/0.7-4/topics/North%20Arrow</a> - this relies on the R package, GISTools.</p></li>
-<li><p>CHANGE COLORS: Make each one of the plots differ in color for pixels of the species occurrence raster.</p></li>
-<li><p>OVERLAY the species occurrence points on one of your plotted maps. Use a contrasting color for the points.</p></li>
-<li><p>ADD A LEGEND. hint: <a href="https://biologyforfun.wordpress.com/2013/03/11/taking-control-of-the-legend-in-raster-in-r/" class="uri">https://biologyforfun.wordpress.com/2013/03/11/taking-control-of-the-legend-in-raster-in-r/</a> Some tips on plotting LEGENDS with rasters (“distribution” below) and shapefiles (“occurrence” below) together. “left” tells R where to put the legend (lower left). You can also specify actual coordinates. pch is the base R code for the point shape: <a href="http://www.statmethods.net/advgraphs/parameters.html" class="uri">http://www.statmethods.net/advgraphs/parameters.html</a> - here it’s referencing 21 and 15 which are the circles and squares for “occurrence” and “distribution” respectively. Assign their colors with the “col=” command, and their size with “pt.cex”. Adding a title to the legend is important, otherwise we don’t know what we’re looking at. ?legend will tell you more.</p></li>
+<li><p>ADD A SCALEBAR: See these potential approaches: scalebar.R: <a
+href="https://rdrr.io/cran/raster/src/R/scalebar.R"
+class="uri">https://rdrr.io/cran/raster/src/R/scalebar.R</a> and <a
+href="https://rdrr.io/cran/raster/man/scalebar.html"
+class="uri">https://rdrr.io/cran/raster/man/scalebar.html</a>. Or: <a
+href="https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/scalebar"
+class="uri">https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/scalebar</a>
+hint: look at the units (and extent) of a raster by typing the name of
+the raster at the R prompt.</p></li>
+<li><p>ADD A NORTH ARROW: hint: <a
+href="https://www.rdocumentation.org/packages/GISTools/versions/0.7-4/topics/North%20Arrow"
+class="uri">https://www.rdocumentation.org/packages/GISTools/versions/0.7-4/topics/North%20Arrow</a>
+- this relies on the R package, GISTools.</p></li>
+<li><p>CHANGE COLORS: Make each one of the plots differ in color for
+pixels of the species occurrence raster.</p></li>
+<li><p>OVERLAY the species occurrence points on one of your plotted
+maps. Use a contrasting color for the points.</p></li>
+<li><p>ADD A LEGEND. hint: <a
+href="https://biologyforfun.wordpress.com/2013/03/11/taking-control-of-the-legend-in-raster-in-r/"
+class="uri">https://biologyforfun.wordpress.com/2013/03/11/taking-control-of-the-legend-in-raster-in-r/</a>
+Some tips on plotting LEGENDS with rasters (“distribution” below) and
+shapefiles (“occurrence” below) together. “left” tells R where to put
+the legend (lower left). You can also specify actual coordinates. pch is
+the base R code for the point shape: <a
+href="http://www.statmethods.net/advgraphs/parameters.html"
+class="uri">http://www.statmethods.net/advgraphs/parameters.html</a> -
+here it’s referencing 21 and 15 which are the circles and squares for
+“occurrence” and “distribution” respectively. Assign their colors with
+the “col=” command, and their size with “pt.cex”. Adding a title to the
+legend is important, otherwise we don’t know what we’re looking at.
+?legend will tell you more.</p></li>
 </ol>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Repeat 1a-e. above, but this time reproject the data into another projection for North America (your choice).</p></li>
-<li><p>Briefly answer the following: How do the different projections and resolutions change your interpretation of the distribution of the species? Keep in mind that distribution does not just include extent or range size. What would be an appropriate resolution and extent of occurrence data for the species you chose if you are trying to represent its full distribution? Which type of Coordinate System (projected or geographic), if any, would be more appropriate to use with these data if you wanted to measure distances between a) two extreme ends of the species range? and b) two nearby species occurrences locations?</p></li>
+<li><p>Repeat 1a-e. above, but this time reproject the data into another
+projection for North America (your choice).</p></li>
+<li><p>Briefly answer the following: How do the different projections
+and resolutions change your interpretation of the distribution of the
+species? Keep in mind that distribution does not just include extent or
+range size. What would be an appropriate resolution and extent of
+occurrence data for the species you chose if you are trying to represent
+its full distribution? Which type of Coordinate System (projected or
+geographic), if any, would be more appropriate to use with these data if
+you wanted to measure distances between a) two extreme ends of the
+species range? and b) two nearby species occurrences locations?</p></li>
 </ol>
 <p>Here are some useful bits of code:</p>
 <pre class="r"><code># Regions of US shapefile
-download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_region_20m.zip&quot;,
+download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_region_20m.zip&quot;,
               dest=file.path(data_path,&quot;usr.zip&quot;), mode=&quot;wb&quot;) 
 unzip( file.path(data_path,&quot;usr.zip&quot;), exdir = data_path)
 
-# read in the shapefile
-usr &lt;- readOGR(file.path(data_path,&quot;cb_2014_us_region_20m.shp&quot;))
+# read in the US Regions shapefile
+usr &lt;- readOGR(file.path(data_path,&quot;cb_2021_us_region_20m.shp&quot;))
 ## take a look at the shapefile info
 summary(usr)
 ## follow the steps above for projecting it to WGS 1984, then to US National Atlas Equal-Area.
@@ -776,12 +915,30 @@ summary(usr)
 </div>
 <div id="homework-in-preparation-for-lab-3" class="section level2">
 <h2>Homework in preparation for Lab 3:</h2>
-<p>In Lab 3 we will be working with landcover data from the National Land Cover Database (NLCD). Read about NLCD here (<a href="https://www.mrlc.gov/" class="uri">https://www.mrlc.gov/</a>) and view the short video: <a href="https://www.mrlc.gov/nlcd-2016-video" class="uri">https://www.mrlc.gov/nlcd-2016-video</a>.</p>
-<p><strong>OPTIONAL MSU HPCC info:</strong> In past years we have used the MSU HPCC for this lab, but we will not be doing so this year. We will be using a smaller chunk of the data so you can run it on your computer.</p>
-<p>If you’re interested in learning about the HPCC here is the go-to Introduction website: <a href="https://wiki.hpcc.msu.edu/display/TEAC/Introduction+to+HPCC" class="uri">https://wiki.hpcc.msu.edu/display/TEAC/Introduction+to+HPCC</a></p>
-<p>There are also Intro to HPCC workshops offered monthly through iCER; free but registration required <a href="https://icer.msu.edu/upcoming-workshops" class="uri">https://icer.msu.edu/upcoming-workshops</a>)</p>
-<p>If you are not familiar with basic Linux commands, check out the HPCC Intro to Linux online courses at the wiki link above. You can also check them out here: <a href="https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition" class="uri">https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition</a>.</p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
+<p>In Lab 3 we will be working with landcover data from the National
+Land Cover Database (NLCD). Read about NLCD here (<a
+href="https://www.mrlc.gov/" class="uri">https://www.mrlc.gov/</a>) and
+view the short video: <a href="https://www.mrlc.gov/nlcd-2016-video"
+class="uri">https://www.mrlc.gov/nlcd-2016-video</a>.</p>
+<p><strong>OPTIONAL MSU HPCC info:</strong> In past years we have used
+the MSU HPCC for this lab, but we will not be doing so this year. We
+will be using a smaller chunk of the data so you can run it on your
+computer.</p>
+<p>If you’re interested in learning about the HPCC here is the HPCC
+website: <a href="https://docs.icer.msu.edu"
+class="uri">https://docs.icer.msu.edu</a> and training workshops and
+courses: <a
+href="https://docs.icer.msu.edu/#hpcc-workshops-and-training"
+class="uri">https://docs.icer.msu.edu/#hpcc-workshops-and-training</a></p>
+<p>If you are not familiar with basic Linux commands, check out the HPCC
+Intro to Linux online courses at the link above (now on D2L). You can
+also check them out here: <a
+href="https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition"
+class="uri">https://linuxconfig.org/bash-scripting-tutorial-for-beginners#h1-bash-shell-scripting-definition</a>.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
+work is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed
+under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
 
@@ -794,7 +951,7 @@ summary(usr)
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -812,7 +969,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
