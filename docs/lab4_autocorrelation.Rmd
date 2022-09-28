@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 4"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2015; rev. Sep 24, 2019, Sep 23-27, 2020"
+date: "Sep 2015; rev. Sep 24, 2019, Sep 23-27, 2020, Sep 27, 2022"
 urlcolor: blue
 ---
 
@@ -11,7 +11,7 @@ urlcolor: blue
 
 This lab has 2 Parts. You need to hand in Part 2 as a PDF produced from R Markdown, including output plots, statistics, code, and text for answers to the questions below. When referring to the code below it may be more useful to use the .Rmd file linked above. OPTIONAL: If you would like to test out GitHub in completing this lab, complete your .Rmd file in RStudio and push your PDF (and your .Rmd if you want) to a repository. You can add the link to the GitHub file when you submit to D2L. Please also submit your PDF to D2L.
 
-This lab uses the the brycesite environmental data from the same study used in Lab 1. See this link for more information on these data: http://ecology.msu.montana.edu/labdsv/R/labs/lab1/lab1.html and http://ecology.msu.montana.edu/labdsv/R/labs/lab2/lab2.html
+This lab uses the the brycesite environmental data from the R package labdsv. 
 
 The variable list for the site variables is here: https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite. 
 A few notes: east=easting; north=northing; elev is recorded in feet; we will convert to metric.
@@ -55,29 +55,21 @@ If you previously saved your workspace and want to load it here, do so this way:
      
 **NOTES on R packages used in this lab:**
 
-(1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("ape", "ncf", "ggplot2", "sp", "labdsv", "ggmap", "proj4", "rgdal","ggspatial","raster")) {`
-`  if (!require(package, character.only=T, quietly=T)) {`
-
-`    install.packages(package)`
-
-`    library(package, character.only=T)`
-
-`  }`
-
-`}`
-
+(1) With R Markdown, it is helpful to install packages locally before knitting. 
 Load the packages:
 ```{r, message=FALSE, results='hide',warning=FALSE}
-library(dplyr)
+library(sf)
+library(tidyverse) 
 library(ggplot2)
+library(tmap)
 library(ape)
 library(ncf)
-library(sp)
 library(labdsv)
 library(FedData)
 library(ggspatial)
 library(ggmap)
+library(gt)
+library(broom)
 library(raster)
 
 # Apply ggplot2 theme to remove gray background and set the base font size as 14. See:  https://ggplot2.tidyverse.org/reference/ggtheme.html for more theme options.
@@ -86,76 +78,93 @@ theme_set(theme_classic(base_size = 14))
 # Call the data directly because it's loaded in the labdsv R package
 data(brycesite)
 
-## If you wanted to read it in another way, you could do so this way:
-# if(! file.exists(file.path(data_path,'brycesite.R'))){
-#   download.file("http://ecology.msu.montana.edu/labdsv/R/labs/lab2/brycesite.R", dest=file.path(data_path,"brycesite.R"), mode="wb") 
-# }
-# site<- read.table(file.path(data_path,"brycesite.R",header=TRUE, row.names=1), exdir = data_path)
+# Plot the data in space, by elevation (brycesite has northing and easting so it's projection is UTM). Here we will use the sf R package.
+head(brycesite)
+site <- brycesite %>%
+  drop_na(east, north) %>% # drop missing locations
+  mutate(elev_m = elev * 0.3048) # create new column; convert feet to meters
 
-# make a copy called "site"
-site<-brycesite
-# Take a look at the site, remove any NAs in locations
-head(site)
-summary(site)
-site<-subset(site, site$east != "NA",)
-site<-subset(site, site$north != "NA",)
-site$elev.ft<-site$elev # make a copy of elev
-site$elev <- site$elev.ft * 0.3048 # convert feet to meters
-# Plot the data in space, by elevation
-coords <- site[, c("east", "north")]
-coordinates(coords) <- c("east", "north")
-crs.geo <- CRS("+proj=utm +zone=12 +datum=WGS84")
-proj4string(coords) <- crs.geo   
-dat <- site[,c("plotcode", "elev")]
-elevdat <- SpatialPointsDataFrame(coords = coords, data = dat)
-spplot(elevdat, zcol = "elev")
+st_crs(site) # CRS for site doesn't exist because it's a dataframe (not spatial feature)
 
-# Take a look at the underlying elevation from the National Elevation Dataset (NED) using the FedData R package
+# Define CRS using the sf package
+crs.geo <- st_crs("+proj=utm +zone=12 +datum=WGS84")
+
+# Make site into a spatial feature using sf package; assign its projection
+site <- site %>%    
+  st_as_sf(coords = c("east", "north"),
+crs = crs.geo)
+
+# Plot it with ggplot
+site %>%
+  ggplot(aes(color = elev_m)) + geom_sf() +   
+  scale_color_viridis_c(option = "viridis",
+                        name = "Elevation (meters)")
+
+# Plot it with tmap
+# tmap
+tm_shape(site) + tm_bubbles(palette = "viridis",
+             col = "elev_m",
+             size = 0.25)
+
+# Take a look at the underlying elevation from the National Elevation Dataset (NED) using the FedData R package. The FedData package works best if you use a spatial object created with the sp package.
+site.sp<- as(site, "Spatial")
+
 # Returns a raster
 NED <- get_ned(
-  template = elevdat,
+  template = site.sp,
   label = "bryce"
 )
+
+# If you have trouble with FedData package, the Lab4_NED data are on D2L in Lab 4's section as "Lab4_NED.RData". Simply save it, and open it in R.
 ```
 
 *Plot the elevation raster and the vegetation data plot locations on the same map. Practice using ggplot2 for this plotting.* First, project the raster to the veg data projection so we can plot them together (you could instead project the veg data shapefile (which is vector data) with the raster CRS, and you should project vector rather than the raster if you plan on doing any spatial analysis with them both). We're just plotting so it's ok.
 ```{r, message=FALSE, results='hide',warning=FALSE}
 raster::crs(NED)
-NED<-projectRaster(NED,crs = raster::crs(coords))
+# Define crs using the raster pacakge
+crs.geo.r <- CRS("+proj=utm +zone=12 +datum=WGS84") # set CRS
+
+NED <- projectRaster(NED, crs = crs.geo.r)
 
 # Create a dataframe out of the NED raster. This is a necessary step for plotting rasters with ggplot2. 
-NED_df = as.data.frame(NED, xy = TRUE)
-head(NED_df)
-# Create a dataframe out of the elevdat shapefile
-elevdat_df = as.data.frame(elevdat)
-head(elevdat_df)
-# Plot the NED with the points overlaid. See how the elevation in the points aligns with the NED
+NED_df1 = as.data.frame(NED, xy = TRUE)
+head(NED_df1)
+NED_df1 <- NED_df1 %>%
+  drop_na()
+# Rename the elevation column
+NED_df <- NED_df1 %>%
+  rename(elev_NED = layer)
+# Plot the NED with the points overlaid using ggplot. See how the elevation in the points aligns with the NED
 NED_elev<-ggplot() +
   geom_raster(data = NED_df, 
-  aes(x = x, y = y, fill = bryce_NED_1)) # x and y are defined as the column names, "x" and "y"
-NED_elev
+  aes(x = x, y = y, fill = elev_NED)) # x and y are defined as the column names, "x" and "y"; "elev_NED" is the elevation column
+
 # Now add on the vegetation plots and their associated elevation from the elevdat data, and change the color of the raster.
-NED_elev<-ggplot() +
-  geom_raster(data = NED_df, aes(x = x, y = y, fill = bryce_NED_1)) +
-  scale_fill_gradientn(colours = terrain.colors(10)) +
-  geom_sf() +
-  geom_point(data = elevdat_df, aes(x=east, y=north), size=2) +
-  coord_sf(crs=crs(elevdat)) # define the coordinate ref system based on elevdat
+NED_elev <- ggplot() +
+  geom_raster(data = NED_df, aes(x = x, y = y, fill = elev_NED)) + 
+  geom_sf(data = site, aes(color = elev_m)) + 
+  scale_fill_viridis_c(option = "viridis",
+    name = "NED Elevation (m)") + 
+    scale_color_viridis_c(option = "plasma",
+                         # direction = -1,
+    name = "Plot Elevation (m)") + 
+  annotation_scale(location = "br",
+    width_hint = 0.5) + 
+  annotation_north_arrow(location = "br",
+    which_north = "true",
+    pad_x = unit(0.75, "in"),
+    pad_y = unit(0.5, "in"),
+    style = north_arrow_orienteering) +
+labs(title = "Bryce Canyon Vegetation Plot Elevation") + 
+  ylab("Latitude") +
+  xlab("Longitude")
 NED_elev
-# Now add a north arrow and scale with R package ggspatial, and color code the plot locations based on "elev" from the plot dataset.
-NED_elev<-ggplot() +
-  geom_raster(data = NED_df, aes(x = x, y = y, fill = bryce_NED_1)) +
-  scale_fill_gradientn(colors = terrain.colors(10), name="NED Elevation (m)") +
-  geom_sf() +
-  geom_point(data = elevdat_df, aes(x=east, y=north, color=elev), size=2) +
-  scale_colour_gradientn(colors=c(low = "black", high = "white"), name="Plot Elevation (m)") + 
-  ggtitle("Bryce Canyon Vegetation Plot Elevation") + 
-  annotation_scale(location = "br", width_hint = 0.4) +
-  annotation_north_arrow(location = "br", which_north = "true", 
-    pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
-    style = north_arrow_fancy_orienteering) +
-  coord_sf(crs=crs(elevdat)) 
-NED_elev
+# Plot with tmap:
+tm_shape(NED) +
+tm_raster(alpha = 0.75, legend.show = FALSE) +
+tm_shape(site) + tm_bubbles(palette = "viridis",
+               col = "elev_m",
+               size = 0.25)
 ```
 
 *Or you could use `ggmap` to pull in a terrain map and overlay the plots on top.* This ggmap uses Lat Lon, which isn't as ideal for inter-point distances. It's better to stick with analysis using the UTM meters. But this ggmap can make some nice maps. It also has terrain options, roads, etc.
@@ -166,22 +175,9 @@ bc_map <- get_stamenmap(bbox = c(left = -112.5, bottom = 37.25,
                                   right = -111.9, top = 37.8), 
                          zoom = 10)
 ggmap(bc_map)
-
-# Convert UTMs for plots to Lat Lon so they can plot on top of ggmap object.
-coords <- site[, c("east", "north")]
-sputm <- SpatialPoints(coords, proj4string=CRS("+proj=utm +zone=12 +datum=WGS84")) 
-spgeo <- spTransform(sputm, CRS("+proj=longlat +datum=WGS84"))
-# Merge in the elevation data
-elevdat <- SpatialPointsDataFrame(coords = spgeo, data = dat)
-
-# for plotting, convert to data frame and merge in the elevation data
-elevdat.dat<-data.frame(elevdat)
-
-# Hint: If you used my bounding box from above, this will look a little too small. 
-p <-ggmap(bc_map)
-p + geom_point(aes(x = east, y = north,  colour = elev), data = elevdat.dat, size = 2) + 
-  theme(legend.position="right")
 ```
+
+OPTIONAL: see if you can overlay the elevation plots on this ggmap terrain map.
 
 # Part 2: Moran's I and Mantel test
 
@@ -194,10 +190,40 @@ shapiro.test(site$elev)
 qqnorm(site$elev)
 qqline(site$elev,col="blue")
 
+
 shapiro.test(log(site$elev))
 qqnorm(log(site$elev))
 qqline(log(site$elev),col="red")
 site$log.elev <- log(site$elev)
+
+# Tidy up the output; use broom and gt packages
+shap_test_elev <- tidy(shapiro.test(site$elev_m)) 
+shap_test_elev %>%
+  gt() %>%
+  tab_header(title = "Shapiro Test (elevation)")
+
+shap_test_lelev <- tidy(shapiro.test(log(site$elev_m))) 
+shap_test_lelev %>%
+  gt() %>%
+  tab_header(title = "Shapiro Test (log elevation)")
+
+# You can combine them into 1 table like this:
+shap_test_df <- data.frame(var = c("elev_m", "log_elev"),
+  statistic = c(shap_test_elev$statistic, shap_test_lelev$statistic),
+  p.value = c(shap_test_elev$p.value, shap_test_lelev$p.value)) 
+
+shap_test_df %>%
+  slice(1:2) %>%
+  gt() %>%
+  tab_header(title = "Shapiro Test Results")
+
+# add easting and northing column to site_sf object
+site_coords <- site %>% 
+  st_coordinates() %>% 
+  as.data.frame()
+site <- site_coords %>% 
+  bind_cols(site) %>% 
+  rename(east = X, north = Y)
 
 # Compute distance matrix
 data.dist <- as.matrix(dist(cbind(site$east,site$north)))
@@ -215,12 +241,19 @@ hist(data.dist)$counts
 
 # Plot the distance matrix with one option of Distance classes
 # (note: these may not be the most informative classes)
-hist(data.dist,main="Histogram of distances with classes chosen",xlab="Distance (meters)",col="gray",ylim=c(0,4500))
-abline(v=c(0,4000,8000,12000,16000,20000,24000,28000),col="purple",lwd=2)
+hist(data.dist,
+     main="Histogram of distances with classes chosen",
+     xlab="Distance (meters)",
+     col="gray",
+     ylim=c(0,4500))
+abline(v=c(0,4000,8000,12000,16000,20000,24000,28000),
+       col="purple",
+       lwd=2)
 
 #Compute Moran's I
 Moran.I(site$log.elev, w, scaled = T, na.rm = T, alternative = "two.sided")
 Moran.I(site$elev, w, scaled = T, na.rm = T, alternative = "two.sided")
+
 ```
 
 ### QUESTION 1:
@@ -242,6 +275,10 @@ fit <- invisible(correlog(x = site$east, y = site$north, z = site$elev, resamp =
 length(which(fit$p <= 0.05)) 
 
 plot(fit$mean.of.class, fit$correlation, pch = 19, "black", ylab = "Correlation coefficient", xlab = "Distance (mean of class)", main = "Correlogram for elevation change")
+
+# You can also try other R packages like pgirmess, to make correlograms (note that the function has the same name "correlog" in both R packages; you need to specify which one to use).
+pgi.cor <- pgirmess::correlog(coords=site_coords, z=site$elev, method="Moran", nbclass=20)
+plot(pgi.cor)
 ```
 
 ### QUESTION 2: 
@@ -263,7 +300,7 @@ elev.dist <- as.matrix(dist(cbind(site$elev, site$elev)))
 mant.results <- ape::mantel.test(m1 = data.dist, m2 = elev.dist, nperm = 999, alternative = 'two.sided')
 ```
 
-Next, choose a NEW VARIABLE from the `site` dataframe. Plot the variable in space (see the code for plotting elevation on a map, above). The variable list for the site variables is here: https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite.
+Next, choose a NEW VARIABLE from the `brycesite` dataframe. Plot the variable in space (see the code for plotting elevation on a map, above). The variable list for the site variables is here: https://www.rdocumentation.org/packages/labdsv/versions/2.0-1/topics/brycesite.
 
 ### QUESTION 4: 
 What are the general patterns of the NEW VARIABLE across space? Do you expect your NEW VARIABLE to be spatially correlated with elevation across the study region? Why or why not? 
@@ -278,5 +315,5 @@ You will need to create your `NEWVARIABLE.dist` like this:
 Interpret the results of the Mantel tests relative to your predictions from Question 4. You may want to run `correlog()` on your NEW VARIABLE to help with interpretation.
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020; 2022 by Phoebe Zarnetske. Special thanks to Nan Nourn for updates related to sf, tmap, gt R packages</a>.
 
