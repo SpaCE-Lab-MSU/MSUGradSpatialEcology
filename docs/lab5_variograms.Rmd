@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 5"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2015; rev. Oct 2, 2019, Sep 30, 2020"
+date: "Sep 2015; rev. Oct 2, 2019, Sep 30, 2020, Oct 4, 2022"
 urlcolor: blue
 ---
 
@@ -99,7 +99,10 @@ library(rgl)
 library(lattice)
 ```
 
-(2) For Package rgdal, if it does not load properly, you may need to install GDAL first:
+(2) For Package "fields", if it does not load properly, you may need to install one of its dependencies (dotCall64): install.packages("dotCall64"); when asked, "Do you want to install from sources the package which needs compilation? (Yes/no/cancel)" type "no".
+
+
+For Package "rgdal", if it does not load properly, you may need to install GDAL first:
 
 PROJ (>= 4.8.0, https://proj.org/download.html) 
 GDAL (>= 1.11.4, https://gdal.org/download.html)
@@ -174,7 +177,7 @@ legend("topleft", fill=attr(fixed.col, "palette"),
        legend=c("sapling","poletimber","sawtimber","large sawtimber"), bty="n")
 ```
 
-Interpolate over the points:
+Interpolate over the points. Note that image.plot() is from the "fields" R package. See above if this command is not working.
 ```{r, message=FALSE, results='hide',warning=FALSE}
 x.res <- 100; y.res <- 100
 
@@ -380,5 +383,5 @@ plot(envelope(dfir.ppp, Kest, correction="best", nsim = 500))
 Notice how the entire plot for Douglas Fir data (black solid line) is above the theoretical curve. Values higher than the theoretical line (red dotted line) reflect clustering, and values below the theoretical line reflect dispersion. The plot indicates that even though we observed clustering in one region by plotting the occurrence data above, Douglas Fir is clustered across the entire study area, at nearly all scales. At very local scales (close to r=0) the curves overlap indicating that there is not strong clustering at those short distances. Repeat the process above to try it out on another species to see how two species compare.
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020; 2022 by Phoebe Zarnetske</a>.
 
