@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 8"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Nov 6, 2020"
+date: "Nov 6, 2020; 28 Oct 2022"
 urlcolor: blue
 ---
 
@@ -9,17 +9,17 @@ urlcolor: blue
 
 *[RMarkdown version of this Lab](lab8_sdm1.Rmd)*
 
-![GBIF Logo](https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png)
+![](https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png)
 
 In week 9 of the course you viewed recordings of the [GBIF Frontiers of Biodiversity Informatics and Modelling Species Distributions Symposium](https://www.amnh.org/research/center-for-biodiversity-conservation/convening-and-connecting/events-and-symposia/gbif-frontiers-panel-and-symposium] held at the [American Museum of Natural History](https://www.amnh.org/) in 2015, which provided some examples of research involving data from GBIF and their use in SDMs. In this lab, you will be introduced to species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you'll be working through the first part of it in this lab. Over the next two labs, you will continue working through the vignette.   
 
-For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette. You can find the PDF of the vignette here: [sdm.pdf](sdm.pdf), and as HTML here: https://rspatial.org/raster/sdm/index.html.
+For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette. You can find the the vignette here: https://rspatial.org/raster/sdm/index.html.
 
 **First**, work through the vignette Part 1 (Chapters 1-4). 
 
 **Second**, answer the dismo vignette Exercises 2.8 (#1-5; and copied below) using a species of your choice (not *Solanum acaule*; select a species with at least 50 occurrence records - it doesn't have to be the African elephant). Note that Question 4 asks you to use `gmap` to make a basemap - this may not work because it requires a link with Google Maps. If `gmap` doesn't work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 & 7 are optional and will not be graded. 
 
-Here are the questions from the `dismo` vignette:
+Here are the questions from the `dismo` vignette (modified slightly given that 'geocode' may not work):
 
 *Exercises 2.8*
 
@@ -27,21 +27,21 @@ Here are the questions from the `dismo` vignette:
 
 2. Summarize the data: how many records are there, how many have coordinates, how many records without coordinates have a textual georeference (locality description)?
 
-3. Use the ‘geocode’ function to georeference up to 10 records without coordinates - if this doesn't work for you, skip it (if it asks you for a Google API, you do not need to complete this step; instead just use data that are already geocoded).
+3. 'geocode' will probably not work because the it depends on a package that is linked with Google and hasn't been updated, so skip the georeferencing task. Instead just use the subset of data that are already geocoded.
 
-4. Make a simple map of all the records, using a color and symbol to distinguish between the coordinates from gbif and the ones returned by Google (via the geocode function). Use ‘gmap’ to create a basemap. **See note above; gmap may not work so just use another basemap.
+4. Make a simple map of all the geocoded records. **See note above; gmap may not work so just use another basemap. For example, see Lab 4 which has ideas for how to map with tmap or ggmap.
 
 5. Do you think the observations are a reasonable representation of the distribution (and ecological niche) of the species?
 
-OPTIONAL:
+6 & 7 are OPTIONAL:
 
 6. Use the ‘rasterize’ function to create a raster of the number of observations and make a map. Use “wrld_simpl” from the maptools package for country boundaries.
 
-7. Map the uncertainty associated with the georeferences. Some records in data returned by gbif have that. You can also extract it from the data returned by the geocode function.
+7. Map the uncertainty associated with the georeferences. Some records in data returned by gbif have that.
 
 **Third**, choose one of the types of SDMs from the list below - each student will select a different model, so indicate your choice soon on the Lab 8 Google Doc so that we don't have duplicates. 
 
-Use the template below to generate a standard summary R Markdown-generated HTML file. This will help you get up to speed on next week's topic (model types), and when posted on D2L, will enable all of you have a quick guide to differen model types. Hint: scan forward in the dismo vignette for descriptions of some of these. Otherwise, check the papers uploaded for next week and Google Scholar. In addition to the `dismo` R package, rome of these models are also run through the R package, `biomod2`: https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html. Below is a list of SDM types. If you have another model in mind that is not on the list, check with me first. 
+Use the template below to generate a standard summary R Markdown-generated HTML file. This will help you get up to speed on next week's topic (model types), and when posted on D2L, will enable all of you have a quick guide to different model types. Hint: scan forward in the dismo vignette for descriptions of some of these. Otherwise, check the papers uploaded for next week and Google Scholar. In addition to the `dismo` R package, some of these models are also run through the R package, `biomod2`: https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html or `flexsdm`: https://sjevelazco.github.io/flexsdm/. Below is a list of SDM types. If you have another model in mind that is not on the list, ensure it is a SDM. For those of you handing in the assignment, pick one model each to write up.   
 
 generalized linear model (GLM)
 
@@ -66,6 +66,10 @@ generalized dissimilarity models (GDM)
 artificial neural network (ANN)
 
 DOMAIN
+
+Support Vector Machine (SVM)
+
+Guassian process models
 
 
 **What to hand in as 2 separate files:**
@@ -104,5 +108,5 @@ library(dismo)     # package to run the model
 
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.
 
