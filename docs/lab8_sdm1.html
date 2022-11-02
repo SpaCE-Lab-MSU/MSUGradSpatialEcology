@@ -14,22 +14,36 @@
 
 <title>MSU Graduate Spatial Ecology Lab 8</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -42,32 +56,8 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 
 
@@ -77,10 +67,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -97,40 +83,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -158,7 +120,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -170,7 +132,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -180,11 +142,28 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -196,13 +175,12 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -210,16 +188,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -263,7 +234,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -310,44 +281,102 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
 <h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 8</h1>
-<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu" class="email">plz@msu.edu</a></h4>
-<h4 class="date">Nov 6, 2020</h4>
+<h4 class="author">Phoebe Zarnetske; <a href="mailto:plz@msu.edu"
+class="email">plz@msu.edu</a></h4>
+<h4 class="date">Nov 6, 2020; 28 Oct 2022</h4>
 
 </div>
 
 
 <div id="lab-8-intro-to-sdms" class="section level1">
 <h1>Lab 8: Intro to SDMs</h1>
-<p><em><a href="lab8_sdm1.Rmd">RMarkdown version of this Lab</a></em></p>
-<div class="figure">
-<img src="https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png" alt="" />
-<p class="caption">GBIF Logo</p>
-</div>
-<p>In week 9 of the course you viewed recordings of the [GBIF Frontiers of Biodiversity Informatics and Modelling Species Distributions Symposium](<a href="https://www.amnh.org/research/center-for-biodiversity-conservation/convening-and-connecting/events-and-symposia/gbif-frontiers-panel-and-symposium" class="uri">https://www.amnh.org/research/center-for-biodiversity-conservation/convening-and-connecting/events-and-symposia/gbif-frontiers-panel-and-symposium</a>] held at the <a href="https://www.amnh.org/">American Museum of Natural History</a> in 2015, which provided some examples of research involving data from GBIF and their use in SDMs. In this lab, you will be introduced to species distribution models (SDMs) using the R package, <code>dismo</code>: <a href="https://cran.r-project.org/web/packages/dismo/index.html" class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>. The package contains a great vignette and you’ll be working through the first part of it in this lab. Over the next two labs, you will continue working through the vignette.</p>
-<p>For this lab, you will work through Part 1 (Chapters 1-4) of the dismo vignette. You can find the PDF of the vignette here: <a href="sdm.pdf">sdm.pdf</a>, and as HTML here: <a href="https://rspatial.org/raster/sdm/index.html" class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
-<p><strong>First</strong>, work through the vignette Part 1 (Chapters 1-4).</p>
-<p><strong>Second</strong>, answer the dismo vignette Exercises 2.8 (#1-5; and copied below) using a species of your choice (not <em>Solanum acaule</em>; select a species with at least 50 occurrence records - it doesn’t have to be the African elephant). Note that Question 4 asks you to use <code>gmap</code> to make a basemap - this may not work because it requires a link with Google Maps. If <code>gmap</code> doesn’t work, use one of the various techniques you learned in previous labs for creating a map for the area that includes your species. Questions 6 &amp; 7 are optional and will not be graded.</p>
-<p>Here are the questions from the <code>dismo</code> vignette:</p>
+<p><em><a href="lab8_sdm1.Rmd">RMarkdown version of this
+Lab</a></em></p>
+<p><img
+src="https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png" /></p>
+<p>In week 9 of the course you viewed recordings of the [GBIF Frontiers
+of Biodiversity Informatics and Modelling Species Distributions
+Symposium](<a
+href="https://www.amnh.org/research/center-for-biodiversity-conservation/convening-and-connecting/events-and-symposia/gbif-frontiers-panel-and-symposium"
+class="uri">https://www.amnh.org/research/center-for-biodiversity-conservation/convening-and-connecting/events-and-symposia/gbif-frontiers-panel-and-symposium</a>]
+held at the <a href="https://www.amnh.org/">American Museum of Natural
+History</a> in 2015, which provided some examples of research involving
+data from GBIF and their use in SDMs. In this lab, you will be
+introduced to species distribution models (SDMs) using the R package,
+<code>dismo</code>: <a
+href="https://cran.r-project.org/web/packages/dismo/index.html"
+class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>.
+The package contains a great vignette and you’ll be working through the
+first part of it in this lab. Over the next two labs, you will continue
+working through the vignette.</p>
+<p>For this lab, you will work through Part 1 (Chapters 1-4) of the
+dismo vignette. You can find the the vignette here: <a
+href="https://rspatial.org/raster/sdm/index.html"
+class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
+<p><strong>First</strong>, work through the vignette Part 1 (Chapters
+1-4).</p>
+<p><strong>Second</strong>, answer the dismo vignette Exercises 2.8
+(#1-5; and copied below) using a species of your choice (not <em>Solanum
+acaule</em>; select a species with at least 50 occurrence records - it
+doesn’t have to be the African elephant). Note that Question 4 asks you
+to use <code>gmap</code> to make a basemap - this may not work because
+it requires a link with Google Maps. If <code>gmap</code> doesn’t work,
+use one of the various techniques you learned in previous labs for
+creating a map for the area that includes your species. Questions 6
+&amp; 7 are optional and will not be graded.</p>
+<p>Here are the questions from the <code>dismo</code> vignette (modified
+slightly given that ‘geocode’ may not work):</p>
 <p><em>Exercises 2.8</em></p>
 <ol style="list-style-type: decimal">
-<li><p>Use the gbif function to download records for the African elephant (or another species of your preference, try to get one with between 10 and 100 records). Use option “geo=FALSE” to also get records with no (numerical) georeference.</p></li>
-<li><p>Summarize the data: how many records are there, how many have coordinates, how many records without coordinates have a textual georeference (locality description)?</p></li>
-<li><p>Use the ‘geocode’ function to georeference up to 10 records without coordinates - if this doesn’t work for you, skip it (if it asks you for a Google API, you do not need to complete this step; instead just use data that are already geocoded).</p></li>
-<li><p>Make a simple map of all the records, using a color and symbol to distinguish between the coordinates from gbif and the ones returned by Google (via the geocode function). Use ‘gmap’ to create a basemap. **See note above; gmap may not work so just use another basemap.</p></li>
-<li><p>Do you think the observations are a reasonable representation of the distribution (and ecological niche) of the species?</p></li>
+<li><p>Use the gbif function to download records for the African
+elephant (or another species of your preference, try to get one with
+between 10 and 100 records). Use option “geo=FALSE” to also get records
+with no (numerical) georeference.</p></li>
+<li><p>Summarize the data: how many records are there, how many have
+coordinates, how many records without coordinates have a textual
+georeference (locality description)?</p></li>
+<li><p>‘geocode’ will probably not work because the it depends on a
+package that is linked with Google and hasn’t been updated, so skip the
+georeferencing task. Instead just use the subset of data that are
+already geocoded.</p></li>
+<li><p>Make a simple map of all the geocoded records. **See note above;
+gmap may not work so just use another basemap. For example, see Lab 4
+which has ideas for how to map with tmap or ggmap.</p></li>
+<li><p>Do you think the observations are a reasonable representation of
+the distribution (and ecological niche) of the species?</p></li>
 </ol>
-<p>OPTIONAL:</p>
+<p>6 &amp; 7 are OPTIONAL:</p>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Use the ‘rasterize’ function to create a raster of the number of observations and make a map. Use “wrld_simpl” from the maptools package for country boundaries.</p></li>
-<li><p>Map the uncertainty associated with the georeferences. Some records in data returned by gbif have that. You can also extract it from the data returned by the geocode function.</p></li>
+<li><p>Use the ‘rasterize’ function to create a raster of the number of
+observations and make a map. Use “wrld_simpl” from the maptools package
+for country boundaries.</p></li>
+<li><p>Map the uncertainty associated with the georeferences. Some
+records in data returned by gbif have that.</p></li>
 </ol>
-<p><strong>Third</strong>, choose one of the types of SDMs from the list below - each student will select a different model, so indicate your choice soon on the Lab 8 Google Doc so that we don’t have duplicates.</p>
-<p>Use the template below to generate a standard summary R Markdown-generated HTML file. This will help you get up to speed on next week’s topic (model types), and when posted on D2L, will enable all of you have a quick guide to differen model types. Hint: scan forward in the dismo vignette for descriptions of some of these. Otherwise, check the papers uploaded for next week and Google Scholar. In addition to the <code>dismo</code> R package, rome of these models are also run through the R package, <code>biomod2</code>: <a href="https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html" class="uri">https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html</a>. Below is a list of SDM types. If you have another model in mind that is not on the list, check with me first.</p>
+<p><strong>Third</strong>, choose one of the types of SDMs from the list
+below - each student will select a different model, so indicate your
+choice soon on the Lab 8 Google Doc so that we don’t have
+duplicates.</p>
+<p>Use the template below to generate a standard summary R
+Markdown-generated HTML file. This will help you get up to speed on next
+week’s topic (model types), and when posted on D2L, will enable all of
+you have a quick guide to different model types. Hint: scan forward in
+the dismo vignette for descriptions of some of these. Otherwise, check
+the papers uploaded for next week and Google Scholar. In addition to the
+<code>dismo</code> R package, some of these models are also run through
+the R package, <code>biomod2</code>: <a
+href="https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html"
+class="uri">https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html</a> or
+<code>flexsdm</code>: <a href="https://sjevelazco.github.io/flexsdm/"
+class="uri">https://sjevelazco.github.io/flexsdm/</a>. Below is a list
+of SDM types. If you have another model in mind that is not on the list,
+ensure it is a SDM. For those of you handing in the assignment, pick one
+model each to write up.</p>
 <p>generalized linear model (GLM)</p>
 <p>generalized additive model (GAM)</p>
 <p>Maxent</p>
@@ -360,27 +389,52 @@ $(document).ready(function () {
 <p>generalized dissimilarity models (GDM)</p>
 <p>artificial neural network (ANN)</p>
 <p>DOMAIN</p>
+<p>Support Vector Machine (SVM)</p>
+<p>Guassian process models</p>
 <p><strong>What to hand in as 2 separate files:</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>You will need to hand in a PDF or HTML produced from R Markdown showing your work on the vignette with a different species, including any images, plots, code, and text for answers to Exercises 2.6 (#1-5).</p></li>
-<li><p>A separate HTML file produced from the R Markdown template below, describing one type of species distribution model. I will be posting these submissions for you all to see on D2L, so your SDM model summary will become a resource for the class.</p></li>
+<li><p>You will need to hand in a PDF or HTML produced from R Markdown
+showing your work on the vignette with a different species, including
+any images, plots, code, and text for answers to Exercises 2.6
+(#1-5).</p></li>
+<li><p>A separate HTML file produced from the R Markdown template below,
+describing one type of species distribution model. I will be posting
+these submissions for you all to see on D2L, so your SDM model summary
+will become a resource for the class.</p></li>
 </ol>
-<div id="template-for-your-summary-of-a-species-distribution-model" class="section level2">
+<div id="template-for-your-summary-of-a-species-distribution-model"
+class="section level2">
 <h2>Template for your summary of a Species Distribution Model</h2>
-<p><strong>Follow the R markdown template below to include the following:</strong></p>
+<p><strong>Follow the R markdown template below to include the
+following:</strong></p>
 <p><strong>Model Name:</strong> Name the model type</p>
-<p><strong>Model Category:</strong> Regression/Machine Learning/Hybrid/etc.</p>
-<p><strong>Model Description:</strong> General description of how this model works.</p>
-<p><strong>Model Assumptions:</strong> Any assumptions you’d need to know about the model and about the data’s distribution, etc.</p>
-<p><strong>Model Response Data:</strong> A description of the types of data used in this model (Presence/absence, Presence-Only, Pseudo-Absence, Abundance, etc.)</p>
-<p><strong>Model Explanatory Data:</strong> A description of the types of data used as predictors/explanatory variables in this model (categorical okay? only continuous?)</p>
-<p><strong>Model Links and Use with R:</strong> an html link to R packages on the CRAN site that employ this model (with brief description), and links to any helpful websites that officially describe this model</p>
-<p><strong>Example Papers:</strong> list at least 2 full references for publications that use this model to generate a SDM.</p>
-<p><strong>Example with R:</strong> Provide annotated code to load the required package(s) to run the model.</p>
+<p><strong>Model Category:</strong> Regression/Machine
+Learning/Hybrid/etc.</p>
+<p><strong>Model Description:</strong> General description of how this
+model works.</p>
+<p><strong>Model Assumptions:</strong> Any assumptions you’d need to
+know about the model and about the data’s distribution, etc.</p>
+<p><strong>Model Response Data:</strong> A description of the types of
+data used in this model (Presence/absence, Presence-Only,
+Pseudo-Absence, Abundance, etc.)</p>
+<p><strong>Model Explanatory Data:</strong> A description of the types
+of data used as predictors/explanatory variables in this model
+(categorical okay? only continuous?)</p>
+<p><strong>Model Links and Use with R:</strong> an html link to R
+packages on the CRAN site that employ this model (with brief
+description), and links to any helpful websites that officially describe
+this model</p>
+<p><strong>Example Papers:</strong> list at least 2 full references for
+publications that use this model to generate a SDM.</p>
+<p><strong>Example with R:</strong> Provide annotated code to load the
+required package(s) to run the model.</p>
 <pre class="r"><code>library(dismo)     # package to run the model</code></pre>
 <pre><code>## Loading required package: raster</code></pre>
 <pre><code>## Loading required package: sp</code></pre>
-<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
+work is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed
+under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.</p>
 </div>
 </div>
 
@@ -393,7 +447,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -411,7 +465,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
