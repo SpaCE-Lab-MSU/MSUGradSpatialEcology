@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 3"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 9, 2019, Sep 17-21, 2020, Sep 20 2022"
+date: "Sep 2016; rev. Sep 9, 2019, Sep 17-21, 2020"
 urlcolor: blue
 ---
 
@@ -46,7 +46,7 @@ If you previously saved your workspace and want to load it here, do so this way:
 **NOTES on R packages used in this lab:**
 
 (1) With R Markdown, it is helpful to install packages locally before knitting (copy this into your R console before you knit).
-`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","sf")) {`
+`for (package in c("dplyr","ggplot2","raster","sp","rgdal","maptools","rgeos","GISTools")) {`
 `  if (!require(package, character.only=T, quietly=T)) {`
 
 `    install.packages(package)`
@@ -93,8 +93,7 @@ library(maptools)
 library(landscapemetrics)
 library(landscapetools)
 library(FedData)
-#library(GISTools)
-library(sf)
+library(GISTools)
 ```
 
 The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Through `FedData` we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to 2016 Land Cover for CONUS, click on the 3 dots to expand the menu and select "Metadata". Metadata contain data about data. Search for "proj" to find the projection information) https://www.mrlc.gov/downloads/sciweb1/shared/mrlc/metadata/NLCD_2016_Land_Cover_L48.xml. It's Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf), Lab 2's links, or resources on D2L.
@@ -109,7 +108,7 @@ if(! file.exists(file.path(data_path,'uss.zip'))){
 unzip (file.path(data_path,"uss.zip"), exdir = data_path)
 
 # Read in the shapefile with rgdal package.
-uss <- readOGR(file.path(data_path,"cb_2021_us_state_20m.shp"))
+uss <- readOGR(file.path(data_path,"cb_2014_us_state_20m.shp"))
 
 #Take a look at the shapefile info. Its CRS is here: https://epsg.io/42310.
 summary(uss)
@@ -143,12 +142,12 @@ par(mfrow=c(1,1)) # single plot layout
 
 # Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
 # Refer to the extent (min and max x and y) of the shapefile, "or1"
-# This code uses the sf package.
 summary(or1)
-or1
-or1.box <- st_as_sfc(st_bbox(or1))
-plot(or1.box)
-plot(or1[1], add=TRUE)
+or2 <- polygon_from_extent(raster::extent(-2294351,-1584307,2301475,2899476), proj4string='+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs')
+
+# See how the or2 outlines to the polygon, "or1"
+plot(or2)
+plot(or1,add=T, col="blue")
 ```
 
 Depending on your computer, these polygons will still be too big to extract NLCD quickly (when I run it on my laptop it takes about 5 mins, so you could try it but it may get hung up if you are knitting to PDF). Let's try a smaller extent. If you wanted to subset out just a portion of Oregon, you could select 1 wildlife management unit. Here is a map of OR Fish & Wildlife Units: https://www.dfw.state.or.us/resources/hunting/big_game/units/bigmap.asp. 
@@ -159,12 +158,12 @@ Depending on your computer, these polygons will still be too big to extract NLCD
 mgmt_file <- file.path(data_path,"mgmt.zip")
 
 if(! file.exists(mgmt_file)){
- download.file("https://nrimp.dfw.state.or.us/DataClearinghouse/default.aspx?pn=ViewFile&att=ODFW/ODFW_805_5_ODFW_wildlife_mgmt_units_shapefile.zip",dest=mgmt_file, mode="wb") 
+ download.file("https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODFW/ODFW_805_5_wildlife_mgmt_units.zip",dest=mgmt_file, mode="wb") 
 }
 
 unzip(mgmt_file, exdir = data_path)
-mgmt<-readOGR(file.path(data_path,"ODFW_wildlife_mgmt_units.shp"))
-mgmt
+mgmt<-readOGR(file.path(data_path,"wmu24poly.shp"))
+
 summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
 lcc.proj<-CRS("+proj=lcc +lat_0=41.75 +lon_0=-120.5 +lat_1=43 +lat_2=45.5 +x_0=400000 +y_0=0 +datum=NAD83 +units=ft +no_defs")
 
@@ -183,15 +182,14 @@ plot(hood,add=T,col="red")
 Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is, and see the NOTE below.
 ```{r, message=FALSE, results='hide',warning=FALSE}
 ?get_nlcd
-
+ 
 hood_nlcd<-get_nlcd(
   template = hood,
   label="Hood",
   year = 2016,
-  dataset = c("landcover"),
+  dataset = "Land_Cover",
   extraction.dir = paste0(data_path, "/FedData/"),
   )
-
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
 hood.merc<-spTransform(hood, merc.proj)
 ```
@@ -234,8 +232,9 @@ If you want to output a raster as a tif
 
 Plot hood_nlcd with `raster` package which uses base R plotting:
 ```{r, message=FALSE, results='hide',warning=FALSE}
-raster::plot(hood_nlcd)
-# Next we will add a legend.
+plot(hood_nlcd)
+plot(hood.merc,add=TRUE, lwd=2, border='white')
+# The plot above doesn't have a legend, a north arrow, or a scalebar. Add those.
 # For more on adding legends with raster (and classifying), see: https://www.earthdatascience.org/courses/earth-analytics/lidar-raster-data-r/classify-raster/
 # To add a legend you need to refer to the NLCD classes https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
 
@@ -304,7 +303,8 @@ legend(x = -13580000, y = 5650000, legend = cols$description, fill = cols$color,
 # Add a scalebar with the raster package
 ?scalebar # units are in your raster units (m) but you can display in km
 scalebar(10000, type="bar", divs = 2, label = c(0,50,100),below="km")
-# Add a north arrow on your own.
+# Add a north arrow with GISTools package
+north.arrow(x=-13565000, y=5730000, len = 1000, cex.lab = 0.75, col = "black", fg = "red")
 
 # You may need to clear the graphic to reset the graphics settings if you are going to make more plots after this.
 #graphics.off()
