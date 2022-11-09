@@ -70,7 +70,22 @@ Work through Part 2 (Ch. 5-7) of the vignette with the example dataset. Choose a
 
 For more background information on **AUC and Spatial Sorting Bias**, see the additional text below the QUESTIONS.
 
-*NOTE:* In Ch. 5-7 of the vignette, when creating the reduced model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12), you can choose to select different bioclimatic variables - see the list of bioclimatic variables above. You should choose a different subset only if the results of your full model (containing the fuller set of bioclimatic variables) suggest a different set, or if you have *a priori* knowledge of the species-climate relationship.
+*NOTE 1:* Older versions of WorldClim data (version 1.4) can be downloaded directly using getData. Note that these data are outdated so you wouldn't want to publish anything with them. We are working on code for you to reference with the updated WorldClim 2.1 data but for the lab exercises, feel free to use 1.4 like this:
+
+```{r}
+# Create the folders (directories) "data" and "lab9" - If they exist already, this command won't over-write them.
+library(raster)
+# Use the getData command
+?getData
+# World-wide, all bioclim variables, 10 minutes of a degree resolution
+w_data_world<-getData('worldclim', var='bio', res=10)
+plot(w_data_world)
+# Region-specific (lon and lat are centered on the area); 0.5 minutes of a degree resolution
+w_data_europe<-getData('worldclim', var='bio', res=0.5, lon=5, lat=45)
+plot(w_data_europe)
+```
+
+*NOTE 2:* In Ch. 5-7 of the vignette, when creating the reduced model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12), you can choose to select different bioclimatic variables - see the list of bioclimatic variables above. You should choose a different subset only if the results of your full model (containing the fuller set of bioclimatic variables) suggest a different set, or if you have *a priori* knowledge of the species-climate relationship.
 
 Show your work (code and output) for this portion of the vignette (Chapters 5-7). You can either add on to Lab 8's .Rmd file of the vignette that you already produced to create a longer PDF or HTML, or you can hand in a new PDF or HTML with just Lab 9's section included. Either way, please hand in a PDF or HTML produced from your .Rmd file to show all your work for Ch. 5-7.
 

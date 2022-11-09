@@ -70,23 +70,10 @@ Work through Part 2 (Ch. 5-7) of the vignette with the example dataset. Choose a
 
 For more background information on **AUC and Spatial Sorting Bias**, see the additional text below the QUESTIONS.
 
-*NOTE 1:* To obtain WorldClim data outside the dismo package area (Central & South America), go to the WorldClim website to see the data options: https://worldclim.org/data/worldclim21.html. Then you will need to read in the data like this:
+*NOTE 1:* Older versions of WorldClim data (version 1.4) can be downloaded directly using getData. Note that these data are outdated so you wouldn't want to publish anything with them. We are working on code for you to reference with the updated WorldClim 2.1 data but for the lab exercises, feel free to use 1.4 like this:
 
 ```{r}
-# Download 10minute res worldclim V 2.1
-wc_url_10m<- "https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip"
-# Download 5minute res worldclim V 2.1
-#wc_url_5m<- "https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip"
-# Download 2.5minute res worldclim V 2.1
-#wc_url_2.5m<- "https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip"
-# Download 30second res worldclim V 2.1
-#wc_url_30s<- "https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip"
-download.file(wc_url_10m, destfile="wc2.1_10m_bio.zip")
-unzip("wc2.1_10m_bio.zip")
-
-plot(wc2.1_10m_bio)
-
-# Older versions of
+# Create the folders (directories) "data" and "lab9" - If they exist already, this command won't over-write them.
 library(raster)
 # Use the getData command
 ?getData

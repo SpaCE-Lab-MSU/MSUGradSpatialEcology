@@ -14,7 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 9</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -179,8 +179,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -188,16 +188,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -377,12 +370,33 @@ from zoos, incorrect locations by looking up the known range from an
 independent source).</p>
 <p>For more background information on <strong>AUC and Spatial Sorting
 Bias</strong>, see the additional text below the QUESTIONS.</p>
-<p><em>NOTE:</em> In Ch. 5-7 of the vignette, when creating the reduced
-model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12),
-you can choose to select different bioclimatic variables - see the list
-of bioclimatic variables above. You should choose a different subset
-only if the results of your full model (containing the fuller set of
-bioclimatic variables) suggest a different set, or if you have <em>a
+<p><em>NOTE 1:</em> Older versions of WorldClim data (version 1.4) can
+be downloaded directly using getData. Note that these data are outdated
+so you wouldn’t want to publish anything with them. We are working on
+code for you to reference with the updated WorldClim 2.1 data but for
+the lab exercises, feel free to use 1.4 like this:</p>
+<pre class="r"><code># Create the folders (directories) &quot;data&quot; and &quot;lab9&quot; - If they exist already, this command won&#39;t over-write them.
+library(raster)
+# Use the getData command
+?getData
+# World-wide, all bioclim variables, 10 minutes of a degree resolution
+w_data_world&lt;-getData(&#39;worldclim&#39;, var=&#39;bio&#39;, res=10)</code></pre>
+<pre><code>## Warning in getData(&quot;worldclim&quot;, var = &quot;bio&quot;, res = 10): getData will be removed in a future version of raster
+## . Please use the geodata package instead</code></pre>
+<pre class="r"><code>plot(w_data_world)</code></pre>
+<p><img src="lab9_sdm2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Region-specific (lon and lat are centered on the area); 0.5 minutes of a degree resolution
+w_data_europe&lt;-getData(&#39;worldclim&#39;, var=&#39;bio&#39;, res=0.5, lon=5, lat=45)</code></pre>
+<pre><code>## Warning in getData(&quot;worldclim&quot;, var = &quot;bio&quot;, res = 0.5, lon = 5, lat = 45): getData will be removed in a future version of raster
+## . Please use the geodata package instead</code></pre>
+<pre class="r"><code>plot(w_data_europe)</code></pre>
+<p><img src="lab9_sdm2_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><em>NOTE 2:</em> In Ch. 5-7 of the vignette, when creating the
+reduced model with a subset of bioclimatic variables (e.g., bio1, bio5,
+bio12), you can choose to select different bioclimatic variables - see
+the list of bioclimatic variables above. You should choose a different
+subset only if the results of your full model (containing the fuller set
+of bioclimatic variables) suggest a different set, or if you have <em>a
 priori</em> knowledge of the species-climate relationship.</p>
 <p>Show your work (code and output) for this portion of the vignette
 (Chapters 5-7). You can either add on to Lab 8’s .Rmd file of the
@@ -416,10 +430,8 @@ the data into training and testing with pairwise distance sampling
 (<code>pwdSample</code> in <code>dismo</code> package).</p>
 <p>Type the following to see the full details on the
 <code>pwdSample</code> command:</p>
-<pre class="r"><code>library(dismo)</code></pre>
-<pre><code>## Loading required package: raster</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
-<pre class="r"><code>?pwdSample</code></pre>
+<pre class="r"><code>library(dismo)
+?pwdSample</code></pre>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
 work is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed
