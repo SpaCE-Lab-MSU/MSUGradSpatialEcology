@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 9"
 author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Nov 13, 2020"
+date: "Nov 13, 2020, Nov 9, 2022"
 urlcolor: blue
 ---
 
@@ -11,7 +11,7 @@ urlcolor: blue
 
 This lab is a continuation of species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8's portion of the vignette with your species of choice before starting on Lab 9.
 
-For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the PDF of the vignette here: [sdm.pdf](sdm.pdf), and as HTML here: https://rspatial.org/raster/sdm/index.html. 
+For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the vignette here: https://rspatial.org/raster/sdm/index.html. 
 
 ```{r, echo=FALSE}
 # Define variable containing url
@@ -22,7 +22,7 @@ pic <- "tempseasonality.jpg"
 ## Bioclimatic Variables
 In Ch. 4 of the vignette, you were introduced to environmental predictors, and specifically bioclimatic variables. The dismo vignette reads in [WorldClim](https://www.worldclim.org/) bioclimatic variables. Worldclim interpolates temperature and precipitation from weather stations to create a modeled representation of these data. Note that you can create bioclimatic variables from any gridded climate data source using the command `biovars`. For example, you could use satellite remote sensing (direct measures instead of interpolated) - [NASA's MODIS land surface temperature](https://modis.gsfc.nasa.gov/data/dataprod/) and [NASA's GPM (global precipitation measurement)](https://www.nasa.gov/mission_pages/GPM/main/index.html). Or you could use [PRISM](https://prism.oregonstate.edu/) data if you're working in the United States. 
 
-The 19 Bioclimatic Variables are listed below. Metadata for these data can be found [here](https://worldclim.org/data/v1.4/formats.html).
+The [19 Bioclimatic Variables](https://www.worldclim.org/data/bioclim.html) are listed below. Metadata for these data can be found [here](https://www.worldclim.org/data/worldclim21.html).
 
 *UNITS: the units for temperature are an order of magnitude larger: °C x 10, and 'mm' is the unit for precipitation.*
 
@@ -72,7 +72,7 @@ For more background information on **AUC and Spatial Sorting Bias**, see the add
 
 *NOTE:* In Ch. 5-7 of the vignette, when creating the reduced model with a subset of bioclimatic variables (e.g., bio1, bio5, bio12), you can choose to select different bioclimatic variables - see the list of bioclimatic variables above. You should choose a different subset only if the results of your full model (containing the fuller set of bioclimatic variables) suggest a different set, or if you have *a priori* knowledge of the species-climate relationship.
 
-Show your work (code and output) for this portion of the vignette (Chapters 5-7). You can either add on to Lab 8's .Rmd file of the vignette that you already produced to create a longer PDF, or you can hand in a new PDF with just Lab 9's section included. Either way, please hand in a PDF produced from your .Rmd file to show all your work for Ch. 5-7.
+Show your work (code and output) for this portion of the vignette (Chapters 5-7). You can either add on to Lab 8's .Rmd file of the vignette that you already produced to create a longer PDF or HTML, or you can hand in a new PDF or HTML with just Lab 9's section included. Either way, please hand in a PDF or HTML produced from your .Rmd file to show all your work for Ch. 5-7.
 
 After completing the vignette with your species of choice, answer the following QUESTIONS:
 
@@ -94,5 +94,5 @@ library(dismo)
 ```
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020 by Phoebe Zarnetske</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed under CC-BY 4.0 2020, 2022 by Phoebe Zarnetske</a>.
 
