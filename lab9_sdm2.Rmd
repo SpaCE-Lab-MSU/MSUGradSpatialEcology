@@ -9,9 +9,13 @@ urlcolor: blue
 
 *[RMarkdown version of this Lab](lab9_sdm2.Rmd)*
 
+*See also Nan Nourn's [example code with expanded bioclim options for Lab 8 & Lab 9](870_Lab08-09_2022_bioclim.html)*
+
 This lab is a continuation of species distribution models (SDMs) using the R package, `dismo`: https://cran.r-project.org/web/packages/dismo/index.html. The package contains a great vignette and you worked through the first part of it in Lab 8. You should complete Lab 8's portion of the vignette with your species of choice before starting on Lab 9.
 
-For this lab, you will work through Part 2 (Chapters 5-7) of the dismo vignette. You can find the vignette here: https://rspatial.org/raster/sdm/index.html. 
+For this lab, you will work through Part 2 (Chapters 5-7: Model fitting, prediction, and evaluation) of the dismo vignette. You can find the vignette here: https://rspatial.org/raster/sdm/index.html. 
+
+Note that if you want to use a species that does not occur in the dismo vignette bioclim variable range (Mexico, Central & South America), then you need to pull in environmental data from other regions. To do this please see the "Environmental Data" section of the additional code provided in Nan Nourn's [example code with expanded bioclim options for Lab 8 & Lab 9](870_Lab08-09_2022_bioclim.html#environmental-data) - this is also linked in Lab 8.
 
 ```{r, echo=FALSE}
 # Define variable containing url
@@ -66,11 +70,13 @@ BIO19 = Precipitation of Coldest Quarter
 
 
 ## What to hand in for Lab 9:
-Work through Part 2 (Ch. 5-7) of the vignette with the example dataset. Choose a different species than the one provided in the vignette (different than the *Bradypus* species; it would be easiest to select the species you chose in Lab 8 since you already completed that section). *Note that the extraction of the environmental predictors occurs in Chapter 4 of the vignette, so if you choose a different species than you used in Lab 8, you will need to go back to earlier portions of the vignette.* Re-create Ch. 5-7 of the vignette with your species of interest, constraining the region of your study area to your species known range (ensure that you remove outliers from zoos, incorrect locations by looking up the known range from an independent source). 
+Work through Part 2 (Ch. 5-7: Model fitting, prediction, and evaluation) of the vignette with the example dataset. Choose a different species than the one provided in the vignette (different than the *Bradypus* species; it would be easiest to select the species you chose in Lab 8 since you already completed that section). *Note that the extraction of the environmental predictors occurs in Chapter 4 of the vignette, so if you choose a different species than you used in Lab 8, you will need to go back to earlier portions of the vignette.* Re-create Ch. 5-7 of the vignette with your species of interest, constraining the region of your study area to your species known range (ensure that you remove outliers from zoos, incorrect locations by looking up the known range from an independent source). 
 
 For more background information on **AUC and Spatial Sorting Bias**, see the additional text below the QUESTIONS.
 
-*NOTE 1:* Older versions of WorldClim data (version 1.4) can be downloaded directly using getData. Note that these data are outdated so you wouldn't want to publish anything with them. We are working on code for you to reference with the updated WorldClim 2.1 data but for the lab exercises, feel free to use 1.4 like this:
+*NOTE 1:* A reminder that if you want to use data from WorldClim outside the dismo vignette data, you should download it; see the "Environmental Data" section of the additional code provided in Nan Nourn's [example code with expanded bioclim options for Lab 8 & Lab 9](870_Lab08-09_2022_bioclim.html#environmental-data) - this is also linked in Lab 8.
+
+It is possible that the dismo vignette is using older versions of WorldClim data (version 1.4). These older (but not updated) data can be downloaded directly using getData. The version 1.4 data are outdated so you wouldn't want to publish anything with them. See above for how to obtain the updated data (2.1). For the lab exercises, it's ok to use the 1.4 version; you can download 1.4 version data from another area like this:
 
 ```{r}
 # Create the folders (directories) "data" and "lab9" - If they exist already, this command won't over-write them.

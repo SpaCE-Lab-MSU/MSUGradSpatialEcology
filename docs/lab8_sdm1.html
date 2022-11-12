@@ -14,7 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 8</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -179,8 +179,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -188,9 +188,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -297,6 +304,9 @@ class="email">plz@msu.edu</a></h4>
 <h1>Lab 8: Intro to SDMs</h1>
 <p><em><a href="lab8_sdm1.Rmd">RMarkdown version of this
 Lab</a></em></p>
+<p><em>See also Nan Nourn’s <a
+href="870_Lab08-09_2022_bioclim.html">example code with expanded bioclim
+options for Lab 8 &amp; Lab 9</a></em></p>
 <p><img
 src="https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png" /></p>
 <p>In week 9 of the course you viewed recordings of the [GBIF Frontiers
@@ -314,12 +324,20 @@ class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>.
 The package contains a great vignette and you’ll be working through the
 first part of it in this lab. Over the next two labs, you will continue
 working through the vignette.</p>
-<p>For this lab, you will work through Part 1 (Chapters 1-4) of the
-dismo vignette. You can find the the vignette here: <a
-href="https://rspatial.org/raster/sdm/index.html"
+<p>For this lab, you will work through Part 1 (Chapters 1-4:
+Introduction, Data preparation, Absence &amp; background points,
+Environmental data) of the dismo vignette. You can find the the vignette
+here: <a href="https://rspatial.org/raster/sdm/index.html"
 class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
 <p><strong>First</strong>, work through the vignette Part 1 (Chapters
-1-4).</p>
+1-4). Note that if you want to use a species that does not occur in the
+dismo vignette bioclim variable range (Mexico, Central &amp; South
+America), then you need to pull in environmental data from other
+regions. To do this please see the “Environmental Data” section of the
+additional code provided in Nan Nourn’s <a
+href="870_Lab08-09_2022_bioclim.html#environmental-data">example code
+with expanded bioclim options for Lab 8 &amp; Lab 9</a> - this is also
+linked in Lab 9.</p>
 <p><strong>Second</strong>, answer the dismo vignette Exercises 2.8
 (#1-5; and copied below) using a species of your choice (not <em>Solanum
 acaule</em>; select a species with at least 50 occurrence records - it
@@ -429,8 +447,6 @@ publications that use this model to generate a SDM.</p>
 <p><strong>Example with R:</strong> Provide annotated code to load the
 required package(s) to run the model.</p>
 <pre class="r"><code>library(dismo)     # package to run the model</code></pre>
-<pre><code>## Loading required package: raster</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
 <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
 work is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed

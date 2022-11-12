@@ -14,7 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 9</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -179,8 +179,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -188,9 +188,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -298,6 +305,9 @@ class="section level1">
 <h1>Lab 9: SDMs: Model fitting, prediction, evaluation</h1>
 <p><em><a href="lab9_sdm2.Rmd">RMarkdown version of this
 Lab</a></em></p>
+<p><em>See also Nan Nourn’s <a
+href="870_Lab08-09_2022_bioclim.html">example code with expanded bioclim
+options for Lab 8 &amp; Lab 9</a></em></p>
 <p>This lab is a continuation of species distribution models (SDMs)
 using the R package, <code>dismo</code>: <a
 href="https://cran.r-project.org/web/packages/dismo/index.html"
@@ -305,10 +315,18 @@ class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>.
 The package contains a great vignette and you worked through the first
 part of it in Lab 8. You should complete Lab 8’s portion of the vignette
 with your species of choice before starting on Lab 9.</p>
-<p>For this lab, you will work through Part 2 (Chapters 5-7) of the
-dismo vignette. You can find the vignette here: <a
-href="https://rspatial.org/raster/sdm/index.html"
+<p>For this lab, you will work through Part 2 (Chapters 5-7: Model
+fitting, prediction, and evaluation) of the dismo vignette. You can find
+the vignette here: <a href="https://rspatial.org/raster/sdm/index.html"
 class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
+<p>Note that if you want to use a species that does not occur in the
+dismo vignette bioclim variable range (Mexico, Central &amp; South
+America), then you need to pull in environmental data from other
+regions. To do this please see the “Environmental Data” section of the
+additional code provided in Nan Nourn’s <a
+href="870_Lab08-09_2022_bioclim.html#environmental-data">example code
+with expanded bioclim options for Lab 8 &amp; Lab 9</a> - this is also
+linked in Lab 8.</p>
 <center>
 <img src="tempseasonality.jpg">
 </center>
@@ -356,25 +374,34 @@ larger: °C x 10, and ‘mm’ is the unit for precipitation.</em></p>
 </div>
 <div id="what-to-hand-in-for-lab-9" class="section level2">
 <h2>What to hand in for Lab 9:</h2>
-<p>Work through Part 2 (Ch. 5-7) of the vignette with the example
-dataset. Choose a different species than the one provided in the
-vignette (different than the <em>Bradypus</em> species; it would be
-easiest to select the species you chose in Lab 8 since you already
-completed that section). <em>Note that the extraction of the
-environmental predictors occurs in Chapter 4 of the vignette, so if you
-choose a different species than you used in Lab 8, you will need to go
-back to earlier portions of the vignette.</em> Re-create Ch. 5-7 of the
-vignette with your species of interest, constraining the region of your
-study area to your species known range (ensure that you remove outliers
-from zoos, incorrect locations by looking up the known range from an
-independent source).</p>
+<p>Work through Part 2 (Ch. 5-7: Model fitting, prediction, and
+evaluation) of the vignette with the example dataset. Choose a different
+species than the one provided in the vignette (different than the
+<em>Bradypus</em> species; it would be easiest to select the species you
+chose in Lab 8 since you already completed that section). <em>Note that
+the extraction of the environmental predictors occurs in Chapter 4 of
+the vignette, so if you choose a different species than you used in Lab
+8, you will need to go back to earlier portions of the vignette.</em>
+Re-create Ch. 5-7 of the vignette with your species of interest,
+constraining the region of your study area to your species known range
+(ensure that you remove outliers from zoos, incorrect locations by
+looking up the known range from an independent source).</p>
 <p>For more background information on <strong>AUC and Spatial Sorting
 Bias</strong>, see the additional text below the QUESTIONS.</p>
-<p><em>NOTE 1:</em> Older versions of WorldClim data (version 1.4) can
-be downloaded directly using getData. Note that these data are outdated
-so you wouldn’t want to publish anything with them. We are working on
-code for you to reference with the updated WorldClim 2.1 data but for
-the lab exercises, feel free to use 1.4 like this:</p>
+<p><em>NOTE 1:</em> A reminder that if you want to use data from
+WorldClim outside the dismo vignette data, you should download it; see
+the “Environmental Data” section of the additional code provided in Nan
+Nourn’s <a
+href="870_Lab08-09_2022_bioclim.html#environmental-data">example code
+with expanded bioclim options for Lab 8 &amp; Lab 9</a> - this is also
+linked in Lab 8.</p>
+<p>It is possible that the dismo vignette is using older versions of
+WorldClim data (version 1.4). These older (but not updated) data can be
+downloaded directly using getData. The version 1.4 data are outdated so
+you wouldn’t want to publish anything with them. See above for how to
+obtain the updated data (2.1). For the lab exercises, it’s ok to use the
+1.4 version; you can download 1.4 version data from another area like
+this:</p>
 <pre class="r"><code># Create the folders (directories) &quot;data&quot; and &quot;lab9&quot; - If they exist already, this command won&#39;t over-write them.
 library(raster)
 # Use the getData command
