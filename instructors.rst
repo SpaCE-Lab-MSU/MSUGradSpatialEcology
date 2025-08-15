@@ -14,9 +14,9 @@ How to use this site: Background
 markdown::render_site() is a great tool for quickly converting a folder
 of RMarkdown files into a navigable website. It takes an index file
 which becomes the home page, a ``_site.yml`` file that defines what the
-site navigation (menu) will look like and some other things, and a bunch
+site navigation (menu) will look like amongst other things, and a bunch
 of Rmd files. It converts all the Rmd to HTML, builds the navigation
-based on \_site.yml and puts that in each HTML file, and copies the
+based on ``_site.yml`` and puts that in each HTML file, and copies the
 whole thing along with any othe rfiles hanging around into a sub folder
 you specify. Github pages likes to see websites in the /docs folder
 that's what we’ll us. However its simplicity has limitations. All
