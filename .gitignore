@@ -6,5 +6,5 @@ renv/*
 renv.lock
 .Rprofile
 *.Rproj
-data/lab2/*
+#data/lab2/*
 _site/data/lab2/*
