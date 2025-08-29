@@ -5,7 +5,7 @@
                  xmlns:gml="http://www.opengis.net/gml/3.2"
                  xmlns:gmi="http://www.isotc211.org/2005/gmi">
    <gmd:fileIdentifier>
-      <gco:CharacterString>cb_2014_us_state_20m.shp.iso.xml</gco:CharacterString>
+      <gco:CharacterString>cb_2014_us_nation_20m.shp.iso.xml</gco:CharacterString>
    </gmd:fileIdentifier>
    <gmd:language>
       <gco:CharacterString>eng</gco:CharacterString>
@@ -17,7 +17,7 @@
    </gmd:characterSet>
    <!-- This part represents a link to the Series Collection File -->
 <gmd:parentIdentifier>
-      <gco:CharacterString>Series Information for the 2014 Cartographic Boundary File, State , 1:20,000,000</gco:CharacterString>
+      <gco:CharacterString>Series Information for the ,</gco:CharacterString>
    </gmd:parentIdentifier>
    <gmd:hierarchyLevel>
       <gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode"
@@ -37,7 +37,7 @@ dataset
       <gco:CharacterString>2009-02-15 </gco:CharacterString>
    </gmd:metadataStandardVersion>
    <gmd:dataSetURI>
-      <gco:CharacterString>http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_state_20m.zip</gco:CharacterString>
+      <gco:CharacterString>http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip</gco:CharacterString>
    </gmd:dataSetURI>
    <!-- This is the ptvctinf/sdtsterm/sdtstype from section 3 of the FGDC Standard (Spatial Data Organization) -->
 <gmd:spatialRepresentationInfo>
@@ -51,7 +51,7 @@ dataset
                                                 complex </gmd:MD_GeometricObjectTypeCode>
                </gmd:geometricObjectType>
                <gmd:geometricObjectCount>
-                  <gco:Integer>52</gco:Integer>
+                  <gco:Integer>1</gco:Integer>
                </gmd:geometricObjectCount>
             </gmd:MD_GeometricObjects>
          </gmd:geometricObjects>
@@ -76,7 +76,7 @@ dataset
          <gmd:citation>
             <gmd:CI_Citation>
                <gmd:title>
-                  <gco:CharacterString>2014 Cartographic Boundary File, State for United States, 1:20,000,000</gco:CharacterString>
+                  <gco:CharacterString>2014 Cartographic Boundary File, United States, 1:20,000,000</gco:CharacterString>
                </gmd:title>
                <gmd:date>
                   <gmd:CI_Date>
@@ -98,7 +98,7 @@ dataset
          <gmd:abstract>
             <gco:CharacterString>The 2014 cartographic boundary shapefiles are simplified representations of selected geographic areas from the U.S. Census Bureau's Master Address File / Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) Database (MTDB). These boundary files are specifically designed for small-scale thematic mapping. When possible, generalization is performed with the intent to maintain the hierarchical relationships among geographies and to maintain the alignment of geographies within a file set for a given year. Geographic areas may not align with the same areas from another year. Some geographies are available as nation-based files while others are available only as state-based files.
 
-States and equivalent entities are the primary governmental divisions of the United States.  In addition to the fifty States, the Census Bureau treats the District of Columbia, Puerto Rico, and each of the Island Areas (American Samoa, the Commonwealth of the Northern Mariana Islands, Guam, and the U.S. Virgin Islands) as the statistical equivalents of States for the purpose of data presentation.</gco:CharacterString>
+This file depicts the shape of the United States clipped back to a generalized coastline.  This Nation layer covers the extent of the fifty States, the District of Columbia, Puerto Rico, and each of the Island Areas (American Samoa, the Commonwealth of the Northern Mariana Islands, Guam, and the U.S. Virgin Islands) when scale appropriate.</gco:CharacterString>
          </gmd:abstract>
          <gmd:purpose>
             <gco:CharacterString>These files were specifically created to support small-scale thematic mapping.  To improve the appearance of shapes at small scales, areas are represented with fewer vertices than detailed TIGER/Line Shapefiles.  Cartographic boundary files take up less disk space than their ungeneralized counterparts.  Cartographic boundary files take less time to render on screen than TIGER/Line Shapefiles.  You can join this file with table data downloaded from American FactFinder by using the AFFGEOID field in the cartographic boundary file.  If detailed boundaries are required, please use the TIGER/Line Shapefiles instead of the generalized cartographic boundary files.</gco:CharacterString>
@@ -151,7 +151,7 @@ States and equivalent entities are the primary governmental divisions of the Uni
                   <gco:CharacterString>Generalized</gco:CharacterString>
                </gmd:keyword>
                <gmd:keyword>
-                  <gco:CharacterString>State</gco:CharacterString>
+                  <gco:CharacterString>United States</gco:CharacterString>
                </gmd:keyword>
                <gmd:type>
                   <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode"
@@ -274,7 +274,7 @@ These products are free to use in a product or publication, however acknowledgem
          <gmd:featureCatalogueCitation>
             <gmd:CI_Citation>
                <gmd:title>
-                  <gco:CharacterString>Feature Catalog for the 2014   State  1:20,000,000  Cartographic Boundary File</gco:CharacterString>
+                  <gco:CharacterString>Feature Catalog for the 2014   1:20,000,000  Cartographic Boundary File</gco:CharacterString>
                </gmd:title>
                <gmd:date>
                   <gmd:CI_Date>
@@ -289,7 +289,7 @@ These products are free to use in a product or publication, however acknowledgem
                <gmd:citedResponsibleParty xlink:href="https://www.ngdc.noaa.gov/docucomp/1df27e57-4768-42de-909b-52f530601fba"
                                           xlink:title="U.S Department of Commerce, U.S Census Bureau, Geography Division (distributor)"/>
                <gmd:otherCitationDetails>
-                  <gco:CharacterString>http://meta.geo.census.gov/data/existing/decennial/GEO/CPMB/boundary/2014gz/state_20m/2014_state_20m.ea.iso.xml</gco:CharacterString>
+                  <gco:CharacterString>http://meta.geo.census.gov/data/existing/decennial/GEO/CPMB/boundary/2014gz/nation_20m/2014_nation_20m.ea.iso.xml</gco:CharacterString>
                </gmd:otherCitationDetails>
             </gmd:CI_Citation>
          </gmd:featureCatalogueCitation>
@@ -337,7 +337,7 @@ These products are free to use in a product or publication, however acknowledgem
                <gmd:onLine>
                   <gmd:CI_OnlineResource>
                      <gmd:linkage>
-                        <gmd:URL>http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_state_20m.zip</gmd:URL>
+                        <gmd:URL>http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip</gmd:URL>
                      </gmd:linkage>
                      <gmd:name>
                         <gco:CharacterString>Shapefile Zip File</gco:CharacterString>

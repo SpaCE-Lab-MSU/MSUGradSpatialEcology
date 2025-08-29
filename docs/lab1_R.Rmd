@@ -1,7 +1,7 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 1"
-author: "Phoebe Zarnetske; plz@msu.edu"
-date: "Sep 2016; rev. Sep 4, 2018, Aug 18-Sep 4, 2020, Sep 2, 2022"
+author: "Phoebe Zarnetske: plz@msu.edu: Lala Kounta: kountala@msu.edu; Kelly Kaspar: kapsarke@msu.edu "
+date: "Last rev. Aug, 2025, Sep, 2020"
 urlcolor: blue
 ---
 
