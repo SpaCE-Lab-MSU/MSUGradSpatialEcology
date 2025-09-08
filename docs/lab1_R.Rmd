@@ -1,7 +1,9 @@
 ---
 title: "MSU Graduate Spatial Ecology Lab 1"
-author: "Phoebe Zarnetske: plz@msu.edu: Lala Kounta: kountala@msu.edu; Kelly Kapsar: kapsarke@msu.edu "
+author: 'Phoebe Zarnetske: plz@msu.edu: Lala Kounta: kountala@msu.edu; Kelly Kapsar:
+  kapsarke@msu.edu '
 date: "Last rev. Aug, 2025; created Sep, 2020"
+output: pdf_document
 urlcolor: blue
 ---
 
