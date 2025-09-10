@@ -7,3 +7,5 @@ navbar:
   left:
     - text: "Lab 1"
       href: lab1_R.html       
+    - text: "Lab 2"
+      href: Lab2_simplified.html

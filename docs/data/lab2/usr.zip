@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+	<title>MSU Network Computer Registration</title>
+	<link rel="icon" type="image/ico" href="favicon.ico">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="_files/css/it-services-style-notitle.css">
+	<link rel="stylesheet" type="text/css" href="_files/css/it-services-msu-branding.css">
+	<link rel="stylesheet" type="text/css" href="_files/css/it-services-netops.css">
+	<link href="_stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+	<link href="_stylesheets/main.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p id="skip-nav" class="at-readable"><a accesskey="s" href="#msuit_brand_content_wrapper">Skip to Content</a></p>
+<header>
+	<div class="MSUwrapper" id="MSUheader">
+<div id="MSUmasthead" role="banner">
+<a href="http://www.msu.edu">
+<!-- if using a dark background change the img src to images/masthead-helmet-white.png-->
+<img alt="Michigan State University masthead graphic" class="screen-msugraphic" height="34" src="_files/images/it-services-branding/masthead-helmet-white.png" width="297"/>
+<!-- MSU Web Standards indicate the MSU masthead graphic should be printed black -->
+<img alt="Michigan State University masthead graphic" class="print-msugraphic" height="34" src="_files/images/it-services-branding/masthead-helmet-black.png" width="297"/> </a>
+<img alt="show search tool" class="phone-only resp-search-icon" src="_files/images/it-services-branding/icon-search-wht.png" />
+</div>
+<!-- If you prefer to have a transparent fill in the search box, replace the class 'white-fill' with 'no-fill' -->
+<div class="white-fill" id="MSUSearchTool" role="search">
+<div id="search-tool-box">
+<!-- u.search.msu.edu BEGIN - if you are using phase-I Search Tool fill in the following form values -->
+<!-- action should be equal to .//u.search.msu.edu/index.php. when using Search Tool -->
+<form action="//u.search.msu.edu/index.php" method="get" role="form">
+<!-- value should be equal to site name. Ex: University Archives -->
+<input name="client" type="hidden" value="MSU"/>
+<!-- value should be equal to the hostname that will be searched.  Ex: .archives.msu.edu.-->
+<input name="sitesearch" type="hidden" value="msu.edu"/>
+<!-- u.search.msu.edu END -->
+<!-- The styles applied to the following input fields and buttons comply with brand standards and should be used regardless of your search solution -->
+<label class="descriptor-readable" for="q">Search Tool </label>
+<input id="q" name="q" placeholder="Search..." type="text"/>
+<input id="btn_search" type="submit" value="search button"/>
+</form>
+</div>
+</div>
+</div>
+</header>
+
+
+<!-- MSUIT Login Code  -->
+<div id="msuit_brand_content_wrapper">
+
+
+<!-- MSUIT Title Header  -->
+	<div class="msuit_brand_title_header">
+			<h1>MSU Network Computer Registration</h1>
+	</div>
+
+<!-- END of MSUIT Title Header   -->
+
+
+<!-- MSUIT Content Area  -->
+	<div class="msuit_brand_content" style="padding-bottom: 16px;">
+
+		<div class="msuit_brand_content_inner">
+
+			<div class="msuit_brand_content_left no-login">
+
+			
+					<section>		
+<div id="content">
+<!-- InstanceBeginEditable name="Main Content" -->
+<b>Only registered systems are authorized to use this portion of the MSU network.
+<br />&nbsp;
+<br />
+<a href="http://dhcp.msu.edu/register">Visit the DHCP Registration Site</a> to register.
+</b>
+<div class="alertbox">
+<p><strong>Please note:  You will need to register
+your devices (computer, phone, tablet, etc.) with your
+<a href="https://netid.msu.edu/" target="_blank">MSU NetID</a>
+to use the MSU network.</strong></p>
+<p>
+<b>You may need to register your device twice,</b> if you are moving from a wired
+Ethernet connection to <b>MSUnet Wireless</b> service, or vice versa.
+</p>
+<p>
+<b>Guest use:</b> Guests of Michigan State University may access the <b>MSU Wireless Network</b>
+without an MSU NetId by connecting to the Wi-Fi network <b>MSUnet 3.0 Guest</b>.
+</p>
+</div>
+<p>Other reasons you may see this page:
+</p>
+<ol>
+  <li>
+    <b>Already registered?</b>
+    <br />&nbsp;<br />
+    You have registered your device, but have not followed the
+    instructions for renewing the IP address on your device.
+    <br />
+    <br />
+    Review the <a href="https://dhcp.msu.edu/help/renew.html"> IP renewal instructions.
+    </a>
+  </li>
+
+  <li>
+    <b>Multiple network interfaces or adapters?</b>
+    <br />&nbsp;<br />
+    Each network interface on a computer system has a unique MAC address and
+    must be registered separately.  For example if you connect to the
+    network with an ethernet cable that will register a different MAC
+    address than if you connect to MSUnet Wireless with your wireless
+    adapter.
+  </li>
+
+  <li>
+    <b>Using a router?<br />
+    <br />
+    </b>If your device is attached to or associated with a wireless router
+    or cable/DSL router,
+    that router may not have been registered.  See #1 above.  If the router
+    has been registered, it may not have been reset since the registration
+    was completed.<br />
+    <br />
+    If you are using wireless networking and are <i>not</i> connected to
+    <b>MSUnet Wireless</b>, and you have not set up your own
+    wireless router, then you may be camping on a wireless router which
+    belongs to someone nearby.  You should NOT register this device as you are
+    then responsible for all activity of all users on that device.  
+  </li>
+
+  <li>
+    <b>Access suspended?<br />
+    <br />
+    </b>Your network access may be suspended.<br />
+    <br />
+    Please go to <a href="http://dhcp.msu.edu/">dhcp.msu.edu</a> and log in to check if
+    your network access is suspended.
+  </li>
+
+  <li>
+    <b>Other<br />
+    <br />
+    </b>If you have eliminated all of the above, and are still reaching this page,
+    contact the <a href="http://help.msu.edu/">MSU IT Service Desk</a> at (517) 432-6200.
+  </li>
+
+</ol>
+
+<h2>Additional notes</h2>
+<p>We strongly recommend that all network users should: </p>
+<ul>
+  <li>
+    Update your operating system on a regular basis to install the latest
+    security fixes. <br />
+    <br />
+    For most devices, this is best done by enabling <b>Automatic Updates</b>.
+    Review your device settings to enable automatic updates if needed.
+  </li>
+
+  <li>
+    Run a firewall on your computer system.
+  </li>
+
+  <li>Recent versions of Windows include
+    the <b>Windows Firewall</b>.  Open the <b>Windows control panel</b> for
+    <b>Windows Firewall</b> to review your settings.  Most other operating systems
+    have similar built-in firewall systems.<br />
+  </li>
+
+  <li>
+    Install <b>Anti-virus</b> and <b>Anti-spyware</b> software.<br />
+  </li>
+
+</ul>
+
+<p>
+Additional information may be found at the <a href="http://tech.msu.edu/">
+Technology at MSU</a> site.
+</p>
+
+<p><font size="-2">Last revised: July 21, 2021</font></p>
+<hr />
+<p>If you need help with this service, contact the <a href="http://help.msu.edu/">MSU IT Service Desk</a>. </p>
+
+      <!-- InstanceEndEditable -->
+</div>
+					</section>
+			
+			</div>
+
+			<div class="msuit_brand_clear"></div>
+		</div>
+
+	</div>
+
+<!-- END of MSUIT Content Area  -->
+
+
+</div>
+<!-- END of Login Code   -->
+
+
+
+<footer class="MSUwrapper light-background" id="MSUstandardFooter" role="contentinfo">
+<div class="fourMSUcolumns" id="standard-footer-MSU-wordmark">
+<a href="http://www.msu.edu">
+<!-- If using a dark background change the img src to images/msu-wordmark-white-221x47.png-->
+<img alt="Michigan State University Wordmark" class="screen-msuwordmark" height="48" src="_files/images/it-services-branding/msu-wordmark-green-221x47.png" width="222"/>
+<img alt="Michigan State University Wordmark" class="print-msuwordmark" height="49" src="_files/images/it-services-branding/msu-wordmark-black-221x47.png" width="221"/>
+</a>
+</div>
+<div class="twelveMSUcolumns">
+<div id="standard-footer-site-links">
+<ul><!-- change the css to using nth child instead of classes!!!!!!-->
+<li>Call us: <strong>(517) 432-6200</strong></li>
+
+<li><a href="http://contact.cl.msu.edu/contact.php?service=network" target="_parent">Contact Information</a></li>
+<li><a href="http://tech.msu.edu/privacy" target="_parent">Privacy Statement</a></li>
+<li><a href="http://www.msu.edu/accessibility.html" target="_parent">Site Accessibility</a></li>
+</ul>
+</div>
+<div id="standard-footer-MSU-info">
+<ul>
+<li>Call MSU: <span class="msu-phone"><strong>(517) 355-1855</strong></span></li>
+<li>Visit: <strong><a href="http://msu.edu">msu.edu</a></strong></li>
+<li>MSU is an affirmative-action, equal-opportunity employer.</li>
+</ul>
+<ul>
+<li class="spartans-will">Spartans Will.</li>
+<li>&copy; Michigan State University</li>
+</ul>
+</div>
+</div>
+</footer><!-- ================================================== -->
+
+</body>
+
+</html>
