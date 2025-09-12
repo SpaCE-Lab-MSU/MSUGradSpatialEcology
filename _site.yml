@@ -8,4 +8,6 @@ navbar:
     - text: "Lab 1"
       href: lab1_R.html    
     - text: "Lab 2"
-      href: lab2_scale.html    
+      href: lab2_scale.html 
+    - text: "Lab 3"
+      href: lab3.html
