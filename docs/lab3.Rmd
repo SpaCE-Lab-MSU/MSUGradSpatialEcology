@@ -75,9 +75,9 @@ library(ggplot2)
 
 ```
 
-The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Through `FedData` we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to Data, filter Products *Land Cover* Time Period *2016*. Click on Metadata and search for *proj* to find the projection information). It's Albers Conical Equal Area, WGS84. If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf), Lab 2's links, or resources on D2L.
+The `FedData` R package is a good way to pull in US environmental data from federal sources. See more here: https://docs.ropensci.org/FedData/. Through `FedData` we are downloading the 2016 NLCD land cover product for Oregon. We want to work with NLCD data, so it's important to look up its projection. That can be found in the metadata for 2016 NLCD (navigate to https://www.mrlc.gov/data, scroll down to Data, filter Products *Land Cover* Time Period *2016*. Click on Metadata and search for *proj* to find the projection information). It's Albers Conical Equal Area, WGS84 (EPSG:5070). If you need a refresher on Coordinate Reference Systems, refer to this summary sheet (https://www.nceas.ucsb.edu/sites/default/files/2020-04/OverviewCoordinateReferenceSystems.pdf), Lab 2's links, or resources on D2L.
 
-Practice working with shapefiles and projecting:
+Before we download the NLCD data, we are going to download an outline of the state of Oregon to use to clip the data: 
 ```{r, message=FALSE, results='hide',warning=FALSE}
 # Create a polygon the state of Oregon from the States of US shapefile
 if(! file.exists(file.path(data_path,'uss.zip'))){
@@ -89,7 +89,9 @@ unzip (file.path(data_path,"uss.zip"), exdir = data_path)
 # Read in the shapefile with rgdal package.
 uss <- sf::read_sf(file.path(data_path,"cb_2014_us_state_20m.shp"))
 
-#Take a look at the shapefile info. Its CRS is here: https://epsg.io/42310.
+#Take a look at the shapefile info. Its CRS is here: https://epsg.io/4269.
+st_crs(uss)
+
 summary(uss)
 # What are the first 6 lines of uss?
 head(uss)
@@ -100,12 +102,15 @@ unique(uss$NAME)
 ```
 
 **Projecting**
+Note that the US outline data you just loaded have a different CRS from the NLCD data. 
+
 We can project these data to match the NLCD data coordinate reference system (Albers, also known as NAD83 / Albers NorthAm). FedData R package returns NLCD data in a different CRS. In general you should avoid projecting rasters because projection of rasters affects their cell values. If you're working with a raster and a vector in some spatial analysis, project the vector data to match the raster projection.
 ```{r, message=FALSE, results='hide',warning=FALSE}
-# Here's the CRS info that FedData returns for NLCD (Pseudo Mercator: https://epsg.io/3857)
-merc.proj <- terra::crs("+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs")
 # Here's the CRS info for CONUS North America Albers Equal Area Conic (https://epsg.io/5070)
-us.aea.proj <- terra::crs("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
+# This is called the PROJ4 string and you can find it on the epsg.io webpage. 
+# Some libraries will allow you to use the EPSG code to specify the projection. 
+# Others will require the PROJ4 string. 
+us.aea.proj <- "epsg:5070"
 
 # First let's make a shapefile of just Oregon from the entire US shapefile:
 or <- uss[uss$NAME =="Oregon",] 
@@ -117,8 +122,9 @@ or1<-sf::st_transform(or, us.aea.proj)
 plot(or1$geometry, main="Albers Equal Area Conic")
 
 # Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
-# Refer to the extent (min and max x and y) of the shapefile, "or1"
-summary(or1)
+# Refer to the extent (min and max x and y) of the shapefile, "or1"derived 
+# from the st_bbox function
+st_bbox(or1)
 or2 <- FedData::polygon_from_extent(raster::extent(-2294351,-1584307, 2301475, 2899476))
 sf::st_crs(or2) <- sf::st_crs(us.aea.proj)
 # See how the or2 outlines to the polygon, "or1"
@@ -138,8 +144,8 @@ file_name="https://nrimp.dfw.state.or.us/web%20stores/data%20libraries/files/ODF
 unzip (file.path(data_path,"mgmt.zip"), exdir = data_path)
 mgmt<-sf::read_sf(file.path(data_path,"wmu24poly.shp"))
 
-summary(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
-lcc.proj<-terra::crs("+proj=lcc +lat_0=41.75 +lon_0=-120.5 +lat_1=43 +lat_2=45.5 +x_0=400000 +y_0=0 +datum=NAD83 +units=ft +no_defs")
+st_crs(mgmt) # Its CRS is lcc (Lambert Conformal Conic: https://proj.org/operations/projections/lcc.html)
+lcc.proj<-st_crs("+proj=lcc +lat_0=41.75 +lon_0=-120.5 +lat_1=43 +lat_2=45.5 +x_0=400000 +y_0=0 +datum=NAD83 +units=ft +no_defs")
 
 # Project mgmt to the lcc projection from the Oregon NLCD 2011 (see below)
 mgmt1<-sf::st_transform(mgmt, lcc.proj)
@@ -147,10 +153,10 @@ mgmt1<-sf::st_transform(mgmt, lcc.proj)
 head(mgmt1)
 unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
-hood <- mgmt1[mgmt$UNIT_NAME =="HOOD",] 
+hood <- mgmt1[mgmt1$UNIT_NAME =="HOOD",] 
 ## See where it's located. Plotting and rendering may take a minute because these polygons are complex.
-plot(mgmt1,main="Hood Wildlife Management Unit, Oregon")
-plot(hood,add=T,col="red")
+plot(mgmt1$geometry,main="Hood Wildlife Management Unit, Oregon")
+plot(hood$geometry,add=T,col="red")
 ```
 
 Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is.
@@ -164,13 +170,23 @@ hood_nlcd<-get_nlcd(
   dataset = "landcover",
   extraction.dir = paste0(data_path, "/FedData/"),
   )
-hood_nlcd # CRS = merc; project hood to overlay them on the same plot.
-hood.merc<-sf::st_transform(hood, merc.proj)
+hood_nlcd
+terra::crs(hood_nlcd) # Something is going wrong here with the projection
+# the WKT string does not match what we expect from the metadata and the EPSG code
+# in the data doesn't match the other text information. 
+
+# Given that we know what hte projection should be from the metadata, we are going 
+# to tell R what the projection is for the hood_nlcd object. 
+terra::crs(hood_nlcd) <- us.aea.proj
+
+# We will then transform the hood outline data to the same project. 
+hood.aea<-sf::st_transform(hood, us.aea.proj)
+
 # See if you can add a legend - what are the classifications? https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend
 unique(hood_nlcd)
 
 plot(hood_nlcd,legend = FALSE)
-plot(hood.merc,add=TRUE, lwd=2, border='white')
+plot(hood.aea,add=TRUE, lwd=2, border='white')
 ```
 
 If you have trouble with the `FedData` package, the code below will import the 2016 Oregon NLCD directly (54 MB); it may take a few mins. 
