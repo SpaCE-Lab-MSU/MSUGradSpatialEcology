@@ -378,7 +378,7 @@ summary(uss)
 # What are the first 6 lines of uss?
 head(uss)
 # Plot it. See that it&#39;s showing the states and territories of the US.
-plot(uss)</code></pre>
+plot(uss$geometry)</code></pre>
 <p><img src="lab3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code># What are the unique entries in the field, NAME?
 unique(uss$NAME)</code></pre>
@@ -438,8 +438,8 @@ unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
 hood &lt;- mgmt1[mgmt$UNIT_NAME ==&quot;HOOD&quot;,] 
 ## See where it&#39;s located. Plotting and rendering may take a minute because these polygons are complex.
-plot(mgmt1,main=&quot;Hood Wildlife Management Unit, Oregon&quot;)
-plot(hood,add=T,col=&quot;red&quot;)</code></pre>
+plot(mgmt1$geometry,main=&quot;Hood Wildlife Management Unit, Oregon&quot;)
+plot(hood$geometry,add=T,col=&quot;red&quot;)</code></pre>
 <p><img src="lab3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Use the <code>get_nlcd</code> command from <code>FedData</code> to
 extract the NLCD data for this management unit. <code>FedData</code>

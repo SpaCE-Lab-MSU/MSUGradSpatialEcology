@@ -92,7 +92,7 @@ summary(uss)
 # What are the first 6 lines of uss?
 head(uss)
 # Plot it. See that it's showing the states and territories of the US.
-plot(uss)
+plot(uss$geometry)
 # What are the unique entries in the field, NAME?
 unique(uss$NAME)
 ```
@@ -147,8 +147,8 @@ unique(mgmt1$UNIT_NAME)
 # Select the HOOD Management Unit (where Mount Hood is).
 hood <- mgmt1[mgmt$UNIT_NAME =="HOOD",] 
 ## See where it's located. Plotting and rendering may take a minute because these polygons are complex.
-plot(mgmt1,main="Hood Wildlife Management Unit, Oregon")
-plot(hood,add=T,col="red")
+plot(mgmt1$geometry,main="Hood Wildlife Management Unit, Oregon")
+plot(hood$geometry,add=T,col="red")
 ```
 
 Use the `get_nlcd` command from `FedData` to extract the NLCD data for this management unit. `FedData` does the cropping automatically using a shapefile or raster for "template". If you run into errors you may need to check what the projection of hood_nlcd is.
