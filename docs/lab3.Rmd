@@ -271,7 +271,7 @@ hood_metrics_for <- subset(hood_metrics, class == 1)
 # Note that the y axis scale varies by plot when faceting by metric below. 
 # We use a log10 scale for the x axis to visualize the spread more effectively.
 hood_for_metrics_hist<-hood_metrics_for %>%
-     select(value, metric) %>%
+     dplyr::select(value, metric) %>%
      na.omit() %>%
      ggplot(aes(value, fill = metric, color = metric)) +
      geom_density(alpha = 0.2)+
