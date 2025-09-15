@@ -14,7 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 3</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -457,10 +457,10 @@ hood_nlcd&lt;-get_nlcd(
   )
 hood_nlcd # CRS = merc; project hood to overlay them on the same plot.</code></pre>
 <pre><code>## class       : SpatRaster 
-## size        : 1584, 1220, 1  (nrow, ncol, nlyr)
+## dimensions  : 1584, 1220, 1  (nrow, ncol, nlyr)
 ## resolution  : 30, 30  (x, y)
 ## extent      : -1999635, -1963035, 2747595, 2795115  (xmin, xmax, ymin, ymax)
-## coord. ref. : NAD83 / Conus Albers (EPSG:5070) 
+## coord. ref. : NAD83 / Conus Albers 
 ## source      : Hood_NLCD_Land_Cover_2016.tif 
 ## color table : 1 
 ## categories  : Class, Color, Description 
@@ -514,8 +514,8 @@ different patch and landscape statistics.</p>
 <pre class="r"><code>## Check to see if the input data is suitable for computing patch metrics
  
 check_landscape(hood_nlcd)</code></pre>
-<pre><code>##   layer       crs units   class n_classes OK
-## 1     1 projected     m integer        16  ✔</code></pre>
+<pre><code>##   layer crs units   class n_classes OK
+## 1     1  NA    NA integer        16 ❓</code></pre>
 <p>You could proceed to calculate metrics for all different land cover
 classes (this would take a while). Instead, suppose you are interested
 in the metrics of “forested” patches in this landscape. First,
@@ -583,7 +583,7 @@ hood_metrics_for &lt;- subset(hood_metrics, class == 1)
 # Note that the y axis scale varies by plot when faceting by metric below. 
 # We use a log10 scale for the x axis to visualize the spread more effectively.
 hood_for_metrics_hist&lt;-hood_metrics_for %&gt;%
-     select(value, metric) %&gt;%
+     dplyr::select(value, metric) %&gt;%
      na.omit() %&gt;%
      ggplot(aes(value, fill = metric, color = metric)) +
      geom_density(alpha = 0.2)+

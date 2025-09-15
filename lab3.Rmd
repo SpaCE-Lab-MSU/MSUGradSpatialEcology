@@ -3,9 +3,7 @@ title: "MSU Graduate Spatial Ecology Lab 3"
 author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar:
   kapsarke@msu.edu'
 date: "Last rev. Sep, 2025; created Sep, 2020"
-output:
-  pdf_document: default
-  html_document: default
+output: html_document
 urlcolor: blue
 ---
 
@@ -255,7 +253,7 @@ hood_metrics_for <- subset(hood_metrics, class == 1)
 # Note that the y axis scale varies by plot when faceting by metric below. 
 # We use a log10 scale for the x axis to visualize the spread more effectively.
 hood_for_metrics_hist<-hood_metrics_for %>%
-     select(value, metric) %>%
+     dplyr::select(value, metric) %>%
      na.omit() %>%
      ggplot(aes(value, fill = metric, color = metric)) +
      geom_density(alpha = 0.2)+
