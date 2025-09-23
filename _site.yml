@@ -11,3 +11,5 @@ navbar:
       href: lab2_scale.html 
     - text: "Lab 3"
       href: lab3.html
+    - text: "Lab 4"
+      href: lab4.html
