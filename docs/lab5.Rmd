@@ -19,7 +19,7 @@ OPTIONAL: If you would like to test out GitHub in completing this lab, complete 
 
 **First**, refer to the *[Lab 5 handout on Variograms](lab5_VariogramsHandout.pdf)*
 
-OPTIONAL RESOURCES: If you would like more information, you may also find this ArcGIS series of pages useful in explaining Semivariograms. Note that we won't be using ArcGIS, but the concepts are the same in R. For more of a "book" style resource, see Chapter 3: The principles of geostatistical analysis, starting on Page 49 in *[Using ArcGIS Geostatistical Analyst](http://downloads2.esri.com/support/documentation/ao_/Using_ArcGIS_Geostatistical_Analyst.pdf).* 
+OPTIONAL RESOURCES: If you would like more information, you may also find this ArcGIS series of pages useful in explaining Semivariograms (aka variograms). Note that we won't be using ArcGIS, but the concepts are the same in R. For more of a "book" style resource, see Chapter 3: The principles of geostatistical analysis, starting on Page 49 in *[Using ArcGIS Geostatistical Analyst](http://downloads2.esri.com/support/documentation/ao_/Using_ArcGIS_Geostatistical_Analyst.pdf).* 
 
 *[Empirical semivariogram and covariance functions](https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/empirical-semivariogram-and-covariance-functions.htm)*
 
@@ -44,9 +44,9 @@ OPTIONAL RESOURCES: If you would like more information, you may also find this A
 *[Accounting for anisotropy using directional semivariogram and covariance functions](https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/accounting-for-anisotropy-using-directional-semivariogram-and-covariance-functions.htm)*
 
 
-**Second**, complete the *Start working in R:*. The code below is modified from the Vignette, *[Exploring spatial data in R](FOR870_Lab5_spatialdataviz_variograms.pdf)* by Andrew Finley (MSU; https://www.finley-lab.com) and Sudipto Banerjee (UCLA; http://sudipto.bol.ucla.edu/). See the vignette for more context.
+**Second**, complete the *Start working in R:* section. The code below is modified from the Vignette, *[Exploring spatial data in R](FOR870_Lab5_spatialdataviz_variograms.pdf)* by Andrew Finley (MSU; https://www.finley-lab.com) and Sudipto Banerjee (UCLA; http://sudipto.bol.ucla.edu/). See the vignette for more context.
 
-**Third**, after completing the *Start working in R:*, answer the 3 Questions at the end of the lab.
+**Third**, after completing the *Start working in R:* section, answer the 3 Questions at the end of the lab.
 
 
 *Start working in R:*
@@ -246,7 +246,7 @@ plot(directional.vario.DBH, main="DBH directional", lty=1)
 ```
 
 **End of Exploring spatial data in R**
-Want to fit a variogram function for just one? In this case, shown for 45°.
+Want to fit a variogram function for just one direction? In this case, shown for 45°.
 ```{r, message=FALSE, results='hide',warning=FALSE}
 
 par(mfrow=c(1,1))

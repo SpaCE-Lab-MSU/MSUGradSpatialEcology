@@ -525,18 +525,30 @@ allows you to plot without telling R that the data are spatial in nature
 not be able to do other spatial analyses (e.g., intersections,
 projections, etc.) until you tell R that this is a spatial object.</p>
 <pre class="r"><code>names(puma.gbif) </code></pre>
-<pre><code>##  [1] &quot;gbifID&quot;                           &quot;datasetKey&quot;                       &quot;occurrenceID&quot;                     &quot;kingdom&quot;                         
-##  [5] &quot;phylum&quot;                           &quot;class&quot;                            &quot;order&quot;                            &quot;family&quot;                          
-##  [9] &quot;genus&quot;                            &quot;species&quot;                          &quot;infraspecificEpithet&quot;             &quot;taxonRank&quot;                       
-## [13] &quot;scientificName&quot;                   &quot;verbatimScientificName&quot;           &quot;verbatimScientificNameAuthorship&quot; &quot;countryCode&quot;                     
-## [17] &quot;locality&quot;                         &quot;stateProvince&quot;                    &quot;occurrenceStatus&quot;                 &quot;individualCount&quot;                 
-## [21] &quot;publishingOrgKey&quot;                 &quot;decimalLatitude&quot;                  &quot;decimalLongitude&quot;                 &quot;coordinateUncertaintyInMeters&quot;   
-## [25] &quot;coordinatePrecision&quot;              &quot;elevation&quot;                        &quot;elevationAccuracy&quot;                &quot;depth&quot;                           
-## [29] &quot;depthAccuracy&quot;                    &quot;eventDate&quot;                        &quot;day&quot;                              &quot;month&quot;                           
-## [33] &quot;year&quot;                             &quot;taxonKey&quot;                         &quot;speciesKey&quot;                       &quot;basisOfRecord&quot;                   
-## [37] &quot;institutionCode&quot;                  &quot;collectionCode&quot;                   &quot;catalogNumber&quot;                    &quot;recordNumber&quot;                    
-## [41] &quot;identifiedBy&quot;                     &quot;dateIdentified&quot;                   &quot;license&quot;                          &quot;rightsHolder&quot;                    
-## [45] &quot;recordedBy&quot;                       &quot;typeStatus&quot;                       &quot;establishmentMeans&quot;               &quot;lastInterpreted&quot;                 
+<pre><code>##  [1] &quot;gbifID&quot;                           &quot;datasetKey&quot;                      
+##  [3] &quot;occurrenceID&quot;                     &quot;kingdom&quot;                         
+##  [5] &quot;phylum&quot;                           &quot;class&quot;                           
+##  [7] &quot;order&quot;                            &quot;family&quot;                          
+##  [9] &quot;genus&quot;                            &quot;species&quot;                         
+## [11] &quot;infraspecificEpithet&quot;             &quot;taxonRank&quot;                       
+## [13] &quot;scientificName&quot;                   &quot;verbatimScientificName&quot;          
+## [15] &quot;verbatimScientificNameAuthorship&quot; &quot;countryCode&quot;                     
+## [17] &quot;locality&quot;                         &quot;stateProvince&quot;                   
+## [19] &quot;occurrenceStatus&quot;                 &quot;individualCount&quot;                 
+## [21] &quot;publishingOrgKey&quot;                 &quot;decimalLatitude&quot;                 
+## [23] &quot;decimalLongitude&quot;                 &quot;coordinateUncertaintyInMeters&quot;   
+## [25] &quot;coordinatePrecision&quot;              &quot;elevation&quot;                       
+## [27] &quot;elevationAccuracy&quot;                &quot;depth&quot;                           
+## [29] &quot;depthAccuracy&quot;                    &quot;eventDate&quot;                       
+## [31] &quot;day&quot;                              &quot;month&quot;                           
+## [33] &quot;year&quot;                             &quot;taxonKey&quot;                        
+## [35] &quot;speciesKey&quot;                       &quot;basisOfRecord&quot;                   
+## [37] &quot;institutionCode&quot;                  &quot;collectionCode&quot;                  
+## [39] &quot;catalogNumber&quot;                    &quot;recordNumber&quot;                    
+## [41] &quot;identifiedBy&quot;                     &quot;dateIdentified&quot;                  
+## [43] &quot;license&quot;                          &quot;rightsHolder&quot;                    
+## [45] &quot;recordedBy&quot;                       &quot;typeStatus&quot;                      
+## [47] &quot;establishmentMeans&quot;               &quot;lastInterpreted&quot;                 
 ## [49] &quot;mediaType&quot;                        &quot;issue&quot;</code></pre>
 <pre class="r"><code># remove NA values if they exist in lat or lon
 puma1&lt;-subset(puma.gbif, puma.gbif$decimalLatitude != &quot;NA&quot;,)
