@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar: kapsarke@msu.edu" />
+
+
+<title>MSU Graduate Spatial Ecology Lab 5</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">MSU Grad Spatial Ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="lab1_R.html">Lab 1</a>
+</li>
+<li>
+  <a href="lab2_scale.html">Lab 2</a>
+</li>
+<li>
+  <a href="lab3.html">Lab 3</a>
+</li>
+<li>
+  <a href="lab4.html">Lab 4</a>
+</li>
+<li>
+  <a href="lab5.html">Lab 5</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 5</h1>
+<h4 class="author">Phoebe Zarnetske: <a href="mailto:plz@msu.edu"
+class="email">plz@msu.edu</a>; Lala Kounta: <a
+href="mailto:kountala@msu.edu" class="email">kountala@msu.edu</a>; Kelly
+Kapsar: <a href="mailto:kapsarke@msu.edu"
+class="email">kapsarke@msu.edu</a></h4>
+<h4 class="date">Last rev. Sep, 2025; created Sep, 2020</h4>
+
+</div>
+
+
+<div id="lab-5-variograms-ripleys-k" class="section level1">
+<h1>Lab 5: Variograms, Ripley’s K</h1>
+<p><em><a href="lab5.Rmd">RMarkdown version of this Lab</a></em></p>
+<p>This lab has 3 Questions associated with Variograms. You need to hand
+in a <strong>single PDF</strong> produced from R Markdown, including
+output plots, any statistics, code, and text for answers to the
+questions below. When referring to the code below it may be more useful
+to use the .Rmd file linked above. A Ripley’s K exercise using the R
+package, <code>spatstat</code>, is also included but is optional.</p>
+<p>OPTIONAL: If you would like to test out GitHub in completing this
+lab, complete your .Rmd file in RStudio and push your PDF (and your .Rmd
+if you want) to a repository (if you did this in Lab 4, add this Lab 5
+Markdown to the same repository). In your .Rmd file, add the link to the
+GitHub .Rmd file so it’s visible in your PDF when you submit to D2L.</p>
+<p><strong>First</strong>, refer to the <em><a
+href="lab5_VariogramsHandout.pdf">Lab 5 handout on
+Variograms</a></em></p>
+<p>OPTIONAL RESOURCES: If you would like more information, you may also
+find this ArcGIS series of pages useful in explaining Semivariograms
+(aka variograms). Note that we won’t be using ArcGIS, but the concepts
+are the same in R. For more of a “book” style resource, see Chapter 3:
+The principles of geostatistical analysis, starting on Page 49 in <em><a
+href="http://downloads2.esri.com/support/documentation/ao_/Using_ArcGIS_Geostatistical_Analyst.pdf">Using
+ArcGIS Geostatistical Analyst</a>.</em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/empirical-semivariogram-and-covariance-functions.htm">Empirical
+semivariogram and covariance functions</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/creating-empirical-semivariograms.htm">Creating
+empirical semivariograms</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/binning-empirical-semivariograms.htm">Binning
+empirical semivariograms</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/choosing-a-lag-size.htm">Choosing
+a lag size</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/empirical-semivariograms-for-different-directions.htm">Empirical
+semivariograms for different directions</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/semivariogram-and-covariance-functions.htm">Semivariogram
+and covariance functions</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/understanding-a-semivariogram-the-range-sill-and-nugget.htm">Understanding
+a semivariogram: The range, sill, and nugget</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/modeling-a-semivariogram.htm">Fitting
+a model to the empirical semivariogram</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/fitting-a-model-to-the-empirical-semivariogram.htm">Semivariograms
+and Covariance Functions</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/combining-semivariogram-models.htm">Combining
+semivariogram models</a></em></p>
+<p><em><a
+href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/accounting-for-anisotropy-using-directional-semivariogram-and-covariance-functions.htm">Accounting
+for anisotropy using directional semivariogram and covariance
+functions</a></em></p>
+<p><strong>Second</strong>, complete the <em>Start working in R:</em>
+section. The code below is modified from the Vignette, <em><a
+href="FOR870_Lab5_spatialdataviz_variograms.pdf">Exploring spatial data
+in R</a></em> by Andrew Finley (MSU; <a
+href="https://www.finley-lab.com"
+class="uri">https://www.finley-lab.com</a>) and Sudipto Banerjee (UCLA;
+<a href="http://sudipto.bol.ucla.edu/"
+class="uri">http://sudipto.bol.ucla.edu/</a>). See the vignette for more
+context.</p>
+<p><strong>Third</strong>, after completing the <em>Start working in
+R:</em> section, answer the 3 Questions at the end of the lab.</p>
+<p><em>Start working in R:</em></p>
+<pre class="r"><code>##### STARTING UP R
+# Clear all existing data (or don&#39;t and just make sure you start with a newly opened RStudio session; see why this may not be so great for reproducibility: https://rstats.wtf/save-source.html#rm-list-ls)
+rm(list=ls()) 
+
+# Close graphics devices
+graphics.off()
+
+# Set the paths for your work
+output_path&lt;-(&quot;output&quot;)
+# if this folder doesn&#39;t exist, create it
+if(!dir.exists(output_path)){
+  dir.create(output_path)
+}
+
+# Create the folders (directories) &quot;data&quot; and &quot;lab5&quot; - If they exist already, this command won&#39;t over-write them.
+data_path&lt;-(file.path(&quot;data&quot;,&quot;lab5&quot;))
+if(!dir.exists(data_path)){
+  dir.create(data_path,recursive = TRUE)
+}</code></pre>
+<p>If you previously saved your workspace and want to load it here, do
+so this way:</p>
+<p><code>load(file.path(output_path,"lab5.RData"))</code></p>
+<p><strong>NOTES on R packages used in this lab:</strong></p>
+<ol style="list-style-type: decimal">
+<li>With R Markdown, it is helpful to install packages locally before
+knitting (copy this into your R console before you knit).
+<code>for (package in c("classInt", "spBayes", "MBA", "gstat", "fields", "rgl", "lattice")) {</code>
+<code>if (!require(package, character.only=T, quietly=T)) {</code></li>
+</ol>
+<p><code>install.packages(package)</code></p>
+<p><code>library(package, character.only=T)</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p>We will use forest inventory data from a long-term ecological
+research site in western Oregon (WEF from <code>fields</code> package
+).</p>
+<pre class="r"><code>library(classInt)
+library(sf)
+library(sp)
+library(spBayes)
+library(MBA)
+library(gstat)
+library(fields)
+library(rgl)
+library(dplyr)
+library(lattice)</code></pre>
+<p><strong>Spatial data visualization</strong></p>
+<p>Load the data: We begin by removing rows that have NA for the
+variables of interest, creating a vector of DBH and HT,and plotting the
+tree coordinates.</p>
+<pre class="r"><code>data(WEF.dat)
+?WEF.dat
+WEF.dat &lt;- WEF.dat[!apply(WEF.dat[,c(&quot;East_m&quot;,&quot;North_m&quot;,
+                                     &quot;DBH_cm&quot;,&quot;Tree_height_m&quot;,&quot;ELEV_m&quot;)], 
+                          1, function(x)any(is.na(x))),]
+
+DBH &lt;- WEF.dat$DBH_cm
+HT &lt;- WEF.dat$Tree_height_m</code></pre>
+<p>Create Coordinates:</p>
+<pre class="r"><code>coords &lt;- as.matrix(WEF.dat[,c(&quot;East_m&quot;,&quot;North_m&quot;)])
+plot(coords, pch=1, cex=sqrt(DBH)/10, col=&quot;darkgreen&quot;, xlab=&quot;Easting (m)&quot;, 
+     ylab=&quot;Northing (m)&quot;)
+leg.vals &lt;- round(quantile(DBH),0)
+legend(&quot;topleft&quot;, pch=1, legend=leg.vals, col=&quot;darkgreen&quot;, 
+       pt.cex=sqrt(leg.vals)/10, bty=&quot;n&quot;, title=&quot;DBH (cm)&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+Here we make a color ramp function then create a color palette with five
+shades. colorRamp and Class Intervals:</p>
+<pre class="r"><code>col.br &lt;- colorRampPalette(c(&quot;blue&quot;, &quot;cyan&quot;, &quot;yellow&quot;, &quot;red&quot;))
+col.pal &lt;- col.br(5)
+
+quant &lt;- classIntervals(DBH, n=5, style=&quot;quantile&quot;)
+fisher &lt;- classIntervals(DBH, n=5, style=&quot;fisher&quot;)
+kmeans &lt;- classIntervals(DBH, n=5, style=&quot;kmeans&quot;)
+hclust &lt;- classIntervals(DBH, n=5, style=&quot;hclust&quot;)</code></pre>
+<p>quantFisher and Plot the data:</p>
+<pre class="r"><code>quant.col &lt;- findColours(quant, col.pal)
+fisher.col &lt;- findColours(fisher, col.pal) 
+
+par(mfrow=c(1,2))
+plot(coords, col=quant.col, pch=19, cex=0.5, main=&quot;Quantile&quot;, 
+     xlab=&quot;Easting (m)&quot;, ylab=&quot;Northing (m)&quot;)
+legend(&quot;topleft&quot;, fill=attr(quant.col, &quot;palette&quot;), 
+       legend=names(attr(quant.col, &quot;table&quot;)), bty=&quot;n&quot;)
+
+plot(coords, col=fisher.col, pch=19, cex=0.5, main=&quot;Bclust&quot;, 
+     xlab=&quot;Easting (m)&quot;, ylab=&quot;Northing (m)&quot;)
+legend(&quot;topleft&quot;, 
+       fill=attr(fisher.col, &quot;palette&quot;), 
+       legend=names(attr(fisher.col, &quot;table&quot;)), bty=&quot;n&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+Alternatively, we can choose intervals that are meaningful to the
+analysis. Assign diameter at breast height (DBH) classes:</p>
+<pre class="r"><code>fixed &lt;- classIntervals(DBH, n=4, style=&quot;fixed&quot;, fixedBreaks=c(0,12.7,30.48,60,max(DBH)+1))
+
+fixed.col &lt;- findColours(fixed, col.pal)
+
+plot(coords, col=fixed.col, pch=19, cex=0.5, 
+     main=&quot;Forestry tree size classes&quot;, xlab=&quot;Easting (m)&quot;, ylab=&quot;Northing (m)&quot;)
+legend(&quot;topleft&quot;, fill=attr(fixed.col, &quot;palette&quot;), 
+       legend=c(&quot;sapling&quot;,&quot;poletimber&quot;,&quot;sawtimber&quot;,&quot;large sawtimber&quot;), bty=&quot;n&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Interpolate over the points. Note that image.plot() is from the
+“fields” R package.</p>
+<pre class="r"><code>x.res &lt;- 100; y.res &lt;- 100
+
+surf &lt;- mba.surf(cbind(coords, DBH), no.X=x.res, no.Y=y.res, 
+                 h=5, m=2, extend=FALSE)$xyz.est
+image.plot(surf, xaxs = &quot;r&quot;, yaxs = &quot;r&quot;, 
+           xlab=&quot;Easting (m)&quot;, ylab=&quot;Northing (m)&quot;, col=col.br(25))</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Visualize in 3D - a new window opens up. Move the 3D image around
+with your mouse to see different perspectives!</p>
+<pre class="r"><code>zlim &lt;- range(surf[[3]], na.rm=TRUE)
+zlen &lt;- zlim[2] - zlim[1] + 1
+colorlut &lt;- col.br(zlen) # DBH color lookup table
+col &lt;- colorlut[ surf[[3]]-zlim[1]+1 ] # assign colors to heights for each point
+ 
+surface3d(surf[[1]], surf[[2]], surf[[3]], col=col)
+axes3d(); title3d(main=&quot;DBH&quot;, xlab=&quot;Easting (m)&quot;, 
+                  ylab=&quot;Northing (m)&quot;, zlab=&quot;DBH (cm)&quot;)</code></pre>
+<p>Create a perspective plot of DBH:</p>
+<pre class="r"><code>par(mfrow=c(1,1))
+drape.plot(surf[[1]], surf[[2]], surf[[3]], col=col.br(150), 
+           theta=225, phi=50, border=FALSE,
+            add.legend=FALSE, xlab=&quot;Easting (m)&quot;, 
+           ylab=&quot;Northing (m)&quot;, zlab=&quot;DBH (cm)&quot;)
+
+image.plot(zlim=range(surf[[3]], na.rm=TRUE), legend.only=TRUE, horizontal=FALSE)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><strong>Variogram Analysis</strong> Fit an exponential variogram to
+these data and another to the residuals of a linear regression of DBH
+onto tree species.</p>
+<pre class="r"><code>#DBH is a dataframe. We need to transform it to a spatial object
+DBH.data&lt;-WEF.dat
+DBH.data &lt;- DBH.data %&gt;% rename(x=East_m,y=North_m)
+coordinates(DBH.data) &lt;- ~x+y
+max.dist &lt;- 0.25*max(iDist(coordinates(DBH.data)))
+bins &lt;- 50
+# variogram analysis to quantify the range of spatial dependence
+vario.DBH &lt;-variogram(DBH_cm~x+y, DBH.data,boundaries=seq(0, max.dist, length=bins))
+#fit an exponential variogram model to DBH
+fit.DBH&lt;-fit.variogram(vario.DBH, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
+### check them out
+plot(vario.DBH,fit.DBH,add=TRUE)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>lm.DBH &lt;- lm(DBH~Species, data=WEF.dat)
+summary(lm.DBH)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = DBH ~ Species, data = WEF.dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -78.423  -9.969  -3.561  10.924 118.277 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   89.423      1.303  68.629   &lt;2e-16 ***
+## SpeciesGF    -51.598      4.133 -12.483   &lt;2e-16 ***
+## SpeciesNF     -5.873     15.744  -0.373    0.709    
+## SpeciesSF    -68.347      1.461 -46.784   &lt;2e-16 ***
+## SpeciesWH    -48.062      1.636 -29.377   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22.19 on 1950 degrees of freedom
+## Multiple R-squared:  0.5332, Adjusted R-squared:  0.5323 
+## F-statistic: 556.9 on 4 and 1950 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>DBH.resid &lt;- resid(lm.DBH)
+vario.DBH.resid&lt;-variogram(DBH.resid~x+y, DBH.data,boundaries=seq(0, max.dist, length=bins))
+fit.DBH.resid&lt;-fit.variogram(vario.DBH.resid, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
+plot(vario.DBH.resid,fit.DBH.resid)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code>plot(vario.DBH, fit.DBH, main=&quot;DBH&quot;, ylim = c(0,1100),
+     panel = function(x, ...) {
+       panel = vgm.panel.xyplot(x, ...);
+       panel.abline(h = c(fit.DBH$psill[1],sum(fit.DBH$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
+       panel.abline(v = fit.DBH$range[2],col=&quot;red&quot;)})</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
+<pre class="r"><code>plot(vario.DBH.resid, fit.DBH.resid, main=&quot;DBH residuals&quot;, ylim=c(200,500),
+     panel = function(x, ...) {
+       panel = vgm.panel.xyplot(x, ...);
+       panel.abline(h = c(fit.DBH.resid$psill[1],sum(fit.DBH.resid$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
+       panel.abline(v = fit.DBH.resid$range[2],col=&quot;red&quot;)})</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-4.png" width="672" /></p>
+<p>The above variograms are isotropic (spatial dependence is the same in
+all directions). Compute directional semivariograms to determine if
+there is anisotropy.</p>
+<pre class="r"><code>directional.vario.DBH &lt;- variogram(DBH_cm~x+y,DBH.data,boundaries=seq(0, max.dist, length=bins),alpha=c(0,45,90,135))
+par(mfrow=c(1,1))
+plot(directional.vario.DBH, main=&quot;DBH directional&quot;, lty=1)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><strong>End of Exploring spatial data in R</strong> Want to fit a
+variogram function for just one direction? In this case, shown for
+45°.</p>
+<pre class="r"><code>par(mfrow=c(1,1))
+  plot(directional.vario.DBH[directional.vario.DBH$dir.hor==45,], main=&quot;DBH at 45°&quot;, lty=1)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>vario.DBH.45&lt;-directional.vario.DBH[directional.vario.DBH$dir.hor==45,]
+# Apply fit
+fit.DBH.45&lt;-fit.variogram(vario.DBH.45, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
+
+# Plot it
+plot(vario.DBH.45, fit.DBH.45, main=&quot;DBH at 45°&quot;, ylim = c(0,1100),
+     panel = function(x, ...) {
+       panel = vgm.panel.xyplot(x, ...);
+       panel.abline(h = c(fit.DBH.45$psill[1],sum(fit.DBH.45$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
+       panel.abline(v = fit.DBH.45$range[2],col=&quot;red&quot;)})</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<div id="question-1" class="section level3">
+<h3>QUESTION 1:</h3>
+<p>Create a directional variogram for 4 directions OTHER than the ones
+used in the example (i.e., other than 0, 45, 90, 135). Fit the variogram
+for each direction. Show your code and resulting plot. Explain why you
+chose these other 4 directions. Does it suggest these data are
+anisotropic? Why or why not?</p>
+</div>
+<div id="question-2" class="section level3">
+<h3>QUESTION 2:</h3>
+<p>What do the variograms produced in question 1 tell you about these
+data? Specifically discuss the sill, nugget, and range.</p>
+</div>
+<div id="question-3" class="section level3">
+<h3>QUESTION 3:</h3>
+<p>Why would you want to produce a variogram on the residuals? What does
+a variogram using residuals tell you that’s different from a variogram
+on the original data?</p>
+</div>
+<div id="ripleys-k" class="section level2">
+<h2>Ripley’s K</h2>
+<p>This is an OPTIONAL exercise.</p>
+<p>The following text is modified from the <code>spatstat</code>
+package: What is Ripley’s K? It’s the K function (or the “reduced second
+moment function”) of a stationary point process X, and is defined so
+that lambda K(r) equals the expected number of additional random points
+within a distance r of a typical random point of X. Lambda is the
+intensity of the process, i.e., the expected number of points of X per
+unit area. The K function is determined by the second order moment
+properties of X.</p>
+<p>In other words, Ripley’s K summarizes spatial dependence in the form
+of clustering or dispersion over a specified range of distances
+(scales).</p>
+<p>An estimate of K derived from a spatial point pattern dataset can be
+used in exploratory data analysis and formal inference about the pattern
+(Cressie, 1991; Diggle, 1983; Ripley, 1977, 1988). In exploratory
+analyses, the estimate of K can indicate inter-point “dependence” and
+“clustering”. For inferential purposes, the estimate of K is usually
+compared to the true value of K for a completely random (Poisson) point
+process (Null expectation), which is K(r) = pi * r^2. Deviations between
+the empirical and theoretical K curves may suggest spatial clustering or
+spatial regularity.</p>
+<p>In the <code>spatstat</code> package, <code>Kest</code> estimates the
+K function of a stationary point process, given observation of the
+process inside a known, bounded window. The argument X is interpreted as
+a point pattern object (of class “ppp”, see <code>ppp.object</code>) and
+can be supplied in any of the formats recognized by
+<code>as.ppp()</code>.</p>
+<p>The ArcGIS page on this topic is <a
+href="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm">Multi-Distance
+Spatial Cluster Analysis (Ripley’s K Function) (Spatial
+Statistics)</a></p>
+<p>You can visualize a measure of spatial clustering/dispersion over a
+range of distances as in this ArcGIS schematic:</p>
+<center>
+<img src="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-110520A9-402D-4C17-8486-A7EC0F827D83-web.png">
+</center>
+<p>Suppose we want to determine how Douglas Fir trees are distributed in
+these data - are they Clustered? Dispersed? Random? At what scale? And
+is the pattern significant? First pull out Douglas Fir from the dataset.
+Then plot it.</p>
+<pre class="r"><code>library(spatstat)
+
+dfir&lt;-subset(WEF.dat, Species==&quot;DF&quot;)
+
+# Plot Douglas Fir DBH distribution
+dfDBH &lt;- dfir$DBH_cm
+coords.df &lt;- as.matrix(dfir[,c(&quot;East_m&quot;,&quot;North_m&quot;)])
+plot(coords.df, pch=1, cex=sqrt(dfDBH)/10, col=&quot;darkgreen&quot;, xlab=&quot;Easting (m)&quot;, 
+     ylab=&quot;Northing (m)&quot;)
+leg.vals &lt;- round(quantile(dfDBH),0)
+legend(&quot;topleft&quot;, pch=1, legend=leg.vals, col=&quot;darkgreen&quot;, 
+       pt.cex=sqrt(leg.vals)/10, bty=&quot;n&quot;, title=&quot;DBH (cm) of Douglas Fir&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>You can start to see some clustering of small DBH in the northwestern
+corner. Let’s quantify the distribution across the study area. Create a
+SpatialPointsDataFrame to generate a point pattern object from the
+Douglas Fir data. Then apply an edge correction. The edge correction is
+necessary because a hard edge (boundary) on the data extent will
+under-estimate the pattern since there are no neighboring points outside
+the data boundary. We need to specify which points will be used for the
+correction vs. the actual calculation. See this diagram in <a
+href="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/multi-distance-spatial-cluster-analysis.htm">Multi-Distance
+Spatial Cluster Analysis (Ripley’s K Function) (Spatial
+Statistics)</a>.</p>
+<center>
+<img src="https://pro.arcgis.com/en/pro-app/tool-reference/spatial-statistics/GUID-0F47C184-365F-40DC-8CD3-84834A07DAC3-web.gif">
+</center>
+<p>We will use the <code>best</code> option for the correction from the
+<code>Kest</code> function:</p>
+<pre class="r"><code>dfir.sp&lt;-dfir
+coordinates(dfir.sp) &lt;- c(&quot;East_m&quot;,&quot;North_m&quot;)
+# Create the point pattern object
+#Make an owin (observation window)
+bb &lt;- bbox(dfir.sp)
+win &lt;- owin(xrange = bb[1, ], yrange = bb[2, ])
+dfir.ppp &lt;- ppp(x = coords[,1], y = coords[,2], window = win)
+# Apply the Kest function, selecting the &quot;best&quot; option for edge correction.
+K.dfir &lt;- Kest(dfir.ppp, correction=&quot;best&quot;)
+plot(K.dfir, main=&quot;Ripley&#39;s K function for Douglas Fir&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code># Is the pattern significant? Apply an envelope using 500 simulations to create the 95% confidence interval around the theoretical line.
+plot(envelope(dfir.ppp, Kest, correction=&quot;best&quot;, nsim = 500))</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<p>Notice how the entire plot for Douglas Fir data (black solid line) is
+above the theoretical curve. Values higher than the theoretical line
+(red dotted line) reflect clustering, and values below the theoretical
+line reflect dispersion. The plot indicates that even though we observed
+clustering in one region by plotting the occurrence data above, Douglas
+Fir is clustered across the entire study area, at nearly all scales. At
+very local scales (close to r=0) the curves overlap indicating that
+there is not strong clustering at those short distances. Repeat the
+process above to try it out on another species to see how two species
+compare.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
+work is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed
+under CC-BY 4.0 2025 by Phoebe Zarnetske</a>.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
