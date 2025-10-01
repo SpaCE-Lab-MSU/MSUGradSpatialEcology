@@ -4,8 +4,8 @@ author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kap
   kapsarke@msu.edu'
 date: "Last rev. Sep, 2025; created Sep, 2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 urlcolor: blue
 ---
 

@@ -14,7 +14,11 @@
 
 <title>MSU Graduate Spatial Ecology Lab 5</title>
 
+<<<<<<< Updated upstream
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+=======
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+>>>>>>> Stashed changes
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -299,10 +303,17 @@ GitHub .Rmd file so it’s visible in your PDF when you submit to D2L.</p>
 href="lab5_VariogramsHandout.pdf">Lab 5 handout on
 Variograms</a></em></p>
 <p>OPTIONAL RESOURCES: If you would like more information, you may also
+<<<<<<< Updated upstream
 find this ArcGIS series of pages useful in explaining Semivariograms
 (aka variograms). Note that we won’t be using ArcGIS, but the concepts
 are the same in R. For more of a “book” style resource, see Chapter 3:
 The principles of geostatistical analysis, starting on Page 49 in <em><a
+=======
+find this ArcGIS series of pages useful in explaining Semivariograms.
+Note that we won’t be using ArcGIS, but the concepts are the same in R.
+For more of a “book” style resource, see Chapter 3: The principles of
+geostatistical analysis, starting on Page 49 in <em><a
+>>>>>>> Stashed changes
 href="http://downloads2.esri.com/support/documentation/ao_/Using_ArcGIS_Geostatistical_Analyst.pdf">Using
 ArcGIS Geostatistical Analyst</a>.</em></p>
 <p><em><a
@@ -339,8 +350,13 @@ semivariogram models</a></em></p>
 href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/accounting-for-anisotropy-using-directional-semivariogram-and-covariance-functions.htm">Accounting
 for anisotropy using directional semivariogram and covariance
 functions</a></em></p>
+<<<<<<< Updated upstream
 <p><strong>Second</strong>, complete the <em>Start working in R:</em>
 section. The code below is modified from the Vignette, <em><a
+=======
+<p><strong>Second</strong>, complete the <em>Start working in R:</em>.
+The code below is modified from the Vignette, <em><a
+>>>>>>> Stashed changes
 href="FOR870_Lab5_spatialdataviz_variograms.pdf">Exploring spatial data
 in R</a></em> by Andrew Finley (MSU; <a
 href="https://www.finley-lab.com"
@@ -349,7 +365,11 @@ class="uri">https://www.finley-lab.com</a>) and Sudipto Banerjee (UCLA;
 class="uri">http://sudipto.bol.ucla.edu/</a>). See the vignette for more
 context.</p>
 <p><strong>Third</strong>, after completing the <em>Start working in
+<<<<<<< Updated upstream
 R:</em> section, answer the 3 Questions at the end of the lab.</p>
+=======
+R:</em>, answer the 3 Questions at the end of the lab.</p>
+>>>>>>> Stashed changes
 <p><em>Start working in R:</em></p>
 <pre class="r"><code>##### STARTING UP R
 # Clear all existing data (or don&#39;t and just make sure you start with a newly opened RStudio session; see why this may not be so great for reproducibility: https://rstats.wtf/save-source.html#rm-list-ls)
@@ -545,8 +565,12 @@ par(mfrow=c(1,1))
 plot(directional.vario.DBH, main=&quot;DBH directional&quot;, lty=1)</code></pre>
 <p><img src="lab5_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p><strong>End of Exploring spatial data in R</strong> Want to fit a
+<<<<<<< Updated upstream
 variogram function for just one direction? In this case, shown for
 45°.</p>
+=======
+variogram function for just one? In this case, shown for 45°.</p>
+>>>>>>> Stashed changes
 <pre class="r"><code>par(mfrow=c(1,1))
   plot(directional.vario.DBH[directional.vario.DBH$dir.hor==45,], main=&quot;DBH at 45°&quot;, lty=1)</code></pre>
 <p><img src="lab5_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
