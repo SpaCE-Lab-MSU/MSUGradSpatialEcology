@@ -1,5 +1,5 @@
 ---
-title: "MSU Graduate Spatial Ecology Lab 5"
+title: "MSU Graduate Spatial Ecology Lab 6"
 author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar:
   kapsarke@msu.edu'
 date: "Last rev. Oct, 2025; created Sep, 2020"
@@ -9,8 +9,9 @@ output:
 urlcolor: blue
 ---
 # Lab 6: Connectivity, Interpolation
+*[RMarkdown version of this Lab](lab6.Rmd)*
 
-This lab covers connectivity analysis with the `grainscape` R package. I have also included some extra OPTIONAL exercises at the end of the lab on interpolation with the `gstat` R package used in lab 5.
+This lab covers connectivity analysis with the `grainscape` R package. We have also included some extra OPTIONAL exercises at the end of the lab on interpolation with the `gstat` R package used in lab 5.
 
 For the connectivity analysis, you need to hand in a **single PDF**, including output plots, any statistics, code, and text for answers to the questions. 
 
