@@ -133,7 +133,7 @@ row.names(site)<-NULL
 # Merge these data together by the Row.Names
 rs<-merge(rich,site,by=c("Row.Names"))
 
-# Make points a matrix for coordinates by referencing the 8th column "east" and the 11th column "north".
+# Make points a matrix for coordinates by referencing  "east" and and "north" columns.
 names(rs)
 rsp <- as.matrix(rs[c(8,11)])
 
