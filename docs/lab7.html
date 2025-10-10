@@ -449,7 +449,7 @@ library(dismo)  # package to easily download gbif occurrence data</code></pre>
 indri.gbif &lt;- gbif(&quot;Indri&quot;, &quot;indri&quot;, geo=T) # plot occurrences</code></pre>
 <pre><code>## 2647 records found</code></pre>
 <pre><code>## 0-300-600-900-1200-1500-1800-2100-2400-2647 records downloaded</code></pre>
-<pre class="r"><code># higher resolution country outline: getData using raster package. Also see: http://www.gadm.org/
+<pre class="r"><code># Administrative boundaries for Madagascar (MDG): gadm function using geodata package. Also see: http://www.gadm.org/
 mada&lt;-gadm(country = &quot;MDG&quot;, level = 0)
 plot(mada, main=&quot;Indri indri GBIF occurrence records&quot;)
 points(indri.gbif$lon,indri.gbif$lat,pch=19, cex=0.5, col=&quot;blue&quot;)</code></pre>

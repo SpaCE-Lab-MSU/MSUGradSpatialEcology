@@ -104,7 +104,7 @@ library(geodata)  ## package to access geographic data
 ? geodata
 # Load any additional packages needed for plotting.
 indri.gbif <- gbif("Indri", "indri", geo=T) # plot occurrences
-# higher resolution country outline: getData using raster package. Also see: http://www.gadm.org/
+# Administrative boundaries for Madagascar (MDG): gadm function using geodata package. Also see: http://www.gadm.org/
 mada<-gadm(country = "MDG", level = 0)
 plot(mada, main="Indri indri GBIF occurrence records")
 points(indri.gbif$lon,indri.gbif$lat,pch=19, cex=0.5, col="blue")
