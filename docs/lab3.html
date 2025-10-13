@@ -387,10 +387,10 @@ summary(uss)
 # What are the first 6 lines of uss?
 head(uss)
 # Plot it. See that it&#39;s showing the states and territories of the US.
-plot(uss$geometry)
-# What are the unique entries in the field, NAME?
-unique(uss$NAME)</code></pre>
+plot(uss$geometry)</code></pre>
 <p><img src="lab3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># What are the unique entries in the field, NAME?
+unique(uss$NAME)</code></pre>
 <p><strong>Projecting</strong> We can project these data to match the
 NLCD data coordinate reference system (Geocentric Cartesian 3D X Y Z
 also known as EPSG:9001). FedData R package returns NLCD data in a
@@ -407,12 +407,13 @@ us.aea.proj &lt;- terra::crs(&quot;+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +
 or &lt;- uss[uss$NAME ==&quot;Oregon&quot;,] 
 
 # Plot Oregon
-plot(or$geometry, main=&quot;Latitude, Longitude NAD83&quot;)
-# Practice projecting, and plot again - 
+plot(or$geometry, main=&quot;Latitude, Longitude NAD83&quot;)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code># Practice projecting, and plot again - 
 or1&lt;-sf::st_transform(or, us.aea.proj)
-plot(or1$geometry, main=&quot;Albers Equal Area Conic&quot;)
-
-# Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
+plot(or1$geometry, main=&quot;Albers Equal Area Conic&quot;)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code># Supposed you decide to use a rectangle instead of the Oregon polygon boundary.
 # Refer to the extent (min and max x and y) of the shapefile, &quot;or1&quot;
 summary(or1)
 or2 &lt;- FedData::polygon_from_extent(raster::extent(-2294351,-1584307, 2301475, 2899476))
@@ -420,7 +421,7 @@ sf::st_crs(or2) &lt;- sf::st_crs(us.aea.proj)
 # See how the or2 outlines to the polygon, &quot;or1&quot;
 plot(or2)
 plot(or1,add=T, col=&quot;blue&quot;)</code></pre>
-<p><img src="lab3_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-4-2.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p><img src="lab3_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <p>If you wanted to subset out just a portion of Oregon, you could
 select 1 wildlife management unit. Here is a map of OR Fish &amp;
 Wildlife Units: <a
@@ -495,9 +496,10 @@ unique(hood_nlcd)</code></pre>
 ## 14             Cultivated Crops
 ## 15               Woody Wetlands
 ## 16 Emergent Herbaceous Wetlands</code></pre>
-<pre class="r"><code>plot(hood_nlcd,legend = FALSE)
-plot(hood.merc,add=FALSE, lwd=2, border=&#39;white&#39;)</code></pre>
-<p><img src="lab3_files/figure-html/unnamed-chunk-6-1.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<pre class="r"><code>plot(hood_nlcd,legend = FALSE)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>plot(hood.merc,add=FALSE, lwd=2, border=&#39;white&#39;)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 <p>If you have trouble with the <code>FedData</code> package, the code
 below will import the 2016 Oregon NLCD directly (54 MB); it may take a
 few mins.</p>
@@ -552,17 +554,18 @@ cover types are:</p>
 # Determine how to make the raster &quot;all forest&quot; not just evergreen. 
 hood_for &lt;- hood_nlcd
 hood_for[hood_for &lt; 41] &lt;- 0 # make everything below 41 zero
-plot(hood_for)
-hood_for[hood_for &gt; 43] &lt;- 0 # make everything above 43 zero
-plot(hood_for)
-unique(hood_for)</code></pre>
+plot(hood_for)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>hood_for[hood_for &gt; 43] &lt;- 0 # make everything above 43 zero
+plot(hood_for)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<pre class="r"><code>unique(hood_for)</code></pre>
 <pre><code>##              Class
 ## 2 Deciduous Forest
 ## 3 Evergreen Forest
 ## 4     Mixed Forest</code></pre>
 <pre class="r"><code>## Assign 1 value (1) to forest.
 hood_for[hood_for == 41 | hood_for == 42 | hood_for == 43] &lt;- 1</code></pre>
-<p><img src="lab3_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>The code below follows part of this vignette: <a
 href="https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html"
 class="uri">https://r-spatialecology.github.io/landscapemetrics/articles/articles/utility.html</a>
@@ -572,12 +575,12 @@ commands not covered here.</p>
 check_landscape(hood_for)
 
 ## Look at the distinct patches for this landscape
-show_patches(hood_for) 
-
-## Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
-show_patches(hood_for, class = &quot;all&quot;, labels = FALSE)
-
-## At the patch level, compute patch metrics
+show_patches(hood_for) </code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>## Show patches of each class (we have 2 classes: 0 for non-forest and 1 for forest)
+show_patches(hood_for, class = &quot;all&quot;, labels = FALSE)</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<pre class="r"><code>## At the patch level, compute patch metrics
 hood_metrics &lt;- calculate_lsm(hood_for, what = &quot;patch&quot;)
 
 ## Look at the different types of metrics at the patch level. Note that you can compute these metrics at the patch, landscape, or class levels.
@@ -596,11 +599,11 @@ hood_for_metrics_hist&lt;-hood_metrics_for %&gt;%
      geom_density(alpha = 0.2)+
      scale_x_log10()+
      facet_wrap(~metric, scales=&quot;free_y&quot;)
-hood_for_metrics_hist
-
-## Determine if any patch metrics for forest are correlated
+hood_for_metrics_hist</code></pre>
+<p><img src="lab3_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
+<pre class="r"><code>## Determine if any patch metrics for forest are correlated
 show_correlation(hood_metrics_for, method = &quot;pearson&quot;)</code></pre>
-<p><img src="lab3_files/figure-html/unnamed-chunk-9-1.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-9-2.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-9-3.png" width="672" /><img src="lab3_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
+<p><img src="lab3_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
 <p>How do the patch metrics from <code>landscapemetrics</code> help you

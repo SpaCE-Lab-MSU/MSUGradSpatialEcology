@@ -14,7 +14,7 @@
 
 <title>MSU Graduate Spatial Ecology Lab 7</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -433,17 +433,19 @@ download occurrence data here: <a
 href="http://www.gbif.org/occurrence/search"
 class="uri">http://www.gbif.org/occurrence/search</a>.</p>
 <center>
-<img src="PL_Zarnetske_2012-05-10_65.JPG">
+<img src="PL_Zarnetske_2012-05-10_65.jpg">
 </center>
 <p>Indri (<em>Indri indri</em>), Analamazaotra Special Reserve,
 Madagascar. Phoebe L. Zarnetske 2012.</p>
 <pre class="r"><code>#install.packages(&quot;geodata&quot;) install packages locally before knitting
-library(dismo)  # package to easily download gbif occurrence data</code></pre>
-<pre><code>## Loading required package: raster</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
-<pre class="r"><code>library(geodata)  ## package to access geographic data</code></pre>
-<pre><code>## Loading required package: terra</code></pre>
-<pre><code>## terra 1.8.60</code></pre>
+library(dismo)  # package to easily download gbif occurrence data
+library(geodata)  ## package to access geographic data</code></pre>
+<pre><code>## Warning: package &#39;geodata&#39; was built under R version 4.4.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;geodata&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:fields&#39;:
+## 
+##     world</code></pre>
 <pre class="r"><code>? geodata
 # Load any additional packages needed for plotting.
 indri.gbif &lt;- gbif(&quot;Indri&quot;, &quot;indri&quot;, geo=T) # plot occurrences</code></pre>
