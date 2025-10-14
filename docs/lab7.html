@@ -261,6 +261,9 @@ $(document).ready(function () {
 <li>
   <a href="lab6.html">Lab 6</a>
 </li>
+<li>
+  <a href="lab7.html">Lab 7</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -439,14 +442,8 @@ class="uri">http://www.gbif.org/occurrence/search</a>.</p>
 Madagascar. Phoebe L. Zarnetske 2012.</p>
 <pre class="r"><code>#install.packages(&quot;geodata&quot;) install packages locally before knitting
 library(dismo)  # package to easily download gbif occurrence data
-library(geodata)  ## package to access geographic data</code></pre>
-<pre><code>## Warning: package &#39;geodata&#39; was built under R version 4.4.3</code></pre>
-<pre><code>## 
-## Attaching package: &#39;geodata&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:fields&#39;:
-## 
-##     world</code></pre>
-<pre class="r"><code>? geodata
+library(geodata)  ## package to access geographic data
+? geodata
 # Load any additional packages needed for plotting.
 indri.gbif &lt;- gbif(&quot;Indri&quot;, &quot;indri&quot;, geo=T) # plot occurrences</code></pre>
 <pre><code>## 2647 records found</code></pre>
