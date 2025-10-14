@@ -261,6 +261,9 @@ $(document).ready(function () {
 <li>
   <a href="lab6.html">Lab 6</a>
 </li>
+<li>
+  <a href="lab7.html">Lab 7</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -498,8 +501,9 @@ vario.DBH &lt;-variogram(DBH_cm~x+y, DBH.data,boundaries=seq(0, max.dist, length
 #fit an exponential variogram model to DBH
 fit.DBH&lt;-fit.variogram(vario.DBH, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
 ### check them out
-plot(vario.DBH,fit.DBH,add=TRUE)
-lm.DBH &lt;- lm(DBH~Species, data=WEF.dat)
+plot(vario.DBH,fit.DBH,add=TRUE)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>lm.DBH &lt;- lm(DBH~Species, data=WEF.dat)
 summary(lm.DBH)</code></pre>
 <pre><code>## 
 ## Call:
@@ -525,20 +529,20 @@ summary(lm.DBH)</code></pre>
 <pre class="r"><code>DBH.resid &lt;- resid(lm.DBH)
 vario.DBH.resid&lt;-variogram(DBH.resid~x+y, DBH.data,boundaries=seq(0, max.dist, length=bins))
 fit.DBH.resid&lt;-fit.variogram(vario.DBH.resid, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
-plot(vario.DBH.resid,fit.DBH.resid)
-
-plot(vario.DBH, fit.DBH, main=&quot;DBH&quot;, ylim = c(0,1100),
+plot(vario.DBH.resid,fit.DBH.resid)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code>plot(vario.DBH, fit.DBH, main=&quot;DBH&quot;, ylim = c(0,1100),
      panel = function(x, ...) {
        panel = vgm.panel.xyplot(x, ...);
        panel.abline(h = c(fit.DBH$psill[1],sum(fit.DBH$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
-       panel.abline(v = fit.DBH$range[2],col=&quot;red&quot;)})
-
-plot(vario.DBH.resid, fit.DBH.resid, main=&quot;DBH residuals&quot;, ylim=c(200,500),
+       panel.abline(v = fit.DBH$range[2],col=&quot;red&quot;)})</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
+<pre class="r"><code>plot(vario.DBH.resid, fit.DBH.resid, main=&quot;DBH residuals&quot;, ylim=c(200,500),
      panel = function(x, ...) {
        panel = vgm.panel.xyplot(x, ...);
        panel.abline(h = c(fit.DBH.resid$psill[1],sum(fit.DBH.resid$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
        panel.abline(v = fit.DBH.resid$range[2],col=&quot;red&quot;)})</code></pre>
-<p><img src="lab5_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="lab5_files/figure-html/unnamed-chunk-11-2.png" width="672" /><img src="lab5_files/figure-html/unnamed-chunk-11-3.png" width="672" /><img src="lab5_files/figure-html/unnamed-chunk-11-4.png" width="672" /></p>
+<p><img src="lab5_files/figure-html/unnamed-chunk-11-4.png" width="672" /></p>
 <p>The above variograms are isotropic (spatial dependence is the same in
 all directions). Compute directional semivariograms to determine if
 there is anisotropy.</p>
@@ -550,8 +554,9 @@ plot(directional.vario.DBH, main=&quot;DBH directional&quot;, lty=1)</code></pre
 variogram function for just one direction? In this case, shown for
 45°.</p>
 <pre class="r"><code>par(mfrow=c(1,1))
-  plot(directional.vario.DBH[directional.vario.DBH$dir.hor==45,], main=&quot;DBH at 45°&quot;, lty=1)
-vario.DBH.45&lt;-directional.vario.DBH[directional.vario.DBH$dir.hor==45,]
+  plot(directional.vario.DBH[directional.vario.DBH$dir.hor==45,], main=&quot;DBH at 45°&quot;, lty=1)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>vario.DBH.45&lt;-directional.vario.DBH[directional.vario.DBH$dir.hor==45,]
 # Apply fit
 fit.DBH.45&lt;-fit.variogram(vario.DBH.45, model = vgm(&quot;Exp&quot;,cutoff = max.dist))
 
@@ -561,7 +566,7 @@ plot(vario.DBH.45, fit.DBH.45, main=&quot;DBH at 45°&quot;, ylim = c(0,1100),
        panel = vgm.panel.xyplot(x, ...);
        panel.abline(h = c(fit.DBH.45$psill[1],sum(fit.DBH.45$psill)),col=c(&quot;blue&quot;,&quot;green&quot;));
        panel.abline(v = fit.DBH.45$range[2],col=&quot;red&quot;)})</code></pre>
-<p><img src="lab5_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="lab5_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="lab5_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
 <div id="question-1" class="section level3">
 <h3>QUESTION 1:</h3>
 <p>Create a directional variogram for 4 directions OTHER than the ones
@@ -661,10 +666,11 @@ win &lt;- owin(xrange = bb[1, ], yrange = bb[2, ])
 dfir.ppp &lt;- ppp(x = coords[,1], y = coords[,2], window = win)
 # Apply the Kest function, selecting the &quot;best&quot; option for edge correction.
 K.dfir &lt;- Kest(dfir.ppp, correction=&quot;best&quot;)
-plot(K.dfir, main=&quot;Ripley&#39;s K function for Douglas Fir&quot;)
-# Is the pattern significant? Apply an envelope using 500 simulations to create the 95% confidence interval around the theoretical line.
+plot(K.dfir, main=&quot;Ripley&#39;s K function for Douglas Fir&quot;)</code></pre>
+<p><img src="lab5_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code># Is the pattern significant? Apply an envelope using 500 simulations to create the 95% confidence interval around the theoretical line.
 plot(envelope(dfir.ppp, Kest, correction=&quot;best&quot;, nsim = 500))</code></pre>
-<p><img src="lab5_files/figure-html/unnamed-chunk-17-1.png" width="672" /><img src="lab5_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<p><img src="lab5_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
 <p>Notice how the entire plot for Douglas Fir data (black solid line) is
 above the theoretical curve. Values higher than the theoretical line
 (red dotted line) reflect clustering, and values below the theoretical
