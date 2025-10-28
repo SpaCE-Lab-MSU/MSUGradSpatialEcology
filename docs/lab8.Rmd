@@ -5,13 +5,12 @@ author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kap
 date: "Last rev. Oct, 2025; created Sep, 2020"
 output:
   html_document: default
-  pdf_document: default
 urlcolor: blue
 ---
 
 # Lab 8: Intro to SDMs
 
-*[RMarkdown version of this Lab](lab8_sdm1.Rmd)*
+*[RMarkdown version of this Lab](lab8.Rmd)*
 
 *See also Nan Nourn's [example code with expanded bioclim options for Lab 8 & Lab 9](870_Lab08-09_2022_bioclim.html)*
 
@@ -60,6 +59,8 @@ Bioclim (or surface range envelope)
 GARP
 
 boosted regression (decision) trees (BRT or GBM)
+
+Bayesian additive regression trees (BART)
 
 random forests
 
