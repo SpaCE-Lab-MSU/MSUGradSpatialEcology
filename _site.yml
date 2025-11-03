@@ -1,5 +1,6 @@
 name: "MSUGradSpatialEcology"
 output_dir: docs
+encoding: "UTF-8"
 exclude: ["renv", "renv.lock", "*.rst", "drafts", "docs_OLD", "*.html"]
 include: ["*.Rmd"]
 navbar:

@@ -211,7 +211,7 @@ Now work with the `landscapemetrics` R package to compute different patch and la
 ```{r, message=FALSE,warning=FALSE}
 ## Check to see if the input data is suitable for computing patch metrics
  
-check_landscape(hood_nlcd)
+# landscapemetrics::check_landscape(hood_nlcd)
 ```
 You could proceed to calculate metrics for all different land cover classes (this would  take a while). Instead, suppose you are interested in the metrics of "forested" patches in this landscape. First, reclassify into "forest" and "nonforest". You need to determine what the cover types are:
 ```{r, message=FALSE,warning=FALSE}

@@ -490,7 +490,7 @@ unique(hood_nlcd)</code></pre>
 ## 5   Developed, Medium Intensity
 ## 6      Developed High Intensity
 ## 7  Barren Land (Rock/Sand/Clay)
-## 8              Deciduous Forest
+## &quot;terra&quot;              Deciduous Forest
 ## 9              Evergreen Forest
 ## 10                 Mixed Forest
 ## 11                  Shrub/Scrub
@@ -526,9 +526,7 @@ few mins.</p>
 different patch and landscape statistics.</p>
 <pre class="r"><code>## Check to see if the input data is suitable for computing patch metrics
  
-check_landscape(hood_nlcd)</code></pre>
-<pre><code>##   layer crs units   class n_classes OK
-## 1     1  NA    NA integer        16 ❓</code></pre>
+# landscapemetrics::check_landscape(hood_nlcd)</code></pre>
 <p>You could proceed to calculate metrics for all different land cover
 classes (this would take a while). Instead, suppose you are interested
 in the metrics of “forested” patches in this landscape. First,
