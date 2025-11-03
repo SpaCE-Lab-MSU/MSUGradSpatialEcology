@@ -5,6 +5,7 @@ author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kap
 date: "Last rev. Nov, 2025; created Sep, 2020"
 output:
   html_document: default
+  pdf_document: default
 urlcolor: blue
 ---
 
@@ -62,7 +63,7 @@ For more background information on **AUC and Spatial Sorting Bias**, see the add
 
 *NOTE 1:* A reminder that if you want to use data from WorldClim outside the dismo vignette data, you should download it; see the "Environmental Data" section of the additional code provided in Nan Nourn's [example code with expanded bioclim options for Lab 8 & Lab 9](870_Lab08-09_2022_bioclim.html) - this is also linked in Lab 8.
 
-It is possible that the dismo vignette is using older versions of WorldClim data (version 1.4). The version 1.4 data are outdated so you wouldn't want to publish anything with them. See above for how to obtain the updated data (2.1). For the lab exercises, it's ok to use the 1.4 version; you can download 2.1 version data from another area like this:
+It is possible that the dismo vignette is using older versions of WorldClim data (version 1.4). The version 1.4 data are outdated so you wouldn't want to publish anything with them. See above for how to obtain the updated data (2.1). For the lab exercises, it's ok to use the 1.4 version; you can download 1.4 version data from another area like this:
 
 ```{r}
 # Create the folders (directories) "data" and "lab9" - If they exist already, this command won't over-write them.
