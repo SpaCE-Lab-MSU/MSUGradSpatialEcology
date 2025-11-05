@@ -1,5 +1,5 @@
 ---
-title: "MSU Graduate Spatial Ecology Lab 8"
+title: "MSU Graduate Spatial Ecology Lab 9"
 author: 'Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar:
   kapsarke@msu.edu'
 date: "Last rev. Nov, 2025; created Sep, 2020"

@@ -512,8 +512,14 @@ href="http://www.gbif.org/occurrence/search">http://www.gbif.org/occurrence/sear
 Phoebe L. Zarnetske 2012.</p>
 <pre class="r"><code># install.packages(&quot;geodata&quot;) # install packages locally before knitting
 library(dismo)   # package to easily download gbif occurrence data
-library(geodata) # package to access geographic data
-?geodata
+library(geodata) # package to access geographic data</code></pre>
+<pre><code>## Warning: package &#39;geodata&#39; was built under R version 4.4.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;geodata&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:fields&#39;:
+## 
+##     world</code></pre>
+<pre class="r"><code>?geodata
 
 # Load any additional packages needed for plotting.
 indri.gbif &lt;- gbif(&quot;Indri&quot;, &quot;indri&quot;, geo = TRUE)</code></pre>
