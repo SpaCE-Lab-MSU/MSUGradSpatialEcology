@@ -22,7 +22,7 @@ For this lab, you will work through Part 3 (Chapters 8-13) of the dismo vignette
 pic <- "sdm82-1.png"
 ```
 <center><img src="`r pic`"></center>
-<center> Figure 1: Comparison of outputs for various SDM algorithms from the `dismo` vignette <center>.
+<center> Figure 1:Comparison of outputs for various SDM algorithms from the `dismo` vignette <center>.
 
 ## Types of SDM Models
 In Lab 8, you filled in a template describing a particular type of SDM of your choice. See D2L for those summaries as a reference. 
