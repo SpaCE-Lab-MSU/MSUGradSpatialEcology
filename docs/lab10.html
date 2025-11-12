@@ -12,7 +12,7 @@
 <meta name="author" content="Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar: kapsarke@msu.edu" />
 
 
-<title>MSU Graduate Spatial Ecology Lab 8</title>
+<title>MSU Graduate Spatial Ecology Lab 10</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -285,159 +285,72 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 8</h1>
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 10</h1>
 <h4 class="author">Phoebe Zarnetske: <a href="mailto:plz@msu.edu"
 class="email">plz@msu.edu</a>; Lala Kounta: <a
 href="mailto:kountala@msu.edu" class="email">kountala@msu.edu</a>; Kelly
 Kapsar: <a href="mailto:kapsarke@msu.edu"
 class="email">kapsarke@msu.edu</a></h4>
-<h4 class="date">Last rev. Oct, 2025; created Sep, 2020</h4>
+<h4 class="date">Last rev. Nov, 2025; created Sep, 2020</h4>
 
 </div>
 
 
-<div id="lab-8-intro-to-sdms" class="section level1">
-<h1>Lab 8: Intro to SDMs</h1>
-<p><em><a href="lab8.Rmd">RMarkdown version of this Lab</a></em></p>
-<p><em>See also Nan Nourn’s <a
-href="870_Lab08-09_2022_bioclim.html">example code with expanded bioclim
-options for Lab 8 &amp; Lab 9</a></em></p>
-<p><img
-src="https://images.ctfassets.net/uo17ejk9rkwj/6RdPjbIsHs24Z4oKfyyfnN/ad54c59569946f61fd14c881a0a6b0fe/GBIF-2015-full-stacked.png" /></p>
-<p>In this lab, you will be introduced to species distribution models
-(SDMs) using the R package, <code>dismo</code>: <a
+<div id="lab-10-sdms-modeling-methods" class="section level1">
+<h1>Lab 10: SDMs: Modeling Methods</h1>
+<p><em><a href="lab10.Rmd">RMarkdown version of this Lab</a></em></p>
+<p>This lab is a continuation of species distribution models (SDMs)
+using the R package, <code>dismo</code>: <a
 href="https://cran.r-project.org/web/packages/dismo/index.html"
 class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>.
-The package contains a great vignette and you’ll be working through the
-first part of it in this lab. Over the next two labs, you will continue
-working through the vignette.</p>
-<p>For this lab, you will work through Part 1 (Chapters 1-4:
-Introduction, Data preparation, Absence &amp; background points,
-Environmental data) of the dismo vignette. You can find the vignette
-here: <a href="https://rspatial.org/raster/sdm/index.html"
+The package contains a great vignette and you worked through the first
+part of it in Lab 8, and the second part in Lab 9. You should complete
+Lab 8 &amp; 9’s portion of the vignette with your species of choice
+before starting on Lab 10.</p>
+<p>For this lab, you will work through Part 3 (Chapters 8-13) of the
+dismo vignette. You can find the PDF of the vignette here: <a
+href="sdm.pdf">sdm.pdf</a>, and as HTML here: <a
+href="https://rspatial.org/raster/sdm/index.html"
 class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
-<p><strong>First</strong>, work through the vignette Part 1 (Chapters
-1-4). Note that if you want to use a species that does not occur in the
-dismo vignette bioclim variable range (Mexico, Central &amp; South
-America), then you need to pull in environmental data from other
-regions. To do this please see the “Environmental Data” section of the
-additional code provided in Nan Nourn’s <a
-href="870_Lab08-09_2022_bioclim.html#environmental-data">example code
-with expanded bioclim options for Lab 8 &amp; Lab 9</a> - this will be
-also linked in Lab 9.</p>
-<p><strong>Second</strong>, answer the dismo vignette Exercises 2.8
-(#1-5; and copied below) using a species of your choice (not <em>Solanum
-acaule</em>; select a different species with at least 50 occurrence
-records - it doesn’t have to be the African elephant). Note that
-Question 4 asks you to use <code>gmap</code> to make a basemap - this
-may not work because it requires a link with Google Maps. If
-<code>gmap</code> doesn’t work, use one of the various techniques you
-learned in previous labs for creating a map for the area that includes
-your species. Questions 6 &amp; 7 are optional and will not be
-graded.</p>
-<p>Here are the questions from the <code>dismo</code> vignette (modified
-slightly given that ‘geocode’ may not work):</p>
-<p><em>Exercises 2.8</em></p>
-<ol style="list-style-type: decimal">
-<li><p>Use the gbif function to download records for the African
-elephant (or another species of your preference, try to get one with
-between 10 and 100 records). Use option “geo=FALSE” to also get records
-with no (numerical) georeference.</p></li>
-<li><p>Summarize the data: how many records are there, how many have
-coordinates, how many records without coordinates have a textual
-georeference (locality description)?</p></li>
-<li><p>‘geocode’ will probably not work because the it depends on a
-package that is linked with Google and hasn’t been updated, so skip the
-georeferencing task. Instead just use the subset of data that are
-already geocoded.</p></li>
-<li><p>Make a simple map of all the geocoded records. **See note above;
-gmap may not work so just use another basemap. For example, see Lab 4
-which has ideas for how to map with tmap or ggplot.</p></li>
-<li><p>Do you think the observations are a reasonable representation of
-the distribution (and ecological niche) of the species?</p></li>
-</ol>
-<p>6 &amp; 7 are OPTIONAL:</p>
-<ol start="6" style="list-style-type: decimal">
-<li><p>Use the ‘rasterize’ function to create a raster of the number of
-observations and make a map. Use “wrld_simpl” from the maptools package
-for country boundaries.</p></li>
-<li><p>Map the uncertainty associated with the georeferences. Some
-records in data returned by gbif have that.</p></li>
-</ol>
-<p><strong>Third</strong>, choose one of the types of SDMs from the list
-below - each student will select a different model, so indicate your
-choice soon on the Lab Community Forum so that we don’t have
-duplicates.</p>
-<p>Use the template below to generate a standard summary R
-Markdown-generated HTML file. This will help you get up to speed on next
-week’s topic (model types), and when posted on D2L, will enable all of
-you have a quick guide to different model types. In addition to the
-<code>dismo</code> R package, some of these models are also run through
-the R package, <code>biomod2</code>: <a
-href="https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html"
-class="uri">https://rdrr.io/cran/biomod2/man/BIOMOD_Modeling.html</a> or
-<code>flexsdm</code>: <a href="https://sjevelazco.github.io/flexsdm/"
-class="uri">https://sjevelazco.github.io/flexsdm/</a>. Below is a list
-of SDM types. If you have another model in mind that is not on the list,
-ensure it is a SDM. For those of you handing in the assignment, pick one
-model each to write up.</p>
-<p>generalized linear model (GLM)</p>
-<p>generalized additive model (GAM)</p>
-<p>Maxent</p>
-<p>Bioclim (or surface range envelope)</p>
-<p>GARP</p>
-<p>boosted regression (decision) trees (BRT or GBM)</p>
-<p>Bayesian additive regression trees (BART)</p>
-<p>random forests</p>
-<p>classification trees (CART)</p>
-<p>mahalanobis distance</p>
-<p>generalized dissimilarity models (GDM)</p>
-<p>artificial neural network (ANN)</p>
-<p>DOMAIN</p>
-<p>Support Vector Machine (SVM)</p>
-<p>Guassian process models</p>
-<p><strong>What to hand in as 2 separate files:</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>You will need to hand in a PDF or HTML produced from R Markdown
-showing your work on the vignette with a different species, including
-any images, plots, code, and text for answers to Exercises 2.6
-(#1-5).</p></li>
-<li><p>A separate HTML file produced from the R Markdown template below,
-describing one type of species distribution model. We will be posting
-these submissions for you all to see on D2L, so your SDM model summary
-will become a resource for the class.</p></li>
-</ol>
-<div id="template-for-your-summary-of-a-species-distribution-model"
-class="section level2">
-<h2>Template for your summary of a Species Distribution Model</h2>
-<p><strong>Follow the R markdown template below to include the
-following:</strong></p>
-<p><strong>Model Name:</strong> Name the model type</p>
-<p><strong>Model Category:</strong> Regression/Machine
-Learning/Hybrid/etc.</p>
-<p><strong>Model Description:</strong> General description of how this
-model works.</p>
-<p><strong>Model Assumptions:</strong> Any assumptions you’d need to
-know about the model and about the data’s distribution, etc.</p>
-<p><strong>Model Response Data:</strong> A description of the types of
-data used in this model (Presence/absence, Presence-Only,
-Pseudo-Absence, Abundance, etc.)</p>
-<p><strong>Model Explanatory Data:</strong> A description of the types
-of data used as predictors/explanatory variables in this model
-(categorical okay? only continuous?)</p>
-<p><strong>Model Links and Use with R:</strong> an html link to R
-packages on the CRAN site that employ this model (with brief
-description), and links to any helpful websites that officially describe
-this model</p>
-<p><strong>Example Papers:</strong> list at least 2 full references for
-publications that use this model to generate a SDM.</p>
-<p><strong>Example with R:</strong> Provide annotated code to load the
-required package(s) to run the model.</p>
-<pre class="r"><code>library(dismo)     # package to run the model</code></pre>
-<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This
-work is licensed under a
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Licensed
-under CC-BY 4.0 2025 by Phoebe Zarnetske</a>.</p>
+<center>
+<img src="sdm82-1.png">
+</center>
+<center>
+Figure 1:Comparison of outputs for various SDM algorithms from the
+<code>dismo</code> vignette
+<center>
+<p>.</p>
+<div id="types-of-sdm-models" class="section level2">
+<h2>Types of SDM Models</h2>
+<p>In Lab 8, you filled in a template describing a particular type of
+SDM of your choice. See D2L for those summaries as a reference.</p>
+<p>For this Lab, work through Ch. 8-13 (from Modeling Methods through
+Geographic Modules) with your species’ data from Lab 9. Get as far as
+you can by building multiple models with different algorithms, and
+comparing them. Working on the Geographic Models (Ch. 13) is
+optional.</p>
+<p>After completing the vignette with your species of choice, answer the
+following QUESTIONS:</p>
+<div id="question-1" class="section level3">
+<h3>QUESTION 1:</h3>
+<p>Describe the differences you observe in the mapped prediction between
+the different modeling algorithms. Which mapped prediction is closer to
+the known distribution of the species? Provide a source and image (e.g.,
+screenshot) of an independent source showing the range map of the
+species.</p>
+</div>
+<div id="question-2" class="section level3">
+<h3>QUESTION 2:</h3>
+<p>Of all the models you tried, which model performs best for your
+species’ data? Why? Include plots and model statistics to help with your
+explanation. Do you agree that model averaging (i.e., ensemble modeling)
+is superior to selecting one top model? Why or why not?</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+</a> This work is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+Licensed under CC-BY 4.0 2025 by Phoebe Zarnetske </a>. ```</p>
+</div>
 </div>
 </div>
 
