@@ -19,7 +19,7 @@ h3 { margin-top: 1.0em; margin-bottom: 0.5em; }
 Here is a [helpful, step-by-step tutorial](https://www.youtube.com/watch?v=8vxfBK_afMw) for exporting vector data in a shapefile format from ArcPro: 
 
 
-```{r video, warning=F, message=F, echo=F}
+```{r video, warning=F, message=F, echo=F, fig.align='center',}
 library(vembedr)
 
 embed_url("https://www.youtube.com/watch?v=8vxfBK_afMw")
