@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Phoebe Zarnetske: plz@msu.edu; Lala Kounta: kountala@msu.edu; Kelly Kapsar: kapsarke@msu.edu" />
+<meta name="author" content="Kelly Kapsar: kapsarke@msu.edu" />
 
 
-<title>MSU Graduate Spatial Ecology Lab 10</title>
+<title>MSU Graduate Spatial Ecology: Tutorials</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -33,6 +33,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -288,72 +289,154 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">MSU Graduate Spatial Ecology Lab 10</h1>
-<h4 class="author">Phoebe Zarnetske: <a href="mailto:plz@msu.edu"
-class="email">plz@msu.edu</a>; Lala Kounta: <a
-href="mailto:kountala@msu.edu" class="email">kountala@msu.edu</a>; Kelly
-Kapsar: <a href="mailto:kapsarke@msu.edu"
+<h1 class="title toc-ignore">MSU Graduate Spatial Ecology:
+Tutorials</h1>
+<h4 class="author">Kelly Kapsar: <a href="mailto:kapsarke@msu.edu"
 class="email">kapsarke@msu.edu</a></h4>
-<h4 class="date">Last rev. Nov, 2025; created Sep, 2020</h4>
+<h4 class="date">Nov. 2025</h4>
 
 </div>
 
 
-<div id="lab-10-sdms-modeling-methods" class="section level1">
-<h1>Lab 10: SDMs: Modeling Methods</h1>
-<p><em><a href="lab10.Rmd">RMarkdown version of this Lab</a></em></p>
-<p>This lab is a continuation of species distribution models (SDMs)
-using the R package, <code>dismo</code>: <a
-href="https://cran.r-project.org/web/packages/dismo/index.html"
-class="uri">https://cran.r-project.org/web/packages/dismo/index.html</a>.
-The package contains a great vignette and you worked through the first
-part of it in Lab 8, and the second part in Lab 9. You should complete
-Lab 8 &amp; 9’s portion of the vignette with your species of choice
-before starting on Lab 10.</p>
-<p>For this lab, you will work through Part 3 (Chapters 8-13) of the
-dismo vignette. You can find the PDF of the vignette here: <a
-href="sdm.pdf">sdm.pdf</a>, and as HTML here: <a
-href="https://rspatial.org/raster/sdm/index.html"
-class="uri">https://rspatial.org/raster/sdm/index.html</a>.</p>
-<center>
-<img src="sdm82-1.png">
-</center>
-<center>
-Figure 1:Comparison of outputs for various SDM algorithms from the
-<code>dismo</code> vignette
-<center>
-<p>.</p>
-<div id="types-of-sdm-models" class="section level2">
-<h2>Types of SDM Models</h2>
-<p>In Lab 8, you filled in a template describing a particular type of
-SDM of your choice. See D2L for those summaries as a reference.</p>
-<p>For this Lab, work through Ch. 8-13 (from Modeling Methods through
-Geographic Modules) with your species’ data from Lab 9. Get as far as
-you can by building multiple models with different algorithms, and
-comparing them. Working on the Geographic Models (Ch. 13) is
-optional.</p>
-<p>After completing the vignette with your species of choice, answer the
-following QUESTIONS:</p>
-<div id="question-1" class="section level3">
-<h3>QUESTION 1:</h3>
-<p>Describe the differences you observe in the mapped prediction between
-the different modeling algorithms. Which mapped prediction is closer to
-the known distribution of the species? Provide a source and image (e.g.,
-screenshot) of an independent source showing the range map of the
-species.</p>
+<style>
+h1 { margin-top: 1.5em; margin-bottom: 0.7em; }
+h2 { margin-top: 1.2em; margin-bottom: 0.6em; }
+h3 { margin-top: 1.0em; margin-bottom: 0.5em; }
+</style>
+<div id="tutorial-1-exporting-a-shapefile-from-arcpro"
+class="section level2">
+<h2>Tutorial #1: Exporting a shapefile from ArcPro</h2>
+<p>Here is a <a
+href="https://www.youtube.com/watch?v=8vxfBK_afMw">helpful, step-by-step
+tutorial</a> for exporting vector data in a shapefile format from
+ArcPro:</p>
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/8vxfBK_afMw" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
 </div>
-<div id="question-2" class="section level3">
-<h3>QUESTION 2:</h3>
-<p>Of all the models you tried, which model performs best for your
-species’ data? Why? Include plots and model statistics to help with your
-explanation. Do you agree that model averaging (i.e., ensemble modeling)
-is superior to selecting one top model? Why or why not?</p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
-</a> This work is licensed under a
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-Licensed under CC-BY 4.0 2025 by Phoebe Zarnetske </a>. ```</p>
 </div>
+</div>
+<div
+id="tutorial-2-switching-between-sp-and-sf-objects-with-spatial-vector-data"
+class="section level2">
+<h2>Tutorial #2: Switching between sp and sf objects with spatial vector
+data</h2>
+<p>The RSpatial community has recently made the transition from the “sp”
+package for handling vector data to the Simple Features, or “sf”
+package. However, not all of the packages that use sp as a dependency
+have made this switch, so it is sometimes necessary to revert back to sp
+to get certain functions to run. Thankfully, it is very straightforward
+to swtich between the two with just a couple of lines of code:</p>
+<div style="text-align: center;">
+<p><img src="https://user-images.githubusercontent.com/520851/50280460-e35c1880-044c-11e9-9ed7-cc46754e49db.jpg"
+       width="400"></p>
+<p>Image by Allison Horst.</p>
+</div>
+<pre class="r"><code>library(sf)
+library(sp)
+
+# Load in object as sf 
+nc &lt;- st_read(system.file(&quot;shape/nc.shp&quot;, package = &quot;sf&quot;), quiet = TRUE)
+
+# Switch to sp 
+nc_sp &lt;- as(nc, &quot;Spatial&quot;)
+
+# And back to sf 
+nc_sf &lt;- st_as_sf(nc_sp)
+
+# Check to make sure nothing changed
+all(nc == nc_sf)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="tutorial-3-ggmap-with-raster-data" class="section level2">
+<h2>Tutorial #3: ggmap with Raster data</h2>
+<p>The ggmap package and rasters unfortunately don’t like to play nicely
+together for some reason that is beyond my understanding. To plot a
+raster onto a ggamp, you need to first convert that raster into a
+dataframe and then plot it (it’s annoying).</p>
+<pre class="r"><code>library(terra)
+library(sf)
+library(ggmap)
+library(rnaturalearth)
+
+
+# Get elevation raster (from sample file that comes with terra package)
+elev &lt;- rast(system.file(&quot;ex/elev.tif&quot;, package = &quot;terra&quot;))
+rast_obj &lt;- elev                      # your raster
+
+# Get basemap layer from rnaturalearth 
+world &lt;- ne_countries(scale = &quot;medium&quot;, returnclass = &quot;sf&quot;)
+
+# Determine extent of elevation raster and crop global basemap to that extent
+e &lt;- ext(rast_obj)
+
+bbox_sf &lt;- st_as_sfc(st_bbox(
+  c(
+    xmin = unname(e[1]),
+    xmax = unname(e[2]),
+    ymin = unname(e[3]),
+    ymax = unname(e[4])
+  ),
+  crs = 4326
+))
+
+world_crop &lt;- st_crop(world, bbox_sf)
+
+# Convert raster object to data frame 
+rast_df  &lt;- as.data.frame(rast_obj, xy = TRUE)
+names(rast_df)[3] &lt;- &quot;value&quot;
+
+# Plot basemap with raster on top
+ggplot() +
+  # basemap polygons
+  geom_sf(
+    data = world_crop,
+    fill = &quot;grey95&quot;,
+    color = &quot;grey70&quot;,
+    linewidth = 0.3
+  ) +
+  # raster overlay
+  geom_raster(
+    data = rast_df,
+    aes(x = x, y = y, fill = value),
+    alpha = 0.7
+  ) +
+  coord_sf(
+    xlim = c(e[1], e[2]),
+    ylim = c(e[3], e[4]),
+    expand = FALSE
+  ) +
+  scale_fill_viridis_c(option = &quot;magma&quot;) +
+  labs(fill = &quot;Elevation (m)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="tutorials_files/figure-html/ggmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tutorial-4-tmap-with-raster-data" class="section level2">
+<h2>Tutorial #4: tmap with Raster data</h2>
+<p>The tmap package plays much more nicely with ggplot. Using the “elev”
+terra raster object that we loaded in as part of Tutorial #3, we can
+just sent that over to tmap and plot it as a raster. No
+dataframe-ification required!</p>
+<pre class="r"><code>library(tmap)
+
+tmap_mode(&quot;plot&quot;)
+
+tm_shape(world_crop) +
+  tm_polygons(col = &quot;grey90&quot;, border.col = &quot;grey60&quot;) +
+tm_shape(elev) +
+  tm_raster(
+    palette = &quot;magma&quot;,     # viridis-based
+    alpha = 0.8,
+    title = &quot;Elevation (m)&quot;
+  ) +
+tm_layout(
+  frame = FALSE,
+  legend.outside = TRUE
+)</code></pre>
+<img src="tutorials_files/figure-html/tmap-1.png" width="672" style="display: block; margin: auto;" />
+<div style="color: gray; font-size: 0.8em; margin-top: 2em;">
+<p>The code for these tutorials was created with assistance from ChatGPT
+v5.1.</p>
 </div>
 </div>
 

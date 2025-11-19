@@ -1,0 +1,145 @@
+---
+title: "MSU Graduate Spatial Ecology: Tutorials"
+author: 'Kelly Kapsar:
+  kapsarke@msu.edu'
+date: 'Nov. 2025'
+output:
+  html_document: default
+urlcolor: blue
+---
+
+<style>
+h1 { margin-top: 1.5em; margin-bottom: 0.7em; }
+h2 { margin-top: 1.2em; margin-bottom: 0.6em; }
+h3 { margin-top: 1.0em; margin-bottom: 0.5em; }
+</style>
+
+## Tutorial #1: Exporting a shapefile from ArcPro
+
+Here is a [helpful, step-by-step tutorial](https://www.youtube.com/watch?v=8vxfBK_afMw) for exporting vector data in a shapefile format from ArcPro: 
+
+
+```{r video, warning=F, message=F, echo=F}
+library(vembedr)
+
+embed_url("https://www.youtube.com/watch?v=8vxfBK_afMw")
+```
+
+## Tutorial #2: Switching between sp and sf objects with spatial vector data
+
+The RSpatial community has recently made the transition from the "sp" package for handling vector data to the Simple Features, or "sf" package. However, not all of the packages that use sp as a dependency have made this switch, so it is sometimes necessary to revert back to sp to get certain functions to run. Thankfully, it is very straightforward to swtich between the two with just a couple of lines of code: 
+
+<div style="text-align: center;">
+  <img src="https://user-images.githubusercontent.com/520851/50280460-e35c1880-044c-11e9-9ed7-cc46754e49db.jpg"
+       width="400">
+       
+       
+  Image by Allison Horst.
+</div>
+
+```{r sp and sf, message=F}
+library(sf)
+library(sp)
+
+# Load in object as sf 
+nc <- st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+
+# Switch to sp 
+nc_sp <- as(nc, "Spatial")
+
+# And back to sf 
+nc_sf <- st_as_sf(nc_sp)
+
+# Check to make sure nothing changed
+all(nc == nc_sf)
+
+```
+
+## Tutorial #3: ggmap with Raster data
+
+The ggmap package and rasters unfortunately don't like to play nicely together for some reason that is beyond my understanding. To plot a raster onto a ggamp, you need to first convert that raster into a dataframe and then plot it (it's annoying). 
+
+```{r ggmap, fig.align='center', message=F, warning=F}
+library(terra)
+library(sf)
+library(ggmap)
+library(rnaturalearth)
+
+
+# Get elevation raster (from sample file that comes with terra package)
+elev <- rast(system.file("ex/elev.tif", package = "terra"))
+rast_obj <- elev                      # your raster
+
+# Get basemap layer from rnaturalearth 
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Determine extent of elevation raster and crop global basemap to that extent
+e <- ext(rast_obj)
+
+bbox_sf <- st_as_sfc(st_bbox(
+  c(
+    xmin = unname(e[1]),
+    xmax = unname(e[2]),
+    ymin = unname(e[3]),
+    ymax = unname(e[4])
+  ),
+  crs = 4326
+))
+
+world_crop <- st_crop(world, bbox_sf)
+
+# Convert raster object to data frame 
+rast_df  <- as.data.frame(rast_obj, xy = TRUE)
+names(rast_df)[3] <- "value"
+
+# Plot basemap with raster on top
+ggplot() +
+  # basemap polygons
+  geom_sf(
+    data = world_crop,
+    fill = "grey95",
+    color = "grey70",
+    linewidth = 0.3
+  ) +
+  # raster overlay
+  geom_raster(
+    data = rast_df,
+    aes(x = x, y = y, fill = value),
+    alpha = 0.7
+  ) +
+  coord_sf(
+    xlim = c(e[1], e[2]),
+    ylim = c(e[3], e[4]),
+    expand = FALSE
+  ) +
+  scale_fill_viridis_c(option = "magma") +
+  labs(fill = "Elevation (m)") +
+  theme_minimal()
+
+```
+
+## Tutorial #4: tmap with Raster data
+
+The tmap package plays much more nicely with ggplot. Using the "elev" terra raster object that we loaded in as part of Tutorial #3, we can just sent that over to tmap and plot it as a raster. No dataframe-ification required! 
+
+```{r tmap, fig.align='center', message=F, warning=F}
+library(tmap)
+
+tmap_mode("plot")
+
+tm_shape(world_crop) +
+  tm_polygons(col = "grey90", border.col = "grey60") +
+tm_shape(elev) +
+  tm_raster(
+    palette = "magma",     # viridis-based
+    alpha = 0.8,
+    title = "Elevation (m)"
+  ) +
+tm_layout(
+  frame = FALSE,
+  legend.outside = TRUE
+)
+```
+<div style="color: gray; font-size: 0.8em; margin-top: 2em;">
+  The code for these tutorials was created with assistance from ChatGPT v5.1.
+</div>

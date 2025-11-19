@@ -26,3 +26,5 @@ navbar:
       href: lab9.html
     - text: "Lab 10"
       href: lab10.html
+    - text: "Tutorials"
+      href: tutorials.html
