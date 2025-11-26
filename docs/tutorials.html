@@ -433,7 +433,103 @@ tm_layout(
   frame = FALSE,
   legend.outside = TRUE
 )</code></pre>
-<img src="tutorials_files/figure-html/tmap-1.png" width="672" style="display: block; margin: auto;" />
+<p><img src="tutorials_files/figure-html/tmap-1.png" width="672" style="display: block; margin: auto;" />
+## Tutorial #5: Indexing multi-dimensional rasters</p>
+<p>This tutorial has been modified and condensed from NEON’s <a
+href="https://www.neonscience.org/resources/learning-hub/tutorials/dc-multiband-rasters-r">“Raster
+04: Work With Multi-Band Rasters - Image Data in R”</a> tutorial. I
+highly recommend checking it out if you’d like to learn more.</p>
+<pre class="r"><code># terra package to work with raster data
+library(terra)
+
+# package for downloading NEON data
+library(neonUtilities)
+
+# package for specifying color palettes
+library(RColorBrewer)
+
+# set working directory to ensure R can find the file we wish to import
+wd &lt;- &quot;~/data/&quot; # this will depend on your local environment environment
+
+
+
+## ----download-harv-camera-data----------------------------------------------------------------------------------------------------------------------------------------------
+
+byTileAOP(dpID=&#39;DP3.30010.001&#39;, # rgb camera data
+          site=&#39;HARV&#39;,
+          year=&#39;2022&#39;,
+          easting=732000,
+          northing=4713500,
+          check.size=FALSE, # set to TRUE or remove if you want to check the size before downloading
+          savepath = wd)</code></pre>
+<pre><code>## Downloading files totaling approximately 351.004249 MB</code></pre>
+<pre><code>## Downloading 1 files</code></pre>
+<pre><code>##   |                                                                                                                       |                                                                                                               |   0%  |                                                                                                                       |===============================================================================================================| 100%</code></pre>
+<pre><code>## Successfully downloaded 1 files to ~/data//DP3.30010.001</code></pre>
+<pre class="r"><code>## ----demonstrate-RGB-Image, fig.cap=&quot;Red, green, and blue composite (true color) image of NEON&#39;s Harvard Forest (HARV) site&quot;, echo=FALSE------------------------------------
+
+# read the file as a raster
+rgb_harv_file &lt;- paste0(wd, &quot;DP3.30010.001/neon-aop-products/2022/FullSite/D01/2022_HARV_7/L3/Camera/Mosaic/2022_HARV_7_732000_4713000_image.tif&quot;)
+
+RGB_HARV &lt;- rast(rgb_harv_file)
+
+# Create an RGB image from the raster using the terra &quot;plot&quot; function. Note &quot;plot&quot; shows the same image, since there are 3 bands
+plotRGB(RGB_HARV, axes=F)</code></pre>
+<p><img src="tutorials_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code># plot(RGB_HARV, axes=F) &lt; this gives the same result as plotRGB
+
+# Determine the number of bands
+num_bands &lt;- nlyr(RGB_HARV)
+
+# To view just one band, index using double brackets: 
+RGB_HARV[[1]]</code></pre>
+<pre><code>## class       : SpatRaster 
+## dimensions  : 10000, 10000, 1  (nrow, ncol, nlyr)
+## resolution  : 0.1, 0.1  (x, y)
+## extent      : 732000, 733000, 4713000, 4714000  (xmin, xmax, ymin, ymax)
+## coord. ref. : WGS 84 / UTM zone 18N 
+## source      : 2022_HARV_7_732000_4713000_image.tif 
+## name        : 2022_HARV_7_732000_4713000_image_1</code></pre>
+<pre class="r"><code># To combine two bands (sum): 
+# Note this is not scientifically meaningful to combine these - I&#39;m just doing 
+# for demonstration purposes
+RG_HARV &lt;- RGB_HARV[[1]] + RGB_HARV[[2]]</code></pre>
+<pre><code>## |---------|---------|---------|---------|</code></pre>
+<pre><code>## Warning: PROJ: proj_create_from_name: Cannot find proj.db (GDAL error 1)</code></pre>
+<pre><code>## =========================================                                          </code></pre>
+<pre class="r"><code># Define colors to plot each
+# Define color palettes for each band using RColorBrewer
+colors &lt;- list(
+  brewer.pal(9, &quot;Reds&quot;),
+  brewer.pal(9, &quot;Greens&quot;),
+  brewer.pal(9, &quot;Blues&quot;)
+)
+
+# Plot each band in a loop, with the specified colors
+for (i in 1:num_bands) {
+  plot(RGB_HARV[[i]], main=paste(&quot;Band&quot;, i), col=colors[[i]])
+}</code></pre>
+<p><img src="tutorials_files/figure-html/unnamed-chunk-1-2.png" width="672" /><img src="tutorials_files/figure-html/unnamed-chunk-1-3.png" width="672" /><img src="tutorials_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
+<pre class="r"><code>## ----raster-attributes------------------------------------------------------------------------------------------------------------------------------------------------------
+# Print dimensions
+cat(&quot;Dimensions:\n&quot;)</code></pre>
+<pre><code>## Dimensions:</code></pre>
+<pre class="r"><code>cat(&quot;Number of rows:&quot;, nrow(RGB_HARV), &quot;\n&quot;)</code></pre>
+<pre><code>## Number of rows: 10000</code></pre>
+<pre class="r"><code>cat(&quot;Number of columns:&quot;, ncol(RGB_HARV), &quot;\n&quot;)</code></pre>
+<pre><code>## Number of columns: 10000</code></pre>
+<pre class="r"><code>cat(&quot;Number of layers:&quot;, nlyr(RGB_HARV), &quot;\n&quot;)</code></pre>
+<pre><code>## Number of layers: 3</code></pre>
+<pre class="r"><code># Print resolution
+resolutions &lt;- res(RGB_HARV)
+cat(&quot;Resolution:\n&quot;)</code></pre>
+<pre><code>## Resolution:</code></pre>
+<pre class="r"><code>cat(&quot;X resolution:&quot;, resolutions[1], &quot;\n&quot;)</code></pre>
+<pre><code>## X resolution: 0.1</code></pre>
+<pre class="r"><code>cat(&quot;Y resolution:&quot;, resolutions[2], &quot;\n&quot;)</code></pre>
+<pre><code>## Y resolution: 0.1</code></pre>
+<pre class="r"><code># Get the extent of the raster
+rgb_extent &lt;- ext(RGB_HARV)</code></pre>
 <div style="color: gray; font-size: 0.8em; margin-top: 2em;">
 <p>The code for these tutorials was created with assistance from ChatGPT
 v5.1.</p>

@@ -456,12 +456,12 @@ search on <a href="https://epsg.io/"
 class="uri">https://epsg.io/</a></p>
 <pre class="r"><code># USA BOUNDARY SHAPEFILE: download it from the web [note that you may need to 
 # change the exdir location depending on where you want it to be saved]
-if(! file.exists(file.path(data_path,&#39;us.zip&#39;))){
- download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip&quot;, 
-               dest=file.path(data_path,&quot;us.zip&quot;), mode=&quot;wb&quot;) 
-}
+# if(! file.exists(file.path(data_path,&#39;us.zip&#39;))){
+#  download.file(&quot;http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip&quot;, 
+#                dest=file.path(data_path,&quot;us.zip&quot;), mode=&quot;wb&quot;) 
+# }
 
-unzip (file.path(data_path,&quot;us.zip&quot;), exdir = data_path)
+# unzip (file.path(data_path,&quot;us.zip&quot;), exdir = data_path)
 # Read in the shapefile with rgdal package
 us &lt;- sf::read_sf(file.path(data_path,&quot;cb_2014_us_nation_20m.shp&quot;))
 # Note that shapefiles are actually a collection of many files. If you move a 
