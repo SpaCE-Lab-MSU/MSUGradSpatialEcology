@@ -140,6 +140,95 @@ tm_layout(
   legend.outside = TRUE
 )
 ```
+## Tutorial #5: Indexing multi-dimensional rasters
+
+This tutorial has been modified and condensed from NEON's ["Raster 04: Work With Multi-Band Rasters - Image Data in R"](https://www.neonscience.org/resources/learning-hub/tutorials/dc-multiband-rasters-r) tutorial. I highly recommend checking it out if you'd like to learn more. 
+
+```{r}
+# terra package to work with raster data
+library(terra)
+
+# package for downloading NEON data
+library(neonUtilities)
+
+# package for specifying color palettes
+library(RColorBrewer)
+
+# set working directory to ensure R can find the file we wish to import
+wd <- "~/data/" # this will depend on your local environment environment
+
+
+
+## ----download-harv-camera-data----------------------------------------------------------------------------------------------------------------------------------------------
+
+byTileAOP(dpID='DP3.30010.001', # rgb camera data
+          site='HARV',
+          year='2022',
+          easting=732000,
+          northing=4713500,
+          check.size=FALSE, # set to TRUE or remove if you want to check the size before downloading
+          savepath = wd)
+
+
+
+## ----demonstrate-RGB-Image, fig.cap="Red, green, and blue composite (true color) image of NEON's Harvard Forest (HARV) site", echo=FALSE------------------------------------
+
+# read the file as a raster
+rgb_harv_file <- paste0(wd, "DP3.30010.001/neon-aop-products/2022/FullSite/D01/2022_HARV_7/L3/Camera/Mosaic/2022_HARV_7_732000_4713000_image.tif")
+
+RGB_HARV <- rast(rgb_harv_file)
+
+# Create an RGB image from the raster using the terra "plot" function. Note "plot" shows the same image, since there are 3 bands
+plotRGB(RGB_HARV, axes=F)
+# plot(RGB_HARV, axes=F) < this gives the same result as plotRGB
+
+# Determine the number of bands
+num_bands <- nlyr(RGB_HARV)
+
+# To view just one band, index using double brackets: 
+RGB_HARV[[1]]
+
+# To combine two bands (sum): 
+# Note this is not scientifically meaningful to combine these - I'm just doing 
+# for demonstration purposes
+RG_HARV <- RGB_HARV[[1]] + RGB_HARV[[2]]
+
+# Define colors to plot each
+# Define color palettes for each band using RColorBrewer
+colors <- list(
+  brewer.pal(9, "Reds"),
+  brewer.pal(9, "Greens"),
+  brewer.pal(9, "Blues")
+)
+
+# Plot each band in a loop, with the specified colors
+for (i in 1:num_bands) {
+  plot(RGB_HARV[[i]], main=paste("Band", i), col=colors[[i]])
+}
+
+
+## ----raster-attributes------------------------------------------------------------------------------------------------------------------------------------------------------
+# Print dimensions
+cat("Dimensions:\n")
+cat("Number of rows:", nrow(RGB_HARV), "\n")
+cat("Number of columns:", ncol(RGB_HARV), "\n")
+cat("Number of layers:", nlyr(RGB_HARV), "\n")
+
+# Print resolution
+resolutions <- res(RGB_HARV)
+cat("Resolution:\n")
+cat("X resolution:", resolutions[1], "\n")
+cat("Y resolution:", resolutions[2], "\n")
+
+# Get the extent of the raster
+rgb_extent <- ext(RGB_HARV)
+
+
+
+```
+
+
+
 <div style="color: gray; font-size: 0.8em; margin-top: 2em;">
   The code for these tutorials was created with assistance from ChatGPT v5.1.
 </div>

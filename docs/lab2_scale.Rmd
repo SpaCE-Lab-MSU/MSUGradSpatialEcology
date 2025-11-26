@@ -130,12 +130,12 @@ for the proj4 strings see www.spatialreference.org or search on https://epsg.io/
 ```{r, message=FALSE, results='hide',warning=FALSE}
 # USA BOUNDARY SHAPEFILE: download it from the web [note that you may need to 
 # change the exdir location depending on where you want it to be saved]
-if(! file.exists(file.path(data_path,'us.zip'))){
- download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip", 
-               dest=file.path(data_path,"us.zip"), mode="wb") 
-}
+# if(! file.exists(file.path(data_path,'us.zip'))){
+#  download.file("http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_nation_20m.zip", 
+#                dest=file.path(data_path,"us.zip"), mode="wb") 
+# }
 
-unzip (file.path(data_path,"us.zip"), exdir = data_path)
+# unzip (file.path(data_path,"us.zip"), exdir = data_path)
 # Read in the shapefile with rgdal package
 us <- sf::read_sf(file.path(data_path,"cb_2014_us_nation_20m.shp"))
 # Note that shapefiles are actually a collection of many files. If you move a 
